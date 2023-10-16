@@ -4,7 +4,10 @@ import "MetadataViews"
 // Owned imports
 import "IComponent"
 
-/// The contract interface for the entity resource
+/// The contract interface for the entity resource, which is the core of the
+/// ECS system. It is a container for components, which are the data of the
+/// system. The entity is also identified by a UUID, which is a random number
+/// generated when the entity is created.
 ///
 pub contract interface IEntity {
 

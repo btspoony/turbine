@@ -1,4 +1,5 @@
-/// The contract interface for the component resource
+/// The contract interface for the component resource, which is the base of all components
+/// in the system.
 ///
 pub contract interface IComponent {
 

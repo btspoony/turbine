@@ -1,4 +1,4 @@
-/// The context interface provide a resource to access system resources.
+/// The context interface provide a way for contracts to access system resources.
 ///
 pub contract interface IContext {
 

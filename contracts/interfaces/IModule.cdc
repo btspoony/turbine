@@ -1,5 +1,8 @@
 
-/// The contract interface for the entity resource
+/// The contract interface for the module, which is the basic unit of the
+/// application. A module is a collection of systems that provide a specific
+/// functionality. A module can be installed in the application and can be used
+/// by other modules.
 ///
 pub contract interface IModule {
 
