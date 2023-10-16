@@ -58,6 +58,14 @@ pub contract interface IEntity {
         /// Enables or disables the component of the given type from the entity
         ///
         pub fun setComponentEnabled(_ componentType: Type, _ enabled: Bool)
+
+        /// Enables or disables all components from the entity
+        ///
+        pub fun setComponentsEnabled(_ enabled: Bool) {
+            for componentType in self.getComponetKeys() {
+                self.setComponentEnabled(componentType, enabled)
+            }
+        }
     }
 
     /// The create function for the entity resource
