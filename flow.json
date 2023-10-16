@@ -77,6 +77,42 @@
         "mainnet": "1d7e57aa55817448",
         "testnet": "631e88ae7f1d7c20"
       }
+    },
+    "IContext": {
+      "source": "./contracts/interfaces/IContext.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "IComponent": {
+      "source": "./contracts/interfaces/IComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "IEntity": {
+      "source": "./contracts/interfaces/IEntity.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "IModule": {
+      "source": "./contracts/interfaces/IModule.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "ISystem": {
+      "source": "./contracts/interfaces/ISystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "IWorld": {
+      "source": "./contracts/interfaces/IWorld.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
     }
   },
   "networks": {
@@ -102,6 +138,12 @@
   "deployments": {
     "emulator": {
       "default": [
+        "IContext",
+        "IComponent",
+        "IEntity",
+        "IModule",
+        "ISystem",
+        "IWorld"
       ],
       "emulator-account": [
         "NonFungibleToken",

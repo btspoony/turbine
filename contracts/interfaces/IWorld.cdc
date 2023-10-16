@@ -1,0 +1,3 @@
+pub contract interface IWorld {
+  
+}
