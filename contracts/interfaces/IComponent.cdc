@@ -65,11 +65,15 @@ pub contract interface IComponent {
 
         /// Returns the keys of the component
         ///
-        pub fun getKeys(): [String]
+        pub fun getKeys(): [String] {
+            return []
+        }
 
         /// Returns the value of the key
         ///
-        pub fun getKeyValue(_ key: String): AnyStruct?
+        pub fun getKeyValue(_ key: String): AnyStruct? {
+            return nil
+        }
     }
 
     /// The component factory
