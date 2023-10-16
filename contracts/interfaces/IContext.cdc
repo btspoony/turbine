@@ -16,7 +16,7 @@ pub contract interface IContext {
      */
     pub fun getSystemCapability(type: Type): Capability
   }
-  
+
   pub resource interface Consumer {
     /**
      * The capability for the context provider.

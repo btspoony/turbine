@@ -113,6 +113,18 @@
       "aliases": {
         "emulator": "01cf0e2f2f715450"
       }
+    },
+    "DisplayComponent": {
+      "source": "./contracts/interfaces/DisplayComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "BaseEntity": {
+      "source": "./contracts/interfaces/BaseEntity.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
     }
   },
   "networks": {
@@ -143,7 +155,9 @@
         "IEntity",
         "IModule",
         "ISystem",
-        "IWorld"
+        "IWorld",
+        "DisplayComponent",
+        "BaseEntity"
       ],
       "emulator-account": [
         "NonFungibleToken",

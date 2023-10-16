@@ -6,7 +6,7 @@ pub contract interface IComponent {
         /// Returns the keys of the component
         pub fun getKeys(): [String]
         /// Returns the value of the key
-        pub fun getKeyValue(_ key: String): AnyStruct
+        pub fun getKeyValue(_ key: String): AnyStruct?
     }
 
     /// The interface for an Enableable Component
@@ -16,7 +16,7 @@ pub contract interface IComponent {
         pub fun isEnable(): Bool
     }
 
-    /// The private interface for an Enableable Component 
+    /// The private interface for an Enableable Component
     ///
     pub resource interface EnableableLifecycle {
         /// Sets the component enable status
@@ -37,6 +37,7 @@ pub contract interface IComponent {
     }
 
     /* --- Interfaces & Resources --- */
+
     pub resource Component: DataProvider, Enableable, EnableableLifecycle {
         access(contract) var enabled: Bool
 
@@ -68,7 +69,7 @@ pub contract interface IComponent {
 
         /// Returns the value of the key
         ///
-        pub fun getKeyValue(_ key: String): AnyStruct
+        pub fun getKeyValue(_ key: String): AnyStruct?
     }
 
     /// The component factory
