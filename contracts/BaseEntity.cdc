@@ -22,7 +22,7 @@ pub contract BaseEntity: IEntity {
     pub resource Entity: MetadataViews.Resolver, IEntity.EntityPublic {
         /// The components of the entity
         access(self) let components: @{Type: IComponent.Component}
-        access(self) let displayType: Type?
+        access(self) var displayType: Type?
 
         init() {
             self.components <- {}
@@ -39,9 +39,20 @@ pub contract BaseEntity: IEntity {
         ///
         pub fun getViews(): [Type] {
             let keys = self.components.keys
+            // cached display type
+            if let k = self.displayType {
+                if let ref = self.borrowComponent(k) {
+                    if ref.isInstance(Type<&DisplayComponent.Component>()) {
+                        let anyRef = ref as! &DisplayComponent.Component
+                        return anyRef.getViews()
+                    }
+                }
+            }
+            // search for display type
             for k in keys {
                 if let ref = self.borrowComponent(k) {
                     if ref.isInstance(Type<&DisplayComponent.Component>()) {
+                        self.displayType = k
                         let anyRef = ref as! &DisplayComponent.Component
                         return anyRef.getViews()
                     }
@@ -53,6 +64,16 @@ pub contract BaseEntity: IEntity {
         /// Resolves the given view if supported - none at this time
         ///
         pub fun resolveView(_ view: Type): AnyStruct? {
+            // cached display type
+            if let k = self.displayType {
+                if let ref = self.borrowComponent(k) {
+                    if ref.isInstance(Type<&DisplayComponent.Component>()) {
+                        let anyRef = ref as! &DisplayComponent.Component
+                        return anyRef.resolveView(view)
+                    }
+                }
+            }
+            // search for display type
             let keys = self.components.keys
             for k in keys {
                 if let ref = self.borrowComponent(k) {
@@ -127,5 +148,11 @@ pub contract BaseEntity: IEntity {
                 ref.setEnable(enabled)
             }
         }
+    }
+
+    /// The create function for the entity resource
+    ///
+    pub fun create(): @Entity {
+        return <-create Entity()
     }
 }

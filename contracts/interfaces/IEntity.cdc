@@ -59,4 +59,8 @@ pub contract interface IEntity {
         ///
         pub fun setComponentEnabled(_ componentType: Type, _ enabled: Bool)
     }
+
+    /// The create function for the entity resource
+    ///
+    pub fun create(): @Entity
 }
