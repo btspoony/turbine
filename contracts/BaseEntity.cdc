@@ -12,10 +12,10 @@ pub contract BaseEntity: IEntity {
 
     // Events
 
-    pub event ComponentAdded(uuid: String, _ componentType: Type)
-    pub event ComponentRemoved(uuid: String, _ componentType: Type)
-    pub event ComponentSet(uuid: String, _ componentType: Type)
-    pub event ComponentEnabled(uuid: String, _ componentType: Type, _ enabled: Bool)
+    pub event ComponentAdded(uuid: UInt64, _ componentType: Type)
+    pub event ComponentRemoved(uuid: UInt64, _ componentType: Type)
+    pub event ComponentSet(uuid: UInt64, _ componentType: Type)
+    pub event ComponentEnabled(uuid: UInt64, _ componentType: Type, _ enabled: Bool)
 
     /// The entity resource
     ///
@@ -112,6 +112,11 @@ pub contract BaseEntity: IEntity {
             )
             self.components[type] <-! component
             self.borrowComponent(type)?.setEnable(true)
+
+            emit ComponentAdded(
+                uuid: self.uuid,
+                type
+            )
         }
 
         /// Detaches the component of the given type from the entity
@@ -120,6 +125,11 @@ pub contract BaseEntity: IEntity {
             let comp <- (self.components.remove(key: componentType)
                 ?? panic("This component is not attached to entity"))
             comp.setEnable(false)
+
+            emit ComponentRemoved(
+                uuid: self.uuid,
+                componentType
+            )
             return <- comp
         }
 
@@ -132,6 +142,11 @@ pub contract BaseEntity: IEntity {
                 oldComp <-! self.removeComponent(type)
             }
             self.addComponent(<-component)
+
+            emit ComponentSet(
+                uuid: self.uuid,
+                type
+            )
             return <- oldComp
         }
 
@@ -146,6 +161,12 @@ pub contract BaseEntity: IEntity {
         pub fun setComponentEnabled(_ componentType: Type, _ enabled: Bool) {
             if let ref = self.borrowComponent(componentType) {
                 ref.setEnable(enabled)
+
+                emit ComponentEnabled(
+                    uuid: self.uuid,
+                    componentType,
+                    enabled
+                )
             }
         }
     }
