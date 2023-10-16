@@ -6,6 +6,12 @@ import "IComponent"
 
 pub contract DisplayComponent: IComponent {
 
+    /// Events
+
+    pub event ComponentValueSet(uuid: UInt64, key: String, _ valueTypeIdentifier: String)
+
+    /// The component implementation
+    ///
     pub resource Component: IComponent.DataProvider, IComponent.Enableable, IComponent.EnableableLifecycle, MetadataViews.Resolver {
         access(contract) var enabled: Bool
         access(self) let kv: {String: AnyStruct}  // key-value store
@@ -58,6 +64,12 @@ pub contract DisplayComponent: IComponent {
         /** Private Methods */
         pub fun setKeyValue(_ key: String, _ value: AnyStruct) {
             self.kv[key] = value
+
+            emit ComponentValueSet(
+                uuid: self.uuid,
+                key: key,
+                value.getType().identifier
+            )
         }
     }
 
