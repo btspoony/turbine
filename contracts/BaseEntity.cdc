@@ -41,9 +41,9 @@ pub contract BaseEntity: IEntity {
             let keys = self.components.keys
             for k in keys {
                 if let ref = self.borrowComponent(k) {
-                    if ref.isInstance(Type<&AnyResource{MetadataViews.Resolver}>()) {
-                        let anyRef = ref as! &AnyResource{MetadataViews.Resolver}
-                        return resolver.getViews()
+                    if ref.isInstance(Type<&DisplayComponent.Component>()) {
+                        let anyRef = ref as! &DisplayComponent.Component
+                        return anyRef.getViews()
                     }
                 }
             }
@@ -53,6 +53,15 @@ pub contract BaseEntity: IEntity {
         /// Resolves the given view if supported - none at this time
         ///
         pub fun resolveView(_ view: Type): AnyStruct? {
+            let keys = self.components.keys
+            for k in keys {
+                if let ref = self.borrowComponent(k) {
+                    if ref.isInstance(Type<&DisplayComponent.Component>()) {
+                        let anyRef = ref as! &DisplayComponent.Component
+                        return anyRef.resolveView(view)
+                    }
+                }
+            }
             return nil
         }
 
