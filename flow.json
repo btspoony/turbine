@@ -23,7 +23,7 @@
       }
     },
     "DisplayComponent": {
-      "source": "contracts/DisplayComponent.cdc",
+      "source": "contracts/components/DisplayComponent.cdc",
       "aliases": {
         "emulator": "01cf0e2f2f715450"
       }
