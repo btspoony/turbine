@@ -73,9 +73,25 @@ pub contract DisplayComponent: IComponent {
         }
     }
 
-    /// The component factory
+    /// The component factory resource
     ///
-    pub fun create(): @Component {
-        return <- create Component()
+    pub resource Factory: IComponent.ComponentFactory {
+        /// The create function for the component factory resource
+        ///
+        pub fun create(): @Component {
+            return <- create Component()
+        }
+
+        /// Returns the type of the component
+        ///
+        pub fun instanceType(): Type {
+            return Type<@Component>()
+        }
+    }
+
+    /// The create function for the entity factory resource
+    ///
+    pub fun createFactory(): @Factory {
+        return <- create Factory()
     }
 }

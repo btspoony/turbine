@@ -171,9 +171,19 @@ pub contract BaseEntity: IEntity {
         }
     }
 
-    /// The create function for the entity resource
+    /// The entity factory resource
     ///
-    pub fun create(): @Entity {
-        return <-create Entity()
+    pub resource EntityFactory {
+        /// Creates a new entity
+        ///
+        pub fun create(): @IEntity.Entity {
+            return <- create Entity()
+        }
+    }
+
+    /// The create function for the entity factory resource
+    ///
+    access(account) fun createFactory(): @EntityFactory {
+        return <- create EntityFactory()
     }
 }

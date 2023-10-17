@@ -77,7 +77,19 @@ pub contract interface IComponent {
         }
     }
 
-    /// The component factory
+    /// The component factory resource
     ///
-    pub fun create(): @Component
+    pub resource interface ComponentFactory {
+        /// Creates a new entity
+        ///
+        pub fun create(): @Component
+
+        /// Returns the type of the component
+        ///
+        pub fun instanceType(): Type
+    }
+
+    /// The create function for the entity factory resource
+    ///
+    pub fun createFactory(): @{ComponentFactory}
 }
