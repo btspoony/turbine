@@ -1,4 +1,4 @@
-import "IContext"
+import "Context"
 import "IEntity"
 import "IComponent"
 
@@ -50,13 +50,13 @@ pub contract interface ISystem {
     }
 
     /// The system interface
-    pub resource System: CoreLifecycle, IContext.Consumer {
-        access(contract) let worldCap: Capability<&AnyResource{IContext.Provider}>
+    pub resource System: CoreLifecycle, Context.Consumer {
+        access(contract) let worldCap: Capability<&AnyResource{Context.Provider}>
 
         /**
          * The capability for the context provider.
          */
-        pub fun getProviderCapability(): Capability<&AnyResource{IContext.Provider}> {
+        pub fun getProviderCapability(): Capability<&AnyResource{Context.Provider}> {
             return self.worldCap
         }
     }

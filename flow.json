@@ -64,8 +64,8 @@
         "emulator": "01cf0e2f2f715450"
       }
     },
-    "IContext": {
-      "source": "contracts/interfaces/IContext.cdc",
+    "Context": {
+      "source": "contracts/core-utils/Context.cdc",
       "aliases": {
         "emulator": "01cf0e2f2f715450"
       }
@@ -150,7 +150,7 @@
   "deployments": {
     "emulator": {
       "default": [
-        "IContext",
+        "Context",
         "IComponent",
         "IEntity",
         "IModule",

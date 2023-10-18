@@ -40,7 +40,19 @@ pub contract interface IEntity {
     /// The entity resource
     ///
     pub resource Entity: MetadataViews.Resolver, EntityPublic {
-        /* ----- Default implementation of Entity Private */
+        /// --- Query functions ---
+
+        /// Iterates over all components
+        ///
+        pub fun forEachComponents(_ callback: ((Type, &IComponent.Component): Void)) {
+            for componentType in self.getComponetKeys() {
+                if let component = self.borrowComponent(componentType) {
+                    callback(componentType, component)
+                }
+            }
+        }
+
+        /// --- Default implementation of Entity Private ---
 
         /// Attaches the given component to the entity
         ///
@@ -57,6 +69,8 @@ pub contract interface IEntity {
         /// Borrows the component of the given type from the entity
         ///
         pub fun borrowComponent(_ componentType: Type): auth &IComponent.Component?
+
+        /// --- Enablement Methods ---
 
         /// Enables or disables the component of the given type from the entity
         ///

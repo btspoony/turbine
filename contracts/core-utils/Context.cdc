@@ -1,6 +1,8 @@
+import "IEntity"
+
 /// The context interface provide a way for contracts to access system resources.
 ///
-pub contract interface IContext {
+pub contract Context {
 
     pub resource interface Provider {
         /**
@@ -25,6 +27,16 @@ pub contract interface IContext {
         ///
         access(all)
         fun exists(uuid: UInt64): Bool
+
+        /// Fetches the entity resource for the given UUID.
+        ///
+        access(all)
+        fun borrowEntity(uuid: UInt64): &IEntity.Entity
+
+        /// Fetches all entity resources' reference
+        ///
+        access(all)
+        fun borrowAllEntities(): [&IEntity.Entity]
     }
 
     pub resource interface Consumer {
