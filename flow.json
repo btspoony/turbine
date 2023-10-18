@@ -16,8 +16,14 @@
         "testnet": "31ad40c07a2a9788"
       }
     },
-    "BaseEntity": {
-      "source": "contracts/BaseEntity.cdc",
+    "CoreEntity": {
+      "source": "contracts/CoreEntity.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "CoreWorld": {
+      "source": "contracts/CoreWorld.cdc",
       "aliases": {
         "emulator": "01cf0e2f2f715450"
       }
@@ -171,7 +177,8 @@
         "EntityQuery",
         "EntityManager",
         "DisplayComponent",
-        "BaseEntity"
+        "CoreEntity",
+        "CoreWorld"
       ],
       "emulator-account": [
         "NonFungibleToken",

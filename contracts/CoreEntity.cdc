@@ -8,7 +8,7 @@ import "DisplayComponent"
 
 /// The contract interface for the entity resource
 ///
-pub contract BaseEntity: IEntity {
+pub contract CoreEntity: IEntity {
 
     // Events
 
