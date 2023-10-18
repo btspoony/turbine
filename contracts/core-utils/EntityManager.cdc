@@ -8,24 +8,13 @@ pub contract EntityManager {
     // Events
     pub event EntityCreated(managerUuid: UInt64, uuid: UInt64)
     pub event ComponentFactoryRegistered(managerUuid: UInt64, type: Type)
-
-    /// The public interface of the entity manager.
-    ///
-    pub resource interface ManagerPublic {
-        access(all)
-        fun exists(uuid: UInt64): Bool
-
-        access(all)
-        fun getAllEntityPublicRefs(): [&{IEntity.EntityPublic}]
-    }
+    pub event ComponentAdded(managerUuid: UInt64, uuid: UInt64, type: Type)
 
     /// The resource that manages the entities.
     ///
-    pub resource Mananger: ManagerPublic {
+    pub resource Mananger {
         access(self)
         let facotry: @IEntity.EntityFactory
-        access(self)
-        let entities: @{UInt64: IEntity.Entity}
         access(self)
         let componentFactories: {Type: Capability<&AnyResource{IComponent.ComponentFactory}>}
 
@@ -33,35 +22,11 @@ pub contract EntityManager {
             factory: @IEntity.EntityFactory,
         ) {
             self.facotry <- factory
-            self.entities <- {}
             self.componentFactories = {}
         }
 
         destroy() {
             destroy self.facotry
-            destroy self.entities
-        }
-
-        // ---- Public methods  ----
-
-        /// Checks if an entity exists.
-        ///
-        access(all)
-        fun exists(uuid: UInt64): Bool {
-            return self.entities.containsKey(uuid)
-        }
-
-        /// Gets all the entity public references.
-        ///
-        access(all)
-        fun getAllEntityPublicRefs(): [&{IEntity.EntityPublic}] {
-            let refs: [&{IEntity.EntityPublic}] = []
-            for key in self.entities.keys {
-                if let entity = self.borrowEntity(uuid: key) {
-                    refs.append(entity)
-                }
-            }
-            return refs
         }
 
         // ---- Private methods - for Entities ----
@@ -69,18 +34,16 @@ pub contract EntityManager {
         /// Creates a new entity.
         ///
         access(all)
-        fun createEntity(): &IEntity.Entity {
+        fun createEntity(): @IEntity.Entity {
             let entity <- self._createEntity()
             let uuid = entity.uuid
-            self.entities[uuid] <-! entity
 
             emit EntityCreated(
                 managerUuid: self.uuid,
                 uuid: uuid
             )
 
-            return self.borrowEntity(uuid: uuid)
-                ?? panic("Failed to borrow entity")
+            return <- entity
         }
 
         // ---- Private methods - for Components ----
@@ -105,14 +68,23 @@ pub contract EntityManager {
             )
         }
 
-        // ---- Internal methods  ----
+        access(all)
+        fun addComponent(_ compType: Type, to: &IEntity.Entity) {
+            pre {
+                self.componentFactories.containsKey(compType): "Component factory not registered"
+            }
+            let compFtyCap = self.componentFactories[compType] ?? panic("Failed to get component factory")
+            let compFty = compFtyCap.borrow() ?? panic("Failed to borrow component factory")
+            to.addComponent(<- compFty.create())
 
-        /// Borrows the entity with the given uuid.
-        ///
-        access(account)
-        fun borrowEntity(uuid: UInt64): &IEntity.Entity? {
-            return &self.entities[uuid] as &IEntity.Entity?
+            emit ComponentAdded(
+                managerUuid: self.uuid,
+                uuid: to.uuid,
+                type: compType
+            )
         }
+
+        // ---- Internal methods  ----
 
         /// Creates a new entity.
         ///

@@ -6,15 +6,25 @@ pub contract interface IContext {
         /**
          * The address of the context provider.
          */
-        pub fun getAddress(): Address
+        access(all)
+        fun getAddress(): Address
+
         /**
          * The list of system types that the context provider supports.
          */
-        pub fun getSystemTypes(): [Type]
+        access(all)
+        fun getSystemTypes(): [Type]
+
         /**
          * Fetches the system capability for the given type.
          */
-        pub fun getSystemCapability(type: Type): Capability
+        access(all)
+        fun getSystemCapability(type: Type): Capability
+
+        /// Check if the given entity resource exists.
+        ///
+        access(all)
+        fun exists(uuid: UInt64): Bool
     }
 
     pub resource interface Consumer {
