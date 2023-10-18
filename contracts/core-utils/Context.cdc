@@ -13,7 +13,7 @@ pub contract Context {
         /// Fetches the entity resource for the given UUID.
         ///
         access(all)
-        fun borrowEntity(uuid: UInt64): &IEntity.Entity
+        fun borrowEntity(uuid: UInt64): &IEntity.Entity?
 
         /// Fetches all entity resources' reference
         ///

@@ -41,14 +41,51 @@ pub contract interface IWorld {
     /// The context of the world
     ///
     pub resource World: WorldState, Context.Provider {
-        // The world state will be used to store the entities and systems.
+        /// The entities in the world.
+        pub let entities: @{UInt64: IEntity.Entity}
 
-        // TODO: Add:
-        //     - the entity manager, which will be used to manage the entities.
-        //     - the world configuration, which will be used to store the world configuration.
+        /**
+         * The address of the wrold.
+         */
+        access(all)
+        fun getAddress(): Address {
+            return self.owner?.address ?? panic("The world is not initialized yet")
+        }
+
+        /// Returns the number of entities in the world.
+        ///
+        access(all)
+        fun entitiesCount(): Int {
+            return self.entities.keys.length
+        }
+
+        /// Check if the given entity resource exists.
+        ///
+        access(all)
+        fun exists(uuid: UInt64): Bool {
+            return self.entities.containsKey(uuid)
+        }
+
+        /// Fetches the entity resource for the given UUID.
+        ///
+        access(all)
+        fun borrowEntity(uuid: UInt64): &IEntity.Entity? {
+            return &self.entities[uuid] as &IEntity.Entity?
+        }
+
+        /// Fetches all entity resources' reference
+        ///
+        access(all)
+        fun borrowAllEntities(): [&IEntity.Entity] {
+            let ret: [&IEntity.Entity] = []
+            for uuid in self.entities.keys {
+                ret.append((&self.entities[uuid] as &IEntity.Entity?)!)
+            }
+            return ret
+        }
     }
 
-  /// The system create method
+  /// The world create method
   ///
   pub fun create(): @World
 }
