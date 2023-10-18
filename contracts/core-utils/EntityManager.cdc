@@ -14,14 +14,14 @@ pub contract EntityManager {
 
     /// The resource that manages the entities.
     ///
-    pub resource Mananger {
+    pub resource Manager {
         access(self)
         let facotry: @IEntity.EntityFactory
         access(self)
         let componentFactories: {Type: Capability<&AnyResource{IComponent.ComponentFactory}>}
 
         init(
-            factory: @IEntity.EntityFactory,
+            _ factory: @IEntity.EntityFactory,
         ) {
             self.facotry <- factory
             self.componentFactories = {}
@@ -121,7 +121,11 @@ pub contract EntityManager {
         }
     }
 
-    init() {
-        // NOTHING
+    /// Creates a new manager.
+    ///
+    pub fun create(
+        factory: @IEntity.EntityFactory,
+    ): @Manager {
+        return <- create Manager(<- factory)
     }
 }

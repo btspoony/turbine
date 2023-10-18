@@ -1,6 +1,6 @@
-import "Context"
 import "IEntity"
 import "IComponent"
+import "Context"
 
 /// The contract of the helper class that allows to query entities.
 ///

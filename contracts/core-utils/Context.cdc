@@ -5,24 +5,6 @@ import "IEntity"
 pub contract Context {
 
     pub resource interface Provider {
-        /**
-         * The address of the context provider.
-         */
-        access(all)
-        fun getAddress(): Address
-
-        /**
-         * The list of system types that the context provider supports.
-         */
-        access(all)
-        fun getSystemTypes(): [Type]
-
-        /**
-         * Fetches the system capability for the given type.
-         */
-        access(all)
-        fun getSystemCapability(type: Type): Capability
-
         /// Check if the given entity resource exists.
         ///
         access(all)
@@ -43,6 +25,16 @@ pub contract Context {
         /**
          * The capability for the context provider.
          */
-        pub fun getProviderCapability(): Capability<&AnyResource{Provider}>
+         access(all)
+        fun getProviderCapability(): Capability<&AnyResource{Provider}>
+
+        /**
+         * Borrow the context provider.
+         */
+        access(all)
+        fun borrowProvider(): &AnyResource{Provider} {
+            return self.getProviderCapability().borrow()
+                ?? panic("Unable to borrow provider")
+        }
     }
 }

@@ -1,6 +1,8 @@
-import "Context"
 import "IEntity"
 import "IComponent"
+import "IWorld"
+import "Context"
+import "EntityManager"
 
 /// The contract interface of `System`.
 /// A system is a container for all the logic that operates on entities that have a specific set of
@@ -51,17 +53,46 @@ pub contract interface ISystem {
 
     /// The system interface
     pub resource System: CoreLifecycle, Context.Consumer {
-        access(contract) let worldCap: Capability<&AnyResource{Context.Provider}>
+        access(contract)
+        let worldCap: Capability<&AnyResource{Context.Provider, IWorld.WorldState}>
 
         /**
          * The capability for the context provider.
          */
-        pub fun getProviderCapability(): Capability<&AnyResource{Context.Provider}> {
+        access(all)
+        fun getProviderCapability(): Capability<&AnyResource{Context.Provider}> {
             return self.worldCap
+        }
+
+        /// The capability for the world state.
+        ///
+        access(all)
+        fun getWorld(): &AnyResource{Context.Provider, IWorld.WorldState} {
+            return self.worldCap.borrow()
+                ?? panic("System has no world")
+        }
+
+        /// Returns the entity manager of the world
+        ///
+        access(all)
+        fun getEntityManager(): &EntityManager.Manager {
+            return self.getWorld().borrowEntityManager()
         }
     }
 
-    /// The system create method
+    /// The system factory resource
     ///
-    pub fun create(): @System
+    pub resource interface SystemFactory {
+        /// Creates a new system
+        ///
+        pub fun create(): @System
+
+        /// Returns the type of the system
+        ///
+        pub fun instanceType(): Type
+    }
+
+    /// The create function for the system factory resource
+    ///
+    pub fun createFactory(): @{SystemFactory}
 }
