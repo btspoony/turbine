@@ -64,12 +64,6 @@
         "emulator": "01cf0e2f2f715450"
       }
     },
-    "Context": {
-      "source": "contracts/core-utils/Context.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
     "IEntity": {
       "source": "contracts/interfaces/IEntity.cdc",
       "aliases": {
@@ -90,6 +84,24 @@
     },
     "IWorld": {
       "source": "contracts/interfaces/IWorld.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "Context": {
+      "source": "contracts/core-utils/Context.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "EntityQuery": {
+      "source": "contracts/core-utils/EntityQuery.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "EntityManager": {
+      "source": "contracts/core-utils/EntityManager.cdc",
       "aliases": {
         "emulator": "01cf0e2f2f715450"
       }
@@ -156,6 +168,8 @@
         "IModule",
         "ISystem",
         "IWorld",
+        "EntityQuery",
+        "EntityManager",
         "DisplayComponent",
         "BaseEntity"
       ],

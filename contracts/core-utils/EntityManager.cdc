@@ -1,5 +1,7 @@
 import "IEntity"
 import "IComponent"
+import "Context"
+import "EntityQuery"
 
 /// The contract that manages the entity system.
 ///
@@ -82,6 +84,30 @@ pub contract EntityManager {
                 uuid: to.uuid,
                 type: compType
             )
+        }
+
+        access(all)
+        fun addComponentBatch(
+            _ compType: Type,
+            to: EntityQuery.Builder,
+            ctx: &AnyResource{Context.Provider},
+        ) {
+            pre {
+                self.componentFactories.containsKey(compType): "Component factory not registered"
+            }
+            let compFtyCap = self.componentFactories[compType] ?? panic("Failed to get component factory")
+            let compFty = compFtyCap.borrow() ?? panic("Failed to borrow component factory")
+
+            let entities = to.executeQuery(ctx)
+            for entity in entities {
+                entity.addComponent(<- compFty.create())
+
+                emit ComponentAdded(
+                    managerUuid: self.uuid,
+                    uuid: entity.uuid,
+                    type: compType
+                )
+            }
         }
 
         // ---- Internal methods  ----

@@ -96,10 +96,10 @@ pub contract EntityQuery {
         ///
         access(all)
         fun executeQuery(
-            _ ctxProvider: &AnyResource{Context.Provider},
+            _ ctx: &AnyResource{Context.Provider},
         ): [&IEntity.Entity] {
             let filtered: [&IEntity.Entity] = []
-            let all = ctxProvider.borrowAllEntities()
+            let all = ctx.borrowAllEntities()
             let len = all.length
             var i = 0
             while i < len {
