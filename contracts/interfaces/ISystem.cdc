@@ -15,38 +15,58 @@ import "EntityManager"
 pub contract interface ISystem {
 
     pub resource interface CoreLifecycle {
-        /**
-         * Called when the system is created
-         */
-        pub fun onCreate(): Void {
+        /// Returns whether the system is enabled
+        ///
+        access(all) view
+        fun getEnabled(): Bool
+
+        /// Sets whether the system is enabled
+        ///
+        access(all) view // TODO: Should now be `all` but that is not supported yet
+        fun setEnabled(enabled: Bool)
+
+        /// Called when the system is created
+        ///
+        access(all)
+        fun onCreate(): Void {
             return
         }
 
-        /**
-         * Called before the first call to OnUpdate and whenever a system resumes running.
-         */
-        pub fun onStartRunning(): Void {
+        /// Called before the first call to OnUpdate and whenever a system resumes running.
+        ///
+        access(all)
+        fun onStartRunning(): Void {
+            pre {
+                self.getEnabled(): "System must be enabled to start running"
+            }
             return
         }
 
-        /**
-         * System event callback to add the work that your system must perform every frame.
-         */
-        pub fun onUpdate(): Void {
+        /// System event callback to add the work that your system must perform every frame.
+        ///
+        access(all)
+        fun onUpdate(): Void {
+            pre {
+                self.getEnabled(): "System must be enabled to update"
+            }
             panic("Cannot call onUpdate on a system that does not implement it")
         }
-        /**
-         * Called when the system is stopped either because the system is being destroyed or the
-         * system is no longer enabled.
-         */
-        pub fun onStopRunning(): Void {
+
+        /// Called when the system is stopped either because the system is being destroyed or the
+        /// system is no longer enabled.
+        ///
+        access(all)
+        fun onStopRunning(): Void {
+            pre {
+                self.getEnabled(): "System must be enabled to stop running"
+            }
             return
         }
 
-        /**
-         * Called when the system is destroyed
-         */
-        pub fun OnDestroy(): Void {
+        /// Called when the system is destroyed
+        ///
+        access(all)
+        fun OnDestroy(): Void {
             return
         }
     }
@@ -55,10 +75,25 @@ pub contract interface ISystem {
     pub resource System: CoreLifecycle, Context.Consumer {
         access(contract)
         let worldCap: Capability<&AnyResource{Context.Provider, IWorld.WorldState}>
+        access(contract)
+        var enabled: Bool
 
-        /**
-         * The capability for the context provider.
-         */
+        /// Returns whether the system is enabled
+        ///
+        access(all) view
+        fun getEnabled(): Bool {
+            return self.enabled
+        }
+
+        /// Sets whether the system is enabled
+        ///
+        access(all)
+        fun setEnabled(enabled: Bool) {
+            self.enabled = enabled
+        }
+
+        /// The capability for the context provider.
+        ///
         access(all)
         fun getProviderCapability(): Capability<&AnyResource{Context.Provider}> {
             return self.worldCap

@@ -7,31 +7,6 @@ import "EntityManager"
 pub contract interface IWorld {
 
     pub resource interface WorldState {
-        /**
-         * The name of the wrold.
-         */
-        access(all)
-        fun getName(): String
-
-        /**
-         * The address of the wrold.
-         */
-        access(all)
-        fun getAddress(): Address
-
-        /**
-         * The list of system types that the context provider supports.
-         */
-        access(all)
-        fun getSystemTypes(): [Type]
-
-        /**
-         * Fetches the system capability for the given type.
-         */
-        access(all)
-        fun getSystemCapability(type: Type): Capability
-
-
         /// The entity manager
         ///
         access(all)
