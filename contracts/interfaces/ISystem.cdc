@@ -45,11 +45,10 @@ pub contract interface ISystem {
         /// System event callback to add the work that your system must perform every frame.
         ///
         access(all)
-        fun onUpdate(): Void {
+        fun onUpdate(_ dt: UFix64): Void {
             pre {
                 self.getEnabled(): "System must be enabled to update"
             }
-            panic("Cannot call onUpdate on a system that does not implement it")
         }
 
         /// Called when the system is stopped either because the system is being destroyed or the

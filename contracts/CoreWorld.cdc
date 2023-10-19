@@ -27,16 +27,25 @@ pub contract CoreWorld: IWorld {
     /// The context of the world
     ///
     pub resource World: IWorld.WorldState, Context.Provider {
-        access(self)
-        let name: String
-        access(self)
-        let systems: {Type: Capability<&ISystem.System>}
-        access(self)
-        let entityManager: @EntityManager.Manager
+        // --- Fields From interface ---
         access(contract)
         let entities: @{UInt64: IEntity.Entity}
-        access(contract)
+        // --- Fields ---
+        /// The name of the world.
+        access(self)
+        let name: String
+        /// The entity manager.
+        access(self)
+        let entityManager: @EntityManager.Manager
+        /// The current time of the world.
+        access(self)
         var currentTime: UFix64
+        /// The collection of systems that the world supports.
+        access(self)
+        let systems: {Type: Capability<&ISystem.System>}
+        /// The changes of systems' enabled status.
+        access(self)
+        var systemsEnabledStatusChanged: {Type: Bool}
 
         init(
             _ name: String
@@ -44,8 +53,9 @@ pub contract CoreWorld: IWorld {
             self.name = name
             self.entities <- {}
             self.entityManager <- EntityManager.create(factory: <- CoreEntity.createFactory())
-            self.systems = {}
             self.currentTime = getCurrentBlock().timestamp
+            self.systems = {}
+            self.systemsEnabledStatusChanged = {}
         }
 
         destroy() {
@@ -106,6 +116,10 @@ pub contract CoreWorld: IWorld {
             assert(self.systems[insType] == nil, message: "System already exists")
 
             self.systems[insType] = system
+            systemRef.setEnabled(enabled: true)
+            self.systemsEnabledStatusChanged[insType] = true
+            // call system onCreate
+            systemRef.onCreate()
 
             emit SystemAdded(address: self.getAddress(), name: self.getName(), system: insType)
         }
@@ -117,23 +131,29 @@ pub contract CoreWorld: IWorld {
             pre {
                 self.systems[system] != nil: "System not found"
             }
-            let systemRef = self.systems[system]!.borrow() ?? panic("System not found")
+            let systemRef = self.borrowSystem(system)
             if systemRef.getEnabled() != enabled {
                 systemRef.setEnabled(enabled: enabled)
+
+                self.systemsEnabledStatusChanged[system] = true
 
                 emit SystemEnabledUpdate(address: self.getAddress(), name: self.getName(), system: system, enabled: enabled)
             }
         }
 
-        /// Removes a system from the context provider.
+        /// Mark as removed, remove a system from the context provider.
         ///
         access(all)
         fun removeSystem(system: Type) {
             pre {
                 self.systems[system] != nil: "System not found"
             }
-            let systemRef = self.systems[system]!.borrow() ?? panic("System not found")
+            let systemRef = self.borrowSystem(system)
             self.systems.remove(key: system)
+
+            // call system onDestroy
+            systemRef.onStopRunning()
+            systemRef.OnDestroy()
 
             emit SystemRemoved(address: self.getAddress(), name: self.getName(), system: system)
         }
@@ -144,9 +164,55 @@ pub contract CoreWorld: IWorld {
         ///
         access(all)
         fun update(_ dt: UFix64): Void {
-            // TODO
+            let toStop: [Type] = []
+            // Before update
+            for t in self.systemsEnabledStatusChanged.keys {
+                let ref = self.borrowSystem(t)
+                let changed = self.systemsEnabledStatusChanged[t]!
+                if !changed { continue }
+                let enabled = ref.getEnabled()
+                if enabled {
+                    // call system onStartRunning
+                    ref.onStartRunning()
+                } else {
+                    toStop.append(t)
+                }
+            }
+
+            // call system onUpdate
+            for t in self.systems.keys {
+                let systemRef = self.borrowSystem(t)
+                let enabled = systemRef.getEnabled()
+                if !enabled { continue }
+                systemRef.onUpdate(dt)
+            }
+
+            // After update
+            // call system onStopRunning
+            let toStopLen = toStop.length
+            var i = 0
+            while i < toStopLen {
+                let t = toStop[i]
+                let ref = self.borrowSystem(t)
+                ref.onStopRunning()
+                i = i + 1
+            }
+            // reset the changes
+            self.systemsEnabledStatusChanged = {}
 
             emit WorldUpdated(address: self.getAddress(), name: self.getName(), dt: dt)
+        }
+
+        // --- Internal Methods ---
+
+        /// Fetch the address of the world
+        ///
+        access(self)
+        fun borrowSystem(_ type: Type): &ISystem.System {
+            pre {
+                self.systems[type] != nil: "System not found"
+            }
+            return self.systems[type]!.borrow() ?? panic("System not found")
         }
     }
 
@@ -301,13 +367,13 @@ pub contract CoreWorld: IWorld {
             // Ensure the system doesn't already exist
             assert(world.getSystemTypes().contains(system) == false, message: "System already exists")
 
-            let system <- factory.create(world: self.buildWorldCapability(to))
-            let systemStoragePath = system.getStoragePath()
+            let systemIns <- factory.create(world: self.buildWorldCapability(to))
+            let systemStoragePath = systemIns.getStoragePath()
             // Ensure the system storage path is not already in use
             assert(acct.borrow<&AnyResource>(from: systemStoragePath) == nil, message: "System storage path already in use")
 
             // Store the system resource
-            acct.save(<- system, to: systemStoragePath)
+            acct.save(<- systemIns, to: systemStoragePath)
 
             // Add the system to the world
             let systemCap = acct.capabilities.storage.issue<&ISystem.System>(systemStoragePath)
@@ -340,10 +406,14 @@ pub contract CoreWorld: IWorld {
             let world = self.borrowWorld(from) ?? panic("World not found")
 
             // Ensure the system exists
-            assert(world.getSystemTypes().contains(system) == true, message: "System not found")
+            let systemCap = world.getSystemCapability(type: system)
+            let systemRef = systemCap.borrow() ?? panic("System not found")
 
             // Remove the system from the world
             world.removeSystem(system: system)
+
+            // Remove the system resource
+            destroy acct.load<@ISystem.System>(from: systemRef.getStoragePath())
         }
 
         // --- System Admin Methods ---
