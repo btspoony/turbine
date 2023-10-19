@@ -10,16 +10,17 @@ pub contract interface IComponent {
         pub fun getKeyValue(_ key: String): AnyStruct?
     }
 
-    /// The interface for an Enableable Component
-    ///
-    pub resource interface Enableable {
-        /// Returns if the component is enabled
-        pub fun isEnable(): Bool
+    pub resource interface DataSetter {
+        /// Sets the value of the key
+        pub fun setData(_ kv: {String: AnyStruct?}): Void
     }
 
     /// The private interface for an Enableable Component
     ///
     pub resource interface EnableableLifecycle {
+        /// Returns if the component is enabled
+        pub fun isEnable(): Bool
+
         /// Sets the component enable status
         ///
         pub fun setEnable(_ enabled: Bool): Void
@@ -39,7 +40,7 @@ pub contract interface IComponent {
 
     /* --- Interfaces & Resources --- */
 
-    pub resource Component: DataProvider, Enableable, EnableableLifecycle {
+    pub resource Component: DataProvider, DataSetter, EnableableLifecycle {
         access(contract) var enabled: Bool
 
         /// Returns if the component is enabled
@@ -62,7 +63,7 @@ pub contract interface IComponent {
             }
         }
 
-        /// --- Data Provider methods ---
+        /// --- Data methods ---
 
         /// Returns the keys of the component
         ///
@@ -74,6 +75,12 @@ pub contract interface IComponent {
         ///
         pub fun getKeyValue(_ key: String): AnyStruct? {
             return nil
+        }
+
+        /// Sets the value of the key
+        ///
+        pub fun setData(_ kv: {String: AnyStruct?}): Void {
+            panic("The component does not support data setting")
         }
     }
 

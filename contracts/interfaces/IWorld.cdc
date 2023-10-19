@@ -14,6 +14,11 @@ pub contract interface IWorld {
 
         // --- Lifecycle Methods ---
 
+        /// Returns the current time of the world.
+        ///
+        access(all)
+        fun getCurrentTime(): UFix64
+
         /// Call to update the world.
         ///
         access(all)
@@ -125,7 +130,28 @@ pub contract interface IWorld {
         fun removeSystem(from: String, system: Type): Void
     }
 
+    pub resource interface WorldExecutor {
+        /// Fetch the world current time
+        ///
+        access(all) view
+        fun getWorldCurrentTime(_ name: String): UFix64
+
+        /// Update the world
+        ///
+        access(all)
+        fun updateWorld(_ name: String, now: UFix64): Void {
+            pre {
+                self.getWorldCurrentTime(name) < now: "The world time can only be updated forward"
+            }
+        }
+
+        /// Update all worlds
+        ///
+        access(all)
+        fun updateAllWorlds(now: UFix64): Void
+    }
+
     /// The world manager is responsible for creating and managing worlds.
     ///
-    pub resource WorldManager: WorldManagerPublic, WorldManagerAdmin {}
+    pub resource WorldManager: WorldManagerPublic, WorldManagerAdmin, WorldExecutor {}
 }

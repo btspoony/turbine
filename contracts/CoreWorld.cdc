@@ -17,11 +17,12 @@ pub contract CoreWorld: IWorld {
     pub event WorldManagerCreated(address: Address)
     pub event SystemFactoryRegistered(address: Address, system: Type)
 
-    pub event WorldCreated(address: Address, name: String)
-
     pub event SystemAdded(address: Address, name: String, system: Type)
     pub event SystemEnabledUpdate(address: Address, name: String, system: Type, enabled: Bool)
     pub event SystemRemoved(address: Address, name: String, system: Type)
+
+    pub event WorldCreated(address: Address, name: String)
+    pub event WorldUpdated(address: Address, name: String, dt: UFix64)
 
     /// The context of the world
     ///
@@ -34,6 +35,8 @@ pub contract CoreWorld: IWorld {
         let entityManager: @EntityManager.Manager
         access(contract)
         let entities: @{UInt64: IEntity.Entity}
+        access(contract)
+        var currentTime: UFix64
 
         init(
             _ name: String
@@ -42,6 +45,7 @@ pub contract CoreWorld: IWorld {
             self.entities <- {}
             self.entityManager <- EntityManager.create(factory: <- CoreEntity.createFactory())
             self.systems = {}
+            self.currentTime = getCurrentBlock().timestamp
         }
 
         destroy() {
@@ -56,6 +60,13 @@ pub contract CoreWorld: IWorld {
         access(all)
         fun getName(): String {
             return self.name
+        }
+
+        /// Returns the current time of the world.
+        ///
+        access(all)
+        fun getCurrentTime(): UFix64 {
+            return self.currentTime
         }
 
         // --- Entity Related ---
@@ -134,12 +145,14 @@ pub contract CoreWorld: IWorld {
         access(all)
         fun update(_ dt: UFix64): Void {
             // TODO
+
+            emit WorldUpdated(address: self.getAddress(), name: self.getName(), dt: dt)
         }
     }
 
     /// The world manager is responsible for creating and managing worlds.
     ///
-    pub resource WorldManager: IWorld.WorldManagerPublic, IWorld.WorldManagerAdmin {
+    pub resource WorldManager: IWorld.WorldManagerPublic, IWorld.WorldManagerAdmin, IWorld.WorldExecutor {
         /// Capability on the underlying account object
         access(self) let acct: Capability<&AuthAccount>
         access(self) let factories: @{Type: AnyResource{ISystem.SystemFactory}}
@@ -242,6 +255,35 @@ pub contract CoreWorld: IWorld {
                     callback(key, world)
                 }
             }
+        }
+
+        // --- World Executor Methods ---
+
+        /// Fetch the world current time
+        ///
+        access(all) view
+        fun getWorldCurrentTime(_ name: String): UFix64 {
+            let world = self.borrowWorld(name) ?? panic("World not found")
+            return world.getCurrentTime()
+        }
+
+        /// Update the world
+        ///
+        access(all)
+        fun updateWorld(_ name: String, now: UFix64): Void {
+            let world = self.borrowWorld(name) ?? panic("World not found")
+            let currentTime = world.getCurrentTime()
+            world.update(now - currentTime)
+        }
+
+        /// Update all worlds
+        ///
+        access(all)
+        fun updateAllWorlds(now: UFix64): Void {
+            self.forEachWorlds(fun (name: String, world: &IWorld.World): Void {
+                let currentTime = world.getCurrentTime()
+                world.update(now - currentTime)
+            })
         }
 
         // --- System Methods ---

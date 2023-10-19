@@ -12,7 +12,7 @@ pub contract DisplayComponent: IComponent {
 
     /// The component implementation
     ///
-    pub resource Component: IComponent.DataProvider, IComponent.Enableable, IComponent.EnableableLifecycle, MetadataViews.Resolver {
+    pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.EnableableLifecycle, MetadataViews.Resolver {
         access(contract) var enabled: Bool
         access(self) let kv: {String: AnyStruct}  // key-value store
 
@@ -33,6 +33,14 @@ pub contract DisplayComponent: IComponent {
         ///
         pub fun getKeyValue(_ key: String): AnyStruct? {
             return self.kv[key]
+        }
+
+        /// Sets the value of the key
+        ///
+        pub fun setData(_ kv: {String: AnyStruct?}): Void {
+            for k in kv.keys {
+                self.setKeyValue(k, kv[k])
+            }
         }
 
         /* ---- Default implemation of MetadataViews.Resolver ---- */
