@@ -92,6 +92,17 @@ pub contract interface ISystem {
             self.enabled = enabled
         }
 
+        /// Returns the storage path of the system
+        ///
+        access(all)
+        fun getStoragePath(): StoragePath {
+            let worldRef = self.getWorld()
+            let identifier = "Turbine.Systems.".concat(self.getType().identifier)
+                .concat(".of.world.").concat(worldRef.getName())
+                .concat("@").concat(worldRef.getAddress().toString())
+            return StoragePath(identifier: identifier)!
+        }
+
         /// The capability for the context provider.
         ///
         access(all)
@@ -120,15 +131,13 @@ pub contract interface ISystem {
     pub resource interface SystemFactory {
         /// Creates a new system
         ///
-        pub fun create(): @System
+        pub fun create(
+            world: Capability<&AnyResource{Context.Provider, IWorld.WorldState}>
+        ): @System
 
         /// Returns the type of the system
         ///
         pub fun instanceType(): Type
-
-        /// Returns the storage path of the system
-        ///
-        pub fun getStoragePath(): StoragePath
     }
 
     /// The create function for the system factory resource

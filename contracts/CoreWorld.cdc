@@ -79,7 +79,7 @@ pub contract CoreWorld: IWorld {
         /// Fetches the system capability for the given type.
         ///
         access(all)
-        fun getSystemCapability(type: Type): Capability {
+        fun getSystemCapability(type: Type): Capability<&ISystem.System> {
             return self.systems[type] ?? panic("System not found")
         }
 
@@ -259,15 +259,16 @@ pub contract CoreWorld: IWorld {
             // Ensure the system doesn't already exist
             assert(world.getSystemTypes().contains(system) == false, message: "System already exists")
 
-            let systemStorePath = factory.getStoragePath()
-            // Ensure the system created
-            if acct.borrow<&AnyResource>(from: systemStorePath) == nil {
-                // Create the system
-                acct.save(<- factory.create(), to: systemStorePath)
-            }
+            let system <- factory.create(world: self.buildWorldCapability(to))
+            let systemStoragePath = system.getStoragePath()
+            // Ensure the system storage path is not already in use
+            assert(acct.borrow<&AnyResource>(from: systemStoragePath) == nil, message: "System storage path already in use")
+
+            // Store the system resource
+            acct.save(<- system, to: systemStoragePath)
 
             // Add the system to the world
-            let systemCap = acct.capabilities.storage.issue<&ISystem.System>(systemStorePath)
+            let systemCap = acct.capabilities.storage.issue<&ISystem.System>(systemStoragePath)
             assert(systemCap.check(), message: "Failed to create system capability")
 
             world.addSystem(system: systemCap)

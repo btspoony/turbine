@@ -5,29 +5,25 @@ import "IEntity"
 pub contract Context {
 
     pub resource interface Provider {
-        /**
-         * The name of the wrold.
-         */
+        /// The name of the wrold.
+        ///
         access(all)
         fun getName(): String
 
-        /**
-         * The address of the wrold.
-         */
+        /// The address of the wrold.
+        ///
         access(all)
         fun getAddress(): Address
 
-        /**
-         * The list of system types that the context provider supports.
-         */
+        /// The list of consumer types that the context provider supports.
+        ///
         access(all)
         fun getSystemTypes(): [Type]
 
-        /**
-         * Fetches the system capability for the given type.
-         */
+        /// Fetches the consumer capability for the given type.
+        ///
         access(all)
-        fun getSystemCapability(type: Type): Capability
+        fun getSystemCapability(type: Type): Capability<&AnyResource{Consumer}>
 
         /// Check if the given entity resource exists.
         ///
@@ -46,15 +42,13 @@ pub contract Context {
     }
 
     pub resource interface Consumer {
-        /**
-         * The capability for the context provider.
-         */
-         access(all)
+        /// The capability for the context provider.
+        ///
+        access(all)
         fun getProviderCapability(): Capability<&AnyResource{Provider}>
 
-        /**
-         * Borrow the context provider.
-         */
+        /// Borrow the context provider.
+        ///
         access(all)
         fun borrowProvider(): &AnyResource{Provider} {
             return self.getProviderCapability().borrow()
