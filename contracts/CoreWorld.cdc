@@ -107,9 +107,11 @@ pub contract CoreWorld: IWorld {
                 self.systems[system] != nil: "System not found"
             }
             let systemRef = self.systems[system]!.borrow() ?? panic("System not found")
-            systemRef.setEnabled(enabled: enabled)
+            if systemRef.getEnabled() != enabled {
+                systemRef.setEnabled(enabled: enabled)
 
-            emit SystemEnabledUpdate(address: self.getAddress(), name: self.getName(), system: system, enabled: enabled)
+                emit SystemEnabledUpdate(address: self.getAddress(), name: self.getName(), system: system, enabled: enabled)
+            }
         }
 
         /// Removes a system from the context provider.
@@ -248,27 +250,57 @@ pub contract CoreWorld: IWorld {
         ///
         access(all)
         fun addSystem(to: String, system: Type): Void {
-            // TODO
+            let acct = self.borrowAuthAccount()
+            let factory = self.borrowSystemFactory(system)
 
-            emit SystemAdded(address: self.acct.address, name: to, system: system)
+            // Ensure the world exists
+            let world = self.borrowWorld(to) ?? panic("World not found")
+
+            // Ensure the system doesn't already exist
+            assert(world.getSystemTypes().contains(system) == false, message: "System already exists")
+
+            let systemStorePath = factory.getStoragePath()
+            // Ensure the system created
+            if acct.borrow<&AnyResource>(from: systemStorePath) == nil {
+                // Create the system
+                acct.save(<- factory.create(), to: systemStorePath)
+            }
+
+            // Add the system to the world
+            let systemCap = acct.capabilities.storage.issue<&ISystem.System>(systemStorePath)
+            assert(systemCap.check(), message: "Failed to create system capability")
+
+            world.addSystem(system: systemCap)
         }
 
         /// Set enabled status of a system
         ///
         access(all)
         fun setSystemEnabled(to: String, system: Type, enabled: Bool): Void {
-            // TODO
+            // Ensure the world exists
+            let world = self.borrowWorld(to) ?? panic("World not found")
 
-            emit SystemEnabledUpdate(address: self.acct.address, name: to, system: system, enabled: enabled)
+            // Ensure the system exists
+            assert(world.getSystemTypes().contains(system) == true, message: "System not found")
+
+            // Set the enabled status
+            world.setSystemEnabled(system: system, enabled: enabled)
         }
 
         /// Remove a system from the world
         ///
         access(all)
         fun removeSystem(from: String, system: Type): Void {
-            // TODO
+            let acct = self.borrowAuthAccount()
 
-            emit SystemRemoved(address: self.acct.address, name: from, system: system)
+            // Ensure the world exists
+            let world = self.borrowWorld(from) ?? panic("World not found")
+
+            // Ensure the system exists
+            assert(world.getSystemTypes().contains(system) == true, message: "System not found")
+
+            // Remove the system from the world
+            world.removeSystem(system: system)
         }
 
         // --- System Admin Methods ---
@@ -276,13 +308,13 @@ pub contract CoreWorld: IWorld {
         /// Register a system factory
         ///
         access(all)
-        fun registerSystemFactory(system: Type, factory: @AnyResource{ISystem.SystemFactory}): Void {
-            pre {
-                self.factories[system] == nil: "System factory already registered"
-            }
-            self.factories[system] <-! factory
+        fun registerSystemFactory(factory: @AnyResource{ISystem.SystemFactory}): Void {
+            let systemType = factory.instanceType()
+            assert(self.factories[systemType] == nil, message: "System factory already registered")
 
-            emit SystemFactoryRegistered(address: self.acct.address, system: system)
+            self.factories[systemType] <-! factory
+
+            emit SystemFactoryRegistered(address: self.acct.address, system: systemType)
         }
 
         // --- Internal Methods ---
