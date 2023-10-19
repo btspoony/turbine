@@ -7,17 +7,25 @@ import "EntityManager"
 pub contract interface IWorld {
 
     pub resource interface WorldState {
-        /// The entity manager
+        /// Fetch the entity manager
         ///
         access(all)
         fun borrowEntityManager(): &EntityManager.Manager
+
+        // --- Lifecycle Methods ---
+
+        /// Call to update the world.
+        ///
+        access(all)
+        fun update(_ dt: UFix64): Void
     }
 
     /// The context of the world
     ///
     pub resource World: WorldState, Context.Provider {
         /// The entities in the world.
-        pub let entities: @{UInt64: IEntity.Entity}
+        access(contract)
+        let entities: @{UInt64: IEntity.Entity}
 
         /**
          * The address of the wrold.
@@ -60,7 +68,64 @@ pub contract interface IWorld {
         }
     }
 
-  /// The world create method
-  ///
-  pub fun create(): @World
+    /// The public interface of the world manager
+    ///
+    pub resource interface WorldManagerPublic {
+        /// Fetch the world storage path by name
+        ///
+        access(all)
+        fun getWorldStoragePath(_ name: String): StoragePath
+
+        /// Fetch the world public path by name
+        ///
+        access(all)
+        fun getWorldPublicPath(_ name: String): PublicPath
+    }
+
+    /// The admin interface of the world manager
+    ///
+    pub resource interface WorldManagerAdmin {
+        // --- World Methods ---
+
+        /// Create a new world
+        ///
+        access(all)
+        fun create(_ name: String, withSystems: [Type]): &World
+
+        /// Borrow the world by name
+        ///
+        access(all)
+        fun borrowWorld(_ name: String): &World?
+
+        /// Fetch the world capability by name
+        ///
+        access(all)
+        fun buildWorldCapability(_ name: String): Capability<&World>
+
+        /// Iterate all worlds
+        ///
+        access(all)
+        fun forEachWorlds(_ callback: ((String, &World): Void))
+
+        // --- System Methods ---
+
+        /// Add a system to the world
+        ///
+        access(all)
+        fun addSystem(to: String, system: Type): Void
+
+        /// Set enabled status of a system
+        ///
+        access(all)
+        fun setSystemEnabled(to: String, system: Type, enabled: Bool): Void
+
+        /// Remove a system from the world
+        ///
+        access(all)
+        fun removeSystem(from: String, system: Type): Void
+    }
+
+    /// The world manager is responsible for creating and managing worlds.
+    ///
+    pub resource WorldManager: WorldManagerPublic, WorldManagerAdmin {}
 }

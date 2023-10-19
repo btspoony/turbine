@@ -22,8 +22,8 @@ pub contract interface ISystem {
 
         /// Sets whether the system is enabled
         ///
-        access(all) view // TODO: Should now be `all` but that is not supported yet
-        fun setEnabled(enabled: Bool)
+        access(all) // TODO: Should now be `all` but that is not supported yet
+        fun setEnabled(enabled: Bool): Void
 
         /// Called when the system is created
         ///
@@ -125,6 +125,10 @@ pub contract interface ISystem {
         /// Returns the type of the system
         ///
         pub fun instanceType(): Type
+
+        /// Returns the storage path of the system
+        ///
+        pub fun getStoragePath(): StoragePath
     }
 
     /// The create function for the system factory resource
