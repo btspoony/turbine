@@ -114,11 +114,6 @@ pub contract interface IWorld {
         access(all)
         fun borrowWorld(_ name: String): &World?
 
-        /// Fetch the world capability by name
-        ///
-        access(all)
-        fun buildWorldCapability(_ name: String): Capability<&World>
-
         /// Iterate all worlds
         ///
         access(all)

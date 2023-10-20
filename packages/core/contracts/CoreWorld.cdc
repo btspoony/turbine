@@ -353,22 +353,6 @@ pub contract CoreWorld: IWorld {
             return nil
         }
 
-        /// Fetch the world capability by name
-        ///
-        access(all)
-        fun buildWorldCapability(_ name: String): Capability<&World> {
-            pre {
-                self.worlds[name] != nil: "World not found"
-            }
-            post {
-                result.check(): "Invalid world capability"
-            }
-            let acct = self.borrowAuthAccount()
-            let identifier = CoreWorld.getWorldResourceIdentifier(name)
-            let storagePath = StoragePath(identifier: identifier)!
-            return acct.capabilities.storage.issue<&World>(storagePath)
-        }
-
         /// Iterate all worlds
         ///
         access(all)
@@ -563,6 +547,23 @@ pub contract CoreWorld: IWorld {
             }
             return (&self.factories[system] as &AnyResource{ISystem.SystemFactory}?)!
         }
+
+        /// Fetch the world capability by name
+        ///
+        access(self)
+        fun buildWorldCapability(_ name: String): Capability<&World> {
+            pre {
+                self.worlds[name] != nil: "World not found"
+            }
+            post {
+                result.check(): "Invalid world capability"
+            }
+            let acct = self.borrowAuthAccount()
+            let identifier = CoreWorld.getWorldResourceIdentifier(name)
+            let storagePath = StoragePath(identifier: identifier)!
+            return acct.capabilities.storage.issue<&World>(storagePath)
+        }
+
     }
 
     /// The identifier for the world resource
