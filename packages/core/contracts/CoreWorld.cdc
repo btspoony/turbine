@@ -334,11 +334,18 @@ pub contract CoreWorld: IWorld {
         ///
         access(all)
         fun create(_ name: String, withSystems: [Type]): &World {
+            pre {
+                self.worlds[name] == nil: "Already exists: World - ".concat(name)
+            }
+
             let acct = self.borrowAuthAccount()
 
             let world <- create World(name)
             let identifier = CoreWorld.getWorldResourceIdentifier(name)
             let storagePath = StoragePath(identifier: identifier)!
+
+            // Ensure the world storage path is not already in use
+            assert(acct.borrow<&AnyResource>(from: storagePath) == nil, message: "World storage path already in use")
 
             // save the world resource
             acct.save(<- world, to: storagePath)
