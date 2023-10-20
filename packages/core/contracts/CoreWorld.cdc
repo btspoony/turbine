@@ -24,6 +24,7 @@ pub contract CoreWorld: IWorld {
 
     pub event WorldCreated(address: Address, name: String)
     pub event WorldUpdated(address: Address, name: String, dt: UFix64)
+    pub event WorldTimeReseted(address: Address, name: String, time: UFix64)
 
     pub event WorldEntityCreated(address: Address, name: String, uid: UInt64)
     pub event WorldEntityDestoried(address: Address, name: String, uid: UInt64)
@@ -51,7 +52,7 @@ pub contract CoreWorld: IWorld {
         access(self)
         var systemsEnabledStatusChanged: {Type: Bool}
         /// The current time of the world.
-        access(self)
+        access(contract)
         var currentTime: UFix64
 
         init(
@@ -381,6 +382,16 @@ pub contract CoreWorld: IWorld {
             let world = self.borrowWorld(name) ?? panic("World not found")
             let currentTime = world.getCurrentTime()
             world.update(now - currentTime)
+        }
+
+        /// Reset the world time
+        ///
+        access(all)
+        fun resetTime(_ name: String, now: UFix64) {
+            let world = self.borrowWorld(name) ?? panic("World not found")
+            world.currentTime = now
+
+            emit WorldTimeReseted(address: self.acct.address, name: name, time: now)
         }
 
         /// Update all worlds
