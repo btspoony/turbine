@@ -1,4 +1,4 @@
-# Turbine - A Fully On-chain Cadence Game Engine with ECS Architecture
+# Turbine - A Cadence Fully On-chain Game Engine with ECS Architecture
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/license/mit/)
 
