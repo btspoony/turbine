@@ -143,6 +143,54 @@
       "aliases": {
         "emulator": "01cf0e2f2f715450"
       }
+    },
+    "GachaPoolComponent": {
+      "source": "./contracts/components/GachaPoolComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "InventoryComponent": {
+      "source": "./contracts/components/InventoryComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "ItemComponent": {
+      "source": "./contracts/components/ItemComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "OwnedItemComponent": {
+      "source": "./contracts/components/OwnedItemComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "PlayerComponent": {
+      "source": "./contracts/components/PlayerComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "GachaPoolSystem": {
+      "source": "./contracts/systems/GachaPoolSystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "InventorySystem": {
+      "source": "./contracts/systems/InventorySystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "ItemSystem": {
+      "source": "./contracts/systems/ItemSystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
     }
   },
   "networks": {
@@ -168,8 +216,17 @@
   "deployments": {
     "emulator": {
       "default": [
+        "GachaPoolComponent",
+        "GachaPoolSystem",
+        "InventoryComponent",
+        "InventorySystem",
+        "ItemComponent",
+        "ItemSystem",
+        "OwnedItemComponent",
+        "PlayerComponent",
         "GachaModule",
-        "GachaPlatform"
+        "GachaPlatform",
+        "GachaGame"
       ],
       "emulator-account": [
         "NonFungibleToken",
