@@ -14,9 +14,9 @@ pub contract DisplayComponent: IComponent {
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.EnableableLifecycle, MetadataViews.Resolver {
         access(contract) var enabled: Bool
-        access(self) var name: String
-        access(self) var description: String
-        access(self) var thumbnail: String
+        access(all) var name: String
+        access(all) var description: String
+        access(all) var thumbnail: String
         access(self) let extra: {String: AnyStruct}
 
         init() {
@@ -64,10 +64,10 @@ pub contract DisplayComponent: IComponent {
                         self.name = value ?? "Untitled"
                         emit DisplayValueSet(self.uuid, k, self.name)
                     case "description":
-                        self.description = kv[k] as! String? ?? "No description"
+                        self.description = value ?? "No description"
                         emit DisplayValueSet(self.uuid, k, self.description)
                     case "thumbnail":
-                        self.thumbnail = kv[k] as! String? ?? ""
+                        self.thumbnail = value ?? ""
                         emit DisplayValueSet(self.uuid, k, self.thumbnail)
                     default:
                         break
