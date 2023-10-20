@@ -54,7 +54,6 @@ pub contract CoreEntity: IEntity {
             for k in keys {
                 if let ref = self.borrowComponent(k) {
                     if ref.isInstance(Type<&DisplayComponent.Component>()) {
-                        self.displayType = k
                         let anyRef = ref as! &DisplayComponent.Component
                         return anyRef.getViews()
                     }
@@ -117,6 +116,12 @@ pub contract CoreEntity: IEntity {
                 self.components[type] == nil,
                 message: "This component already attached to entity"
             )
+
+            // check if this is a display component
+            if component.isInstance(Type<&DisplayComponent.Component>()) {
+                self.displayType = type
+            }
+
             self.components[type] <-! component
             self.borrowComponent(type)?.setEnable(true)
 

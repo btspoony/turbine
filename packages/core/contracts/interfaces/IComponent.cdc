@@ -112,7 +112,7 @@ pub contract interface IComponent {
         /// Returns the storage path of the component factory
         ///
         pub fun getStoragePath(): StoragePath {
-            let identifier = "Turbine.Components.".concat(self.getType().identifier)
+            let identifier = "Turbine.ComponentFactory.".concat(self.getType().identifier)
             return StoragePath(identifier: identifier)!
         }
     }

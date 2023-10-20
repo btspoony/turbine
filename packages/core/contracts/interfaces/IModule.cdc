@@ -1,3 +1,5 @@
+import "IComponent"
+import "ISystem"
 
 /// The contract interface for the module, which is the basic unit of the
 /// application. A module is a collection of systems that provide a specific
@@ -6,29 +8,24 @@
 ///
 pub contract interface IModule {
 
-    /// Returns the name of the module
-    pub resource interface ModulePublic {
-        /// Returns the name of the module
-        pub view fun getName()
-    }
-
     pub resource interface Installer {
-        access(account)
-        fun installRoot(opts: {String: AnyStruct}) {
-            panic("Root install is not supported")
-        }
+        /// Returns the name of the module
+        ///
+        access(all) view
+        fun getName(): String
 
-        access(account)
-        fun install(opts: {String: AnyStruct}) {
-            panic("NonRoot install is not supported")
-        }
+        /// Loads the system factories that are provided by the module.
+        ///
+        access(all)
+        fun loadSystemFactories(): @[AnyResource{ISystem.SystemFactory}]
+
+        /// Loads the component factories that are provided by the module.
+        ///
+        access(all)
+        fun loadComponentFactories(): @[AnyResource{IComponent.ComponentFactory}]
     }
 
-    pub resource Module: ModulePublic, Installer  {
-        pub view fun getName()
-        access(account) fun installRoot(opts: {String: AnyStruct})
-        access(account) fun install(opts: {String: AnyStruct})
-    }
+    pub resource Module: Installer  {}
 
-    pub fun createModule(name: String): @Module
+    pub fun createModule(): @Module
 }

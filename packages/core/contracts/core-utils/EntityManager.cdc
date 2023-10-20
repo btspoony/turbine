@@ -51,17 +51,17 @@ pub contract EntityManager {
 
         access(all)
         fun registerCompenentFactory(
-            compFty: Capability<&AnyResource{IComponent.ComponentFactory}>,
+            factory: Capability<&AnyResource{IComponent.ComponentFactory}>,
         ) {
             pre {
-                compFty.check(): "Component factory is not valid"
+                factory.check(): "Component factory is not valid"
             }
-            let ref = compFty.borrow() ?? panic("Failed to borrow component factory")
+            let ref = factory.borrow() ?? panic("Failed to borrow component factory")
             let compType = ref.instanceType()
 
             assert(!self.componentFactories.containsKey(compType), message: "Component factory already registered")
 
-            self.componentFactories[compType] = compFty
+            self.componentFactories[compType] = factory
 
             emit ComponentFactoryRegistered(
                 managerUuid: self.uuid,

@@ -2,6 +2,7 @@ import "IEntity"
 import "IComponent"
 import "IWorld"
 import "ISystem"
+import "IModule"
 import "Context"
 import "EntityManager"
 import "EntityQuery"
@@ -40,15 +41,18 @@ pub contract CoreWorld: IWorld {
         /// The entity manager.
         access(self)
         let entityManager: @EntityManager.Manager
-        /// The current time of the world.
+        /// The installed modules' names.
         access(self)
-        var currentTime: UFix64
+        let installedModules: [String]
         /// The collection of systems that the world supports.
         access(self)
         let systems: {Type: Capability<&ISystem.System>}
         /// The changes of systems' enabled status.
         access(self)
         var systemsEnabledStatusChanged: {Type: Bool}
+        /// The current time of the world.
+        access(self)
+        var currentTime: UFix64
 
         init(
             _ name: String
@@ -56,6 +60,7 @@ pub contract CoreWorld: IWorld {
             self.name = name
             self.entities <- {}
             self.entityManager <- EntityManager.create(factory: <- CoreEntity.createFactory())
+            self.installedModules = []
             self.currentTime = getCurrentBlock().timestamp
             self.systems = {}
             self.systemsEnabledStatusChanged = {}
@@ -80,6 +85,13 @@ pub contract CoreWorld: IWorld {
         access(all)
         fun getCurrentTime(): UFix64 {
             return self.currentTime
+        }
+
+        /// Fetch the installed modules' names.
+        ///
+        access(all)
+        fun getInstalledModules(): [String] {
+            return self.installedModules
         }
 
         // --- Entity Related ---
@@ -242,6 +254,13 @@ pub contract CoreWorld: IWorld {
         }
 
         // --- Internal Methods ---
+
+        /// Call when a module is installed
+        ///
+        access(contract)
+        fun onModuleInstalled(_ name: String) {
+            self.installedModules.append(name)
+        }
 
         /// Fetch the address of the world
         ///
@@ -454,18 +473,73 @@ pub contract CoreWorld: IWorld {
             destroy acct.load<@ISystem.System>(from: systemRef.getStoragePath())
         }
 
-        // --- System Admin Methods ---
+        // --- Module Methods ---
+
+        /// Install a module to the world
+        ///
+        access(all)
+        fun installModule(to: String, _ module: @IModule.Module) {
+            let acct = self.borrowAuthAccount()
+            let world = self.borrowWorld(to) ?? panic("World not found")
+            let entityMgr = world.borrowEntityManager()
+
+            // load and register all components
+            let componentFactories <- module.loadComponentFactories()
+            var i = componentFactories.length
+            while i > 0 {
+                let compFty <- componentFactories.removeFirst()
+                let compFtyPath = compFty.getStoragePath()
+                if acct.borrow<&AnyResource{IComponent.ComponentFactory}>(from: compFtyPath) == nil {
+                    acct.save(<- compFty, to: compFtyPath)
+                } else {
+                    destroy compFty
+                }
+                assert(
+                    acct.borrow<&AnyResource{IComponent.ComponentFactory}>(from: compFtyPath) != nil,
+                    message: "Component factory not found"
+                )
+                let compFtyCap = acct.capabilities.storage
+                    .issue<&AnyResource{IComponent.ComponentFactory}>(compFtyPath)
+                assert(compFtyCap.check(), message: "Failed to create component factory capability")
+                entityMgr.registerCompenentFactory(factory: compFtyCap)
+                // next
+                i = i - 1
+            }
+            // destory empty array
+            destroy componentFactories
+
+            // load and register all system factories
+            let systemFactories <- module.loadSystemFactories()
+            i = systemFactories.length
+            while i > 0 {
+                let factory <- systemFactories.removeFirst()
+                let systemType = factory.instanceType()
+                // register system factory
+                self.registerSystemFactory(factory: <- factory)
+                // add system to the world
+                self.addSystem(to: to, system: systemType)
+                i = i - 1
+            }
+            // destory empty array
+            destroy systemFactories
+
+            world.onModuleInstalled(module.getName())
+
+            // destory the module resource
+            destroy module
+        }
 
         /// Register a system factory
         ///
         access(all)
         fun registerSystemFactory(factory: @AnyResource{ISystem.SystemFactory}): Void {
             let systemType = factory.instanceType()
-            assert(self.factories[systemType] == nil, message: "System factory already registered")
-
-            self.factories[systemType] <-! factory
-
-            emit SystemFactoryRegistered(address: self.acct.address, system: systemType)
+            if self.factories[systemType] != nil {
+                destroy factory
+            } else {
+                self.factories[systemType] <-! factory
+                emit SystemFactoryRegistered(address: self.acct.address, system: systemType)
+            }
         }
 
         // --- Internal Methods ---

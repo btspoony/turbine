@@ -12,6 +12,11 @@ pub contract interface IWorld {
         access(all)
         fun borrowEntityManager(): &EntityManager.Manager
 
+        /// Fetch the installed modules' names.
+        ///
+        access(all)
+        fun getInstalledModules(): [String]
+
         // --- Lifecycle Methods ---
 
         /// Returns the current time of the world.
