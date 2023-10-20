@@ -16,6 +16,9 @@ pub contract interface IEntity {
     /// The public interface for the entity resource
     ///
     pub resource interface EntityPublic {
+        /// Returns the entity uid
+        pub fun getId(): UInt64
+
         /// Return owner address
         pub fun getOwnerAddress(): Address {
             return self.owner?.address ?? panic("Invalid owner address")
@@ -33,7 +36,7 @@ pub contract interface IEntity {
                 .concat("> Entity[")
                 .concat(self.getType().identifier)
                 .concat("]:")
-                .concat(self.uuid.toString())
+                .concat(self.getId().toString())
         }
     }
 
@@ -90,7 +93,7 @@ pub contract interface IEntity {
     pub resource EntityFactory {
         /// Creates a new entity
         ///
-        pub fun create(): @Entity
+        pub fun create(_ uid: UInt64?): @Entity
     }
 
     /// The create function for the entity factory resource

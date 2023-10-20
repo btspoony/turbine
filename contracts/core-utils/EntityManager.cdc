@@ -8,7 +8,7 @@ import "EntityQuery"
 pub contract EntityManager {
 
     // Events
-    pub event EntityCreated(managerUuid: UInt64, uuid: UInt64)
+    pub event EntityCreated(managerUuid: UInt64, id: UInt64)
     pub event ComponentFactoryRegistered(managerUuid: UInt64, type: Type)
     pub event ComponentAdded(managerUuid: UInt64, uuid: UInt64, type: Type)
 
@@ -36,13 +36,12 @@ pub contract EntityManager {
         /// Creates a new entity.
         ///
         access(all)
-        fun createEntity(): @IEntity.Entity {
-            let entity <- self._createEntity()
-            let uuid = entity.uuid
+        fun createEntity(_ uid: UInt64?): @IEntity.Entity {
+            let entity <- self._createEntity(uid)
 
             emit EntityCreated(
                 managerUuid: self.uuid,
-                uuid: uuid
+                id: entity.getId()
             )
 
             return <- entity
@@ -115,9 +114,9 @@ pub contract EntityManager {
         /// Creates a new entity.
         ///
         access(self)
-        fun _createEntity(): @IEntity.Entity {
+        fun _createEntity(_ uid: UInt64?): @IEntity.Entity {
             let facotry = &self.facotry as &IEntity.EntityFactory
-            return <- facotry.create()
+            return <- facotry.create(uid)
         }
     }
 

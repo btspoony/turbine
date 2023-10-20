@@ -20,11 +20,13 @@ pub contract CoreEntity: IEntity {
     /// The entity resource
     ///
     pub resource Entity: MetadataViews.Resolver, IEntity.EntityPublic {
+        access(self) let id: UInt64
         /// The components of the entity
         access(self) let components: @{Type: IComponent.Component}
         access(self) var displayType: Type?
 
-        init() {
+        init(_ uid: UInt64?) {
+            self.id = uid ?? self.uuid
             self.components <- {}
             self.displayType = nil
         }
@@ -87,6 +89,11 @@ pub contract CoreEntity: IEntity {
         }
 
         /* ----- Default implementation of Entity Public */
+
+        /// Returns the entity uid
+        pub fun getId(): UInt64 {
+            return self.id
+        }
 
         /// Returns true if the entity has a component of the given type
         ///
@@ -176,8 +183,8 @@ pub contract CoreEntity: IEntity {
     pub resource EntityFactory {
         /// Creates a new entity
         ///
-        pub fun create(): @IEntity.Entity {
-            return <- create Entity()
+        pub fun create(_ uid: UInt64?): @IEntity.Entity {
+            return <- create Entity(uid)
         }
     }
 

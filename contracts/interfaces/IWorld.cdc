@@ -50,15 +50,15 @@ pub contract interface IWorld {
         /// Check if the given entity resource exists.
         ///
         access(all)
-        fun exists(uuid: UInt64): Bool {
-            return self.entities.containsKey(uuid)
+        fun exists(uid: UInt64): Bool {
+            return self.entities.containsKey(uid)
         }
 
         /// Fetches the entity resource for the given UUID.
         ///
         access(all)
-        fun borrowEntity(uuid: UInt64): &IEntity.Entity? {
-            return &self.entities[uuid] as &IEntity.Entity?
+        fun borrowEntity(uid: UInt64): &IEntity.Entity? {
+            return &self.entities[uid] as &IEntity.Entity?
         }
 
         /// Fetches all entity resources' reference

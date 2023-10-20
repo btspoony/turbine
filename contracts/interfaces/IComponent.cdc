@@ -5,9 +5,23 @@ pub contract interface IComponent {
 
     pub resource interface DataProvider {
         /// Returns the keys of the component
+        ///
         pub fun getKeys(): [String]
+
         /// Returns the value of the key
+        ///
         pub fun getKeyValue(_ key: String): AnyStruct?
+
+        /// Returns the data of the component
+        ///
+        pub fun getData(): {String: AnyStruct} {
+            let keys = self.getKeys()
+            let data: {String: AnyStruct} = {}
+            for key in keys {
+                data[key] = self.getKeyValue(key)
+            }
+            return data
+        }
     }
 
     pub resource interface DataSetter {
@@ -94,6 +108,13 @@ pub contract interface IComponent {
         /// Returns the type of the component
         ///
         pub fun instanceType(): Type
+
+        /// Returns the storage path of the component factory
+        ///
+        pub fun getStoragePath(): StoragePath {
+            let identifier = "Turbine.Components.".concat(self.getType().identifier)
+            return StoragePath(identifier: identifier)!
+        }
     }
 
     /// The create function for the entity factory resource

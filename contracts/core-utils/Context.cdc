@@ -25,15 +25,25 @@ pub contract Context {
         access(all)
         fun getSystemCapability(type: Type): Capability<&AnyResource{Consumer}>
 
+        /// Create a new entity resource with the given UUID.
+        ///
+        access(all)
+        fun createEntity(_ uid: UInt64?): &IEntity.Entity
+
+        /// Destroy the entity resource for the given UUID.
+        ///
+        access(all)
+        fun destroyEntity(uid: UInt64): Void
+
         /// Check if the given entity resource exists.
         ///
         access(all)
-        fun exists(uuid: UInt64): Bool
+        fun exists(uid: UInt64): Bool
 
         /// Fetches the entity resource for the given UUID.
         ///
         access(all)
-        fun borrowEntity(uuid: UInt64): &IEntity.Entity?
+        fun borrowEntity(uid: UInt64): &IEntity.Entity?
 
         /// Fetches all entity resources' reference
         ///

@@ -24,6 +24,9 @@ pub contract CoreWorld: IWorld {
     pub event WorldCreated(address: Address, name: String)
     pub event WorldUpdated(address: Address, name: String, dt: UFix64)
 
+    pub event WorldEntityCreated(address: Address, name: String, uid: UInt64)
+    pub event WorldEntityDestoried(address: Address, name: String, uid: UInt64)
+
     /// The context of the world
     ///
     pub resource World: IWorld.WorldState, Context.Provider {
@@ -86,6 +89,39 @@ pub contract CoreWorld: IWorld {
         access(all)
         fun borrowEntityManager(): &EntityManager.Manager {
             return &self.entityManager as &EntityManager.Manager
+        }
+
+        /// Create a new entity resource with the given UUID.
+        ///
+        access(all)
+        fun createEntity(_ uid: UInt64?): &IEntity.Entity {
+            let manager = self.borrowEntityManager()
+            let newEntity <- manager.createEntity(uid)
+
+            let uid = newEntity.getId()
+            assert(self.entities[uid] == nil, message: "Entity already exists")
+
+            // save the entity resource
+            self.entities[uid] <-! newEntity
+
+            emit WorldEntityCreated(address: self.getAddress(), name: self.getName(), uid: uid)
+
+            return self.borrowEntity(uid: uid)!
+        }
+
+        /// Destroy the entity resource for the given UUID.
+        ///
+        access(all)
+        fun destroyEntity(uid: UInt64): Void {
+            pre {
+                self.entities[uid] != nil: "Entity not found"
+            }
+            let manager = self.borrowEntityManager()
+            let entity <- self.entities.remove(key: uid)
+            entity?.setComponentsEnabled(false)
+            destroy entity
+
+            emit WorldEntityDestoried(address: self.getAddress(), name: self.getName(), uid: uid)
         }
 
         // --- System Related ---
@@ -199,6 +235,8 @@ pub contract CoreWorld: IWorld {
             }
             // reset the changes
             self.systemsEnabledStatusChanged = {}
+            // update the current time
+            self.currentTime = self.currentTime + dt
 
             emit WorldUpdated(address: self.getAddress(), name: self.getName(), dt: dt)
         }
