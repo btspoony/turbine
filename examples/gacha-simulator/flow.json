@@ -1,0 +1,130 @@
+{
+  "contracts": {
+    "CoreEntity": {
+      "source": "./node_modules/@turbine/core/contracts/CoreEntity.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "CoreWorld": {
+      "source": "./node_modules/@turbine/core/contracts/CoreWorld.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "DisplayComponent": {
+      "source": "./node_modules/@turbine/core/contracts/components/DisplayComponent.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "PropertyComponent": {
+      "source": "./node_modules/@turbine/core/contracts/components/PropertyComponent.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "CapabilityComponent": {
+      "source": "./node_modules/@turbine/core/contracts/components/CapabilityComponent.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "IComponent": {
+      "source": "./node_modules/@turbine/core/contracts/interfaces/IComponent.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "IEntity": {
+      "source": "./node_modules/@turbine/core/contracts/interfaces/IEntity.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "IModule": {
+      "source": "./node_modules/@turbine/core/contracts/interfaces/IModule.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "ISystem": {
+      "source": "./node_modules/@turbine/core/contracts/interfaces/ISystem.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "IWorld": {
+      "source": "./node_modules/@turbine/core/contracts/interfaces/IWorld.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "Context": {
+      "source": "./node_modules/@turbine/core/contracts/core-utils/Context.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "EntityQuery": {
+      "source": "./node_modules/@turbine/core/contracts/core-utils/EntityQuery.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "EntityManager": {
+      "source": "./node_modules/@turbine/core/contracts/core-utils/EntityManager.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "WorldUtils": {
+      "source": "./node_modules/@turbine/core/contracts/core-utils/WorldUtils.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    }
+  },
+  "networks": {
+    "emulator": "127.0.0.1:3569",
+    "mainnet": "access.mainnet.nodes.onflow.org:9000",
+    "sandboxnet": "access.sandboxnet.nodes.onflow.org:9000",
+    "testnet": "access.devnet.nodes.onflow.org:9000"
+  },
+  "accounts": {
+    "default": {
+      "address": "01cf0e2f2f715450",
+      "key": "625fa26301b5d54d3be6aec70213c8c9a0dcb4bd22a78041cb0d8c6e7d19627e"
+    },
+    "emulator-account": {
+      "address": "f8d6e0586b0a20c7",
+      "key": "625fa26301b5d54d3be6aec70213c8c9a0dcb4bd22a78041cb0d8c6e7d19627e"
+    },
+    "emulator-flow": {
+      "address": "0ae53cb6e3f42a79",
+      "key": "625fa26301b5d54d3be6aec70213c8c9a0dcb4bd22a78041cb0d8c6e7d19627e"
+    }
+  },
+  "deployments": {
+    "emulator": {
+      "default": [],
+      "emulator-account": [
+        "Context",
+        "IComponent",
+        "IEntity",
+        "ISystem",
+        "IModule",
+        "IWorld",
+        "EntityQuery",
+        "EntityManager",
+        "DisplayComponent",
+        "PropertyComponent",
+        "CapabilityComponent",
+        "CoreEntity",
+        "CoreWorld",
+        "WorldUtils"
+      ]
+    },
+    "testnet": {}
+  }
+}
