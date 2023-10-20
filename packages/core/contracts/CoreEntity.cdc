@@ -50,15 +50,6 @@ pub contract CoreEntity: IEntity {
                     }
                 }
             }
-            // search for display type
-            for k in keys {
-                if let ref = self.borrowComponent(k) {
-                    if ref.isInstance(Type<&DisplayComponent.Component>()) {
-                        let anyRef = ref as! &DisplayComponent.Component
-                        return anyRef.getViews()
-                    }
-                }
-            }
             return []
         }
 
@@ -67,16 +58,6 @@ pub contract CoreEntity: IEntity {
         pub fun resolveView(_ view: Type): AnyStruct? {
             // cached display type
             if let k = self.displayType {
-                if let ref = self.borrowComponent(k) {
-                    if ref.isInstance(Type<&DisplayComponent.Component>()) {
-                        let anyRef = ref as! &DisplayComponent.Component
-                        return anyRef.resolveView(view)
-                    }
-                }
-            }
-            // search for display type
-            let keys = self.components.keys
-            for k in keys {
                 if let ref = self.borrowComponent(k) {
                     if ref.isInstance(Type<&DisplayComponent.Component>()) {
                         let anyRef = ref as! &DisplayComponent.Component
@@ -137,6 +118,11 @@ pub contract CoreEntity: IEntity {
             let comp <- (self.components.remove(key: componentType)
                 ?? panic("This component is not attached to entity"))
             comp.setEnable(false)
+
+            // check if this is a display component
+            if comp.isInstance(Type<&DisplayComponent.Component>()) {
+                self.displayType = nil
+            }
 
             emit ComponentRemoved(
                 uuid: self.uuid,
