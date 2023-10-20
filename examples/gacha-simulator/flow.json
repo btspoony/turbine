@@ -131,6 +131,18 @@
       "aliases": {
         "emulator": "f8d6e0586b0a20c7"
       }
+    },
+    "GachaPlatform": {
+      "source": "./contracts/GachaPlatform.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "GachaModule": {
+      "source": "./contracts/GachaModule.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
     }
   },
   "networks": {
@@ -155,7 +167,10 @@
   },
   "deployments": {
     "emulator": {
-      "default": [],
+      "default": [
+        "GachaModule",
+        "GachaPlatform"
+      ],
       "emulator-account": [
         "NonFungibleToken",
         "FungibleToken",
