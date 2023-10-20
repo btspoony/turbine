@@ -52,7 +52,7 @@ pub contract CoreWorld: IWorld {
         access(self)
         var systemsEnabledStatusChanged: {Type: Bool}
         /// The current time of the world.
-        access(contract)
+        access(self)
         var currentTime: UFix64
 
         init(
@@ -81,6 +81,13 @@ pub contract CoreWorld: IWorld {
             return self.name
         }
 
+        /// Fetch the installed modules' names.
+        ///
+        access(all)
+        fun getInstalledModules(): [String] {
+            return self.installedModules
+        }
+
         /// Returns the current time of the world.
         ///
         access(all)
@@ -88,11 +95,13 @@ pub contract CoreWorld: IWorld {
             return self.currentTime
         }
 
-        /// Fetch the installed modules' names.
+        /// Set the current time of the world.
         ///
-        access(all)
-        fun getInstalledModules(): [String] {
-            return self.installedModules
+        access(contract)
+        fun setCurrentTime(t: UFix64) {
+            self.currentTime = t
+
+            emit WorldTimeReseted(address: self.getAddress(), name: self.getName(), time: t)
         }
 
         // --- Entity Related ---
@@ -396,9 +405,7 @@ pub contract CoreWorld: IWorld {
         access(all)
         fun resetTime(_ name: String, now: UFix64) {
             let world = self.borrowWorld(name) ?? panic("World not found")
-            world.currentTime = now
-
-            emit WorldTimeReseted(address: self.acct.address, name: name, time: now)
+            world.setCurrentTime(t: now)
         }
 
         /// Update all worlds
