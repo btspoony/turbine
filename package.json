@@ -1,17 +1,18 @@
 {
-  "name": "turbine",
-  "version": "0.1.0",
-  "exports": {
-    "./contracts/**/*": "./contracts/**/*",
-    "./transactions/**/*": "./transactions/**/*",
-    "./scripts/**/*": "./scripts/**/*",
-    "./flow.json": "./flow.json"
+  "name": "root",
+  "private": true,
+  "engines": {
+    "node": ">=16.x"
   },
+  "packageManager": "pnpm@8.5.1",
   "scripts": {
-    "deploy:emulator": "flow project deploy --update",
-    "deploy:testnet": "flow project deploy --update --network testnet",
-    "deploy:mainnet": "flow project deploy --update --network mainnet",
-    "fund:emulator": "flow transactions send ./transactions/for-dev/transfer-token.cdc 0x01cf0e2f2f715450 1000.0 --signer=emulator-account",
-    "dev": "pnpm fund:emulator && pnpm deploy:emulator"
+    "lines": "find . \\( -name '*.cdc' -o -name '*.ts' -o -name '*.prisma' -o -name '*.vue' \\) -not -path '*/node_modules/*' -not -path '*/tests/*' -not -path '*/deps/*' -not -path '*/dist/*' | xargs wc -l",
+    "prepare": "husky install"
+  },
+  "repository": "github:btspoony/turbine",
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "husky": "^8.0.3"
   }
 }

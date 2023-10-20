@@ -1,12 +1,12 @@
-[submodule "deps/flow-core-contracts"]
-	path = deps/flow-core-contracts
+[submodule "packages/core/deps/flow-core-contracts"]
+	path = packages/core/deps/flow-core-contracts
 	url = https://github.com/onflow/flow-core-contracts.git
-[submodule "deps/flow-ft"]
-	path = deps/flow-ft
+[submodule "packages/core/deps/flow-ft"]
+	path = packages/core/deps/flow-ft
 	url = https://github.com/onflow/flow-ft.git
-[submodule "deps/flow-nft"]
-	path = deps/flow-nft
+[submodule "packages/core/deps/flow-nft"]
+	path = packages/core/deps/flow-nft
 	url = https://github.com/onflow/flow-nft.git
-[submodule "deps/flow-utils"]
-	path = deps/flow-utils
+[submodule "packages/core/deps/flow-utils"]
+	path = packages/core/deps/flow-utils
 	url = https://github.com/green-goo-dao/flow-utils.git
