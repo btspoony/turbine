@@ -104,6 +104,13 @@ pub contract CoreWorld: IWorld {
             return &self.entityManager as &EntityManager.Manager
         }
 
+        /// Returns all available components.
+        ///
+        access(all)
+        fun getAvailableComponents(): [Type] {
+            return self.entityManager.registeredComponents()
+        }
+
         /// Create a new entity resource with the given UUID.
         ///
         access(all)

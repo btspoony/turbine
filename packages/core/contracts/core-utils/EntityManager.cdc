@@ -49,6 +49,8 @@ pub contract EntityManager {
 
         // ---- Private methods - for Components ----
 
+        /// Registers a component factory.
+        ///
         access(all)
         fun registerCompenentFactory(
             factory: Capability<&AnyResource{IComponent.ComponentFactory}>,
@@ -69,6 +71,15 @@ pub contract EntityManager {
             )
         }
 
+        /// Returns all registered component types.
+        ///
+        access(all)
+        fun registeredComponents(): [Type] {
+            return self.componentFactories.keys
+        }
+
+        /// Adds a component to an entity.
+        ///
         access(all)
         fun addComponent(_ compType: Type, to: &IEntity.Entity, withData: {String: AnyStruct}?) {
             pre {
@@ -91,6 +102,8 @@ pub contract EntityManager {
             )
         }
 
+        /// Adds a component to entities.
+        ///
         access(all)
         fun addComponentBatch(
             _ compType: Type,
