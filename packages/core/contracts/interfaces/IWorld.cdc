@@ -12,6 +12,11 @@ pub contract interface IWorld {
         access(all)
         fun borrowEntityManager(): &EntityManager.Manager
 
+        /// Returns all available components.
+        ///
+        access(all)
+        fun getAvailableComponents(): [Type]
+
         /// Fetch the installed modules' names.
         ///
         access(all)
