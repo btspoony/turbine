@@ -70,13 +70,19 @@ pub contract EntityManager {
         }
 
         access(all)
-        fun addComponent(_ compType: Type, to: &IEntity.Entity) {
+        fun addComponent(_ compType: Type, to: &IEntity.Entity, withData: {String: AnyStruct}?) {
             pre {
                 self.componentFactories.containsKey(compType): "Component factory not registered"
             }
             let compFtyCap = self.componentFactories[compType] ?? panic("Failed to get component factory")
             let compFty = compFtyCap.borrow() ?? panic("Failed to borrow component factory")
             to.addComponent(<- compFty.create())
+
+            // Set data if any
+            if let data = withData {
+                let compRef = to.borrowComponent(compType) ?? panic("Failed to borrow component")
+                compRef.setData(data)
+            }
 
             emit ComponentAdded(
                 managerUuid: self.uuid,

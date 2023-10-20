@@ -54,6 +54,13 @@ pub contract interface IWorld {
             return self.entities.containsKey(uid)
         }
 
+        /// Fetches the list of all entity UUIDs.
+        ///
+        access(all)
+        fun getEntities(): [UInt64] {
+            return self.entities.keys
+        }
+
         /// Fetches the entity resource for the given UUID.
         ///
         access(all)

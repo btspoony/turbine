@@ -112,6 +112,12 @@
         "emulator": "01cf0e2f2f715450"
       }
     },
+    "WorldUtils": {
+      "source": "contracts/core-utils/WorldUtils.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
     "MetadataViews": {
       "source": "./deps/flow-nft/contracts/MetadataViews.cdc",
       "aliases": {
@@ -178,7 +184,8 @@
         "EntityManager",
         "DisplayComponent",
         "CoreEntity",
-        "CoreWorld"
+        "CoreWorld",
+        "WorldUtils"
       ],
       "emulator-account": [
         "NonFungibleToken",
