@@ -34,6 +34,12 @@
         "emulator": "01cf0e2f2f715450"
       }
     },
+    "PropertyComponent": {
+      "source": "contracts/components/PropertyComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
     "ExampleNFT": {
       "source": "./deps/flow-nft/contracts/ExampleNFT.cdc",
       "aliases": {
@@ -183,6 +189,7 @@
         "EntityQuery",
         "EntityManager",
         "DisplayComponent",
+        "PropertyComponent",
         "CoreEntity",
         "CoreWorld",
         "WorldUtils"
