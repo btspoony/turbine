@@ -9,7 +9,7 @@ pub contract PropertyComponent: IComponent {
 
     /// The component implementation
     ///
-    pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.EnableableLifecycle {
+    pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.ComponentState {
         access(contract) var enabled: Bool
         access(self) let kv: {String: AnyStruct}  // key-value store
 

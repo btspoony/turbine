@@ -31,30 +31,19 @@ pub contract interface IComponent {
 
     /// The private interface for an Enableable Component
     ///
-    pub resource interface EnableableLifecycle {
+    pub resource interface ComponentState {
         /// Returns if the component is enabled
+        ///
         pub fun isEnable(): Bool
 
         /// Sets the component enable status
         ///
         pub fun setEnable(_ enabled: Bool): Void
-
-        /// This method is invoked when the component is enabled
-        ///
-        pub fun onActivate() {
-            return
-        }
-
-        /// This method is invoked when the component is disabled
-        ///
-        pub fun onDetached() {
-            return
-        }
     }
 
     /* --- Interfaces & Resources --- */
 
-    pub resource Component: DataProvider, DataSetter, EnableableLifecycle {
+    pub resource Component: DataProvider, DataSetter, ComponentState {
         access(contract) var enabled: Bool
 
         /// Returns if the component is enabled
@@ -70,11 +59,6 @@ pub contract interface IComponent {
                 self.enabled == enabled: "The component enable status is not set correctly"
             }
             self.enabled = enabled
-            if enabled {
-                self.onActivate()
-            } else {
-                self.onDetached()
-            }
         }
 
         /// --- Data methods ---
