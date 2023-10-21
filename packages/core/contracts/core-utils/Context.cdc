@@ -50,6 +50,11 @@ pub contract Context {
         access(all)
         fun borrowEntity(uid: UInt64): &IEntity.Entity?
 
+        /// Fetches the entity resources for the given UUIDs.
+        ///
+        access(all)
+        fun borrowEntities(uids: [UInt64]): {UInt64: &IEntity.Entity?}
+
         /// Fetches all entity resources' reference
         ///
         access(all)

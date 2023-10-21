@@ -78,6 +78,17 @@ pub contract interface IWorld {
             return &self.entities[uid] as &IEntity.Entity?
         }
 
+        /// Fetches the entity resources for the given UUIDs.
+        ///
+        access(all)
+        fun borrowEntities(uids: [UInt64]): {UInt64: &IEntity.Entity?} {
+            let ret: {UInt64: &IEntity.Entity?} = {}
+            for uid in uids {
+                ret[uid] = self.borrowEntity(uid: uid)
+            }
+            return ret
+        }
+
         /// Fetches all entity resources' reference
         ///
         access(all)
