@@ -1,5 +1,7 @@
 // Owned imports
+import "IEntity"
 import "IComponent"
+import "ItemComponent"
 
 pub contract OwnedItemComponent: IComponent {
 
@@ -10,30 +12,67 @@ pub contract OwnedItemComponent: IComponent {
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.ComponentState {
         access(contract) var enabled: Bool
 
+        access(all)
+        var itemEntityID: UInt64
+        access(all)
+        var exp: UInt64
+        access(all)
+        var level: UInt64
+        access(all)
+        var quality: UInt64
+
         init() {
             self.enabled = true
+            self.itemEntityID = 0
+            self.exp = 0
+            self.level = 1
+            self.quality = 0
         }
 
-        /// --- Data Provider methods ---
+        /// --- General Interface methods ---
 
         /// Returns the keys of the component
         ///
         pub fun getKeys(): [String] {
-            // TODO: Implement
-            return []
+            return [
+                "itemEntityID",
+                "exp",
+                "level",
+                "quality"
+            ]
         }
 
         /// Returns the value of the key
         ///
         pub fun getKeyValue(_ key: String): AnyStruct? {
-            // TODO: Implement
-            return nil
+            if key == "itemEntityID" {
+                return self.itemEntityID
+            } else if key == "exp" {
+                return self.exp
+            } else if key == "level" {
+                return self.level
+            } else if key == "quality" {
+                return self.quality
+            } else {
+                return nil
+            }
         }
 
         /// Sets the value of the key
         ///
         pub fun setData(_ kv: {String: AnyStruct?}): Void {
-            // TODO: Implement
+            if kv["itemEntityID"] != nil {
+                self.itemEntityID = kv["itemEntityID"] as! UInt64
+            }
+            if kv["exp"] != nil {
+                self.exp = kv["exp"] as! UInt64
+            }
+            if kv["level"] != nil {
+                self.level = kv["level"] as! UInt64
+            }
+            if kv["quality"] != nil {
+                self.quality = kv["quality"] as! UInt64
+            }
         }
     }
 

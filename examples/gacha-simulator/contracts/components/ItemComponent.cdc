@@ -10,30 +10,67 @@ pub contract ItemComponent: IComponent {
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.ComponentState {
         access(contract) var enabled: Bool
 
+        access(all)
+        var category: String
+        access(all)
+        var identity: String
+        access(all)
+        var rarity: UInt8
+        access(all)
+        var traits: {String: UInt8}
+
         init() {
             self.enabled = true
+            self.category = ""
+            self.identity = ""
+            self.rarity = 0
+            self.traits = {}
         }
 
-        /// --- Data Provider methods ---
+        /// --- General Interface methods ---
 
         /// Returns the keys of the component
         ///
         pub fun getKeys(): [String] {
-            // TODO: Implement
-            return []
+            return [
+                "category",
+                "identity",
+                "rarity",
+                "traits"
+            ]
         }
 
         /// Returns the value of the key
         ///
         pub fun getKeyValue(_ key: String): AnyStruct? {
-            // TODO: Implement
-            return nil
+            if key == "category" {
+                return self.category
+            } else if key == "identity" {
+                return self.identity
+            } else if key == "rarity" {
+                return self.rarity
+            } else if key == "traits" {
+                return self.traits
+            } else {
+                return nil
+            }
         }
 
         /// Sets the value of the key
         ///
         pub fun setData(_ kv: {String: AnyStruct?}): Void {
-            // TODO: Implement
+            if kv["category"] != nil {
+                self.category = kv["category"] as! String
+            }
+            if kv["identity"] != nil {
+                self.identity = kv["identity"] as! String
+            }
+            if kv["rarity"] != nil {
+                self.rarity = kv["rarity"] as! UInt8
+            }
+            if kv["traits"] != nil {
+                self.traits = kv["traits"] as! {String: UInt8}
+            }
         }
     }
 
