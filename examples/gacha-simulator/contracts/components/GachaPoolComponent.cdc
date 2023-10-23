@@ -118,7 +118,7 @@ pub contract GachaPoolComponent: IComponent {
                 }
                 return self.baseProbabilityPool[itemEntityID]! + modifier
             } else {
-                return self.baseProbabilityPool[itemEntityID]!
+                return self.baseProbabilityPool[itemEntityID] ?? panic("Invalid itemEntityID")
             }
         }
 

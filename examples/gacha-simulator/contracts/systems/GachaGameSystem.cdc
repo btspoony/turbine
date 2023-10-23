@@ -34,17 +34,18 @@ pub contract GachaGameSystem: ISystem {
 
             // get gacha pool
             let poolComp = self.borrowGachaPoolComponent(poolEntityId)
-            let threshold = poolComp.getCounterThreshold()
-            let probMods = poolComp.getCounterProbabilityModifier()
+            let boostingUpItems = poolComp.getBoostingProbabilityItems()
+            // let threshold = poolComp.getCounterThreshold()
+            // let probMods = poolComp.getCounterProbabilityModifier()
 
             // get all Items' info
             let allItemIds = poolComp.getAllItems()
             let allItemEntities = world.borrowEntities(uids: allItemIds)
-            let allItems: [ItemComponent.ItemInfo] = []
+            let allItems: {UInt64: ItemComponent.ItemInfo} = {}
             for one in allItemEntities.keys {
                 if let item = allItemEntities[one]! {
                     let comp = item.borrowComponent(Type<@ItemComponent.Component>()) ?? panic("ItemComponent not found")
-                    allItems.append((comp as! &ItemComponent.Component).toStruct())
+                    allItems[one] = (comp as! &ItemComponent.Component).toStruct()
                 }
             }
 
@@ -71,11 +72,46 @@ pub contract GachaGameSystem: ISystem {
             // last pulled info
             var currentCounter = playerComp.getGachaPoolCounter(poolEntityId)
             var lastPulledRareItem = playerComp.getGachaPoolLastPulledRare(poolEntityId)
+            // sum of probability
+            var sumProb: {UInt8: UFix64} = {}
+            for itemId in allItems.keys {
+                let item = allItems[itemId]!
+                var prob: UFix64 = 0.0
+                if boostingUpItems.contains(itemId) {
+                    prob = poolComp.getProbabilityRatioWithCounter(itemId, currentCounter)
+                } else {
+                    prob = poolComp.getProbabilityRatio(itemId)
+                }
+                sumProb[item.rarity] = (sumProb[item.rarity] ?? 0.0) + prob
+            }
 
-            // TODO
-            // let inventorySystemCap = world.getSystemCapability(
-            //     type: Type<@InventorySystem.System>()
-            // ) as! Capability<auth &ISystem.System>
+            // sum of probability for rare items
+            var totalProb: UFix64 = 0.0
+            let rarityArr: [UFix64] = []
+            let rarityDic: {Int: UInt8} = {}
+            // reverse order for rare probs
+            var i: UInt8 = 10
+            while i >= 0 {
+                if let prob = sumProb[i] {
+                    totalProb = totalProb + prob
+                    rarityArr.append(prob)
+                    rarityDic[rarityArr.length - 1] = i
+                }
+                i = i - 1
+            }
+
+            // pull one item
+            var rarityRand = self.geneRandomPercentage()
+            var pickedRarity: UInt8? = nil
+            for rarity, prob in rarityArr {
+                rarityRand = rarityRand.saturatingSubtract(prob)
+                if rarityRand == 0.0 {
+                    pickedRarity = rarityDic[rarity]
+                    break
+                }
+            }
+
+            // TODO: pick from rarity pool
         }
 
         access(all)
@@ -85,6 +121,13 @@ pub contract GachaGameSystem: ISystem {
             let poolComp = pool.borrowComponent(Type<@GachaPoolComponent.Component>()) as! &GachaPoolComponent.Component?
                 ?? panic("GachaPoolComponent not found")
             return poolComp
+        }
+
+        access(self)
+        fun geneRandomPercentage(): UFix64 {
+            let rand = unsafeRandom()
+            let randStr = "0.".concat(rand.toString().slice(from: 0, upTo: 5))
+            return UFix64.fromString(randStr)!
         }
 
         /// System event callback to add the work that your system must perform every frame.
