@@ -34,11 +34,11 @@ pub contract interface IComponent {
     pub resource interface ComponentState {
         /// Returns if the component is enabled
         ///
-        pub fun isEnable(): Bool
+        pub fun isEnabled(): Bool
 
         /// Sets the component enable status
         ///
-        pub fun setEnable(_ enabled: Bool): Void
+        pub fun setEnabled(_ enabled: Bool): Void
     }
 
     /* --- Interfaces & Resources --- */
@@ -48,13 +48,13 @@ pub contract interface IComponent {
 
         /// Returns if the component is enabled
         ///
-        pub fun isEnable(): Bool {
+        pub fun isEnabled(): Bool {
             return self.enabled
         }
 
         /// Sets the component enable status
         ///
-        pub fun setEnable(_ enabled: Bool): Void {
+        pub fun setEnabled(_ enabled: Bool): Void {
             post {
                 self.enabled == enabled: "The component enable status is not set correctly"
             }

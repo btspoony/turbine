@@ -117,7 +117,7 @@ pub contract EntityQuery {
                         return
                     }
 
-                    let enabled = component.isEnable()
+                    let enabled = component.isEnabled()
                     // check all
                     if self.all.length > 0 {
                         allMatch = allMatch && (self.all.contains(type) && enabled)

@@ -34,11 +34,15 @@ pub contract GachaPoolSystem: ISystem {
             emit GachaPoolAdded(entity.getId())
 
             let entityMgr = world.borrowEntityManager()
+            let compType = Type<@GachaPoolComponent.Component>()
             entityMgr.addComponent(
-                Type<@GachaPoolComponent.Component>(),
+                compType,
                 to: entity,
                 withData: nil
             )
+            // set the component to disabled by default
+            entity.setComponentEnabled(compType, false)
+
             return entity.getId()
         }
 
@@ -64,6 +68,12 @@ pub contract GachaPoolSystem: ISystem {
             comp.setCounterModifier(threshold, probabilityMods)
 
             emit GachaPoolCounterSet(poolEntityId, threshold, probabilityMods)
+        }
+
+        access(all)
+        fun setGachaPoolEnabled(_ poolEntityId: UInt64, enabled: Bool) {
+            let comp = self.borrowGachaPool(poolEntityId)
+            comp.setEnabled(enabled)
         }
 
         /// System event callback to add the work that your system must perform every frame.

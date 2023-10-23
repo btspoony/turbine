@@ -104,7 +104,7 @@ pub contract CoreEntity: IEntity {
             }
 
             self.components[type] <-! component
-            self.borrowComponent(type)?.setEnable(true)
+            self.borrowComponent(type)?.setEnabled(true)
 
             emit ComponentAdded(
                 uuid: self.uuid,
@@ -117,7 +117,7 @@ pub contract CoreEntity: IEntity {
         pub fun removeComponent(_ componentType: Type): @IComponent.Component {
             let comp <- (self.components.remove(key: componentType)
                 ?? panic("This component is not attached to entity"))
-            comp.setEnable(false)
+            comp.setEnabled(false)
 
             // check if this is a display component
             if comp.isInstance(Type<&DisplayComponent.Component>()) {
@@ -158,7 +158,7 @@ pub contract CoreEntity: IEntity {
         ///
         pub fun setComponentEnabled(_ componentType: Type, _ enabled: Bool) {
             if let ref = self.borrowComponent(componentType) {
-                ref.setEnable(enabled)
+                ref.setEnabled(enabled)
 
                 emit ComponentEnabled(
                     uuid: self.uuid,
