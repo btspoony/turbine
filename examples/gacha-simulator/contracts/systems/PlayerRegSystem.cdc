@@ -1,6 +1,10 @@
 import "Context"
 import "IWorld"
 import "ISystem"
+import "EntityQuery"
+import "IdentityComponent"
+import "PlayerComponent"
+import "InventoryComponent"
 
 pub contract PlayerRegSystem: ISystem {
 
@@ -17,11 +21,51 @@ pub contract PlayerRegSystem: ISystem {
             self.enabled = true
         }
 
+        /// Query the player by username
+        ///
+        access(all)
+        fun queryPlayerByUsername(_ username: String): &IdentityComponent.Component? {
+            let query = EntityQuery.Builder()
+            query.withAll(types: [
+                Type<@IdentityComponent.Component>(),
+                Type<@PlayerComponent.Component>(),
+                Type<@InventoryComponent.Component>()
+            ])
+            let entities = query.executeQuery(self.borrowProvider())
+            for entity in entities {
+                if let comp = entity.borrowComponent(Type<@IdentityComponent.Component>()) {
+                    let identity = comp as! &IdentityComponent.Component
+                    if identity.getUsername() == username {
+                        return identity
+                    }
+                }
+            }
+            return nil
+        }
+
+        access(all)
+        fun registerPlayer(_ username: String): UInt64 {
+            let existing = self.queryPlayerByUsername(username)
+            assert(existing == nil, message: "Player already exists")
+
+            let world = self.borrowWorld()
+            let player = world.createEntity(nil)
+
+            let entityMgr = world.borrowEntityManager()
+            entityMgr.addComponent(Type<@IdentityComponent.Component>(), to: player, withData: {
+                "username": username
+            })
+            entityMgr.addComponent(Type<@PlayerComponent.Component>(), to: player, withData: nil)
+            entityMgr.addComponent(Type<@InventoryComponent.Component>(), to: player, withData: nil)
+
+            return player.getId()
+        }
+
         /// System event callback to add the work that your system must perform every frame.
         ///
         access(all)
         fun onUpdate(_ dt: UFix64): Void {
-            // TODO: Add your system logic here
+            // NOTHING
         }
     }
 
