@@ -13,16 +13,11 @@ pub contract CapabilityComponent: IComponent {
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
         access(all) var enabled: Bool
-
-        access(all) var address: Address?
-        access(all) var capability: Type?
-        access(all) var path: CapabilityPath?
+        access(contract) let kv: {String: AnyStruct}
 
         init() {
             self.enabled = true
-            self.address = nil
-            self.capability = nil
-            self.path = nil
+            self.kv = {}
         }
 
         /// --- Data Provider methods ---
@@ -33,36 +28,34 @@ pub contract CapabilityComponent: IComponent {
             return ["address", "capability", "path"]
         }
 
-        /// Returns the value of the key
-        ///
-        access(all) fun getKeyValue(_ key: String): AnyStruct? {
-            switch key {
-            case "address":
-                return self.address
-            case "capability":
-                return self.capability
-            case "path":
-                return self.path
-            default:
-                return nil
-            }
-        }
-
         /// Sets the value of the key
         ///
         access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             for k in kv.keys {
                 switch k {
                 case "address":
-                    self.address = kv[k] as! Address? ?? panic("Invalid address")
+                    self.kv["address"] = kv[k] as! Address? ?? panic("Invalid address")
                 case "capability":
-                    self.capability = CapabilityType(kv[k] as! Type? ?? panic("Invalid type")) ?? panic("Invalid capability type")
+                    self.kv["capability"] = CapabilityType(kv[k] as! Type? ?? panic("Invalid type")) ?? panic("Invalid capability type")
                 case "path":
-                    self.path = kv[k] as! CapabilityPath? ?? panic("Invalid path")
+                    self.kv["path"] = kv[k] as! CapabilityPath? ?? panic("Invalid path")
                 default:
                     return panic("Invalid key")
                 }
             }
+        }
+
+        access(all)
+        fun getAddress(): Address {
+            return self.kv["address"] as! Address? ?? panic("Invalid address")
+        }
+        access(all)
+        fun getCapability(): Type {
+            return CapabilityType(self.kv["capability"] as! Type? ?? panic("Invalid type")) ?? panic("Invalid capability type")
+        }
+        access(all)
+        fun path(): CapabilityPath {
+            return self.kv["path"] as! CapabilityPath? ?? panic("Invalid path")
         }
     }
 

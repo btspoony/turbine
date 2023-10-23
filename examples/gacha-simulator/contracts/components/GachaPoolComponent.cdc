@@ -13,26 +13,24 @@ pub contract GachaPoolComponent: IComponent {
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
         access(all) var enabled: Bool
+        access(contract) let kv: {String: AnyStruct}
 
         /// The base probability pool {itemEntityID: probability ratio}
-        access(all)
-        var baseProbabilityPool: {UInt64: UFix64}
-        /// The boosting probability items [itemEntityID]
-        access(all)
-        var boostingProbabilityItems: [UInt64]
-        /// The counter threshold to add extra probability ratio
-        access(all)
-        var counterThreshold: UInt64
-        /// The counter probability pool [add probability ratio]
-        access(all)
-        var counterProbabilityModifier: [UFix64]
+        access(self) var baseProbabilityPool: {UInt64: UFix64}
 
         init() {
             self.enabled = true
             self.baseProbabilityPool = {}
-            self.boostingProbabilityItems = []
-            self.counterThreshold = UInt64.max
-            self.counterProbabilityModifier = []
+
+            self.kv = {}
+            /// The boosting probability items [itemEntityID]
+            let boostingProbabilityItems: [UInt64] = []
+            self.kv["boostingProbabilityItems"] = boostingProbabilityItems
+            /// The counter threshold to add extra probability ratio
+            self.kv["counterThreshold"] = UInt64.max
+            /// The counter probability pool [add probability ratio]
+            let counterProbabilityModifier: [UFix64] = []
+            self.kv["counterProbabilityModifier"] = counterProbabilityModifier
         }
 
         /// --- General Interface methods ---
@@ -53,14 +51,8 @@ pub contract GachaPoolComponent: IComponent {
         access(all) fun getKeyValue(_ key: String): AnyStruct? {
             if key == "baseProbabilityPool" {
                 return self.baseProbabilityPool
-            } else if key == "boostingProbabilityItems" {
-                return self.boostingProbabilityItems
-            } else if key == "counterThreshold" {
-                return self.counterThreshold
-            } else if key == "counterProbabilityModifier" {
-                return self.counterProbabilityModifier
             } else {
-                return nil
+                return self.kv[key]
             }
         }
 
@@ -71,17 +63,32 @@ pub contract GachaPoolComponent: IComponent {
                 self.baseProbabilityPool = kv["baseProbabilityPool"] as! {UInt64: UFix64}? ?? panic("Invalid baseProbabilityPool")
             }
             if kv["boostingProbabilityItems"] != nil {
-                self.boostingProbabilityItems = kv["boostingProbabilityItems"] as! [UInt64]? ?? panic("Invalid boostingProbabilityItems")
+                self.kv["boostingProbabilityItems"] = kv["boostingProbabilityItems"] as! [UInt64]? ?? panic("Invalid boostingProbabilityItems")
             }
             if kv["counterThreshold"] != nil {
-                self.counterThreshold = kv["counterThreshold"] as! UInt64? ?? panic("Invalid counterThreshold")
+                self.kv["counterThreshold"] = kv["counterThreshold"] as! UInt64? ?? panic("Invalid counterThreshold")
             }
             if kv["counterProbabilityModifier"] != nil {
-                self.counterProbabilityModifier = kv["counterProbabilityModifier"] as! [UFix64]? ?? panic("Invalid counterProbabilityModifier")
+                self.kv["counterProbabilityModifier"] = kv["counterProbabilityModifier"] as! [UFix64]? ?? panic("Invalid counterProbabilityModifier")
             }
         }
 
         /// --- Component Specific methods ---
+
+        access(all)
+        fun getBoostingProbabilityItems(): [UInt64] {
+            return self.kv["boostingProbabilityItems"] as! [UInt64]
+        }
+
+        access(all)
+        fun getCounterThreshold(): UInt64 {
+            return self.kv["counterThreshold"] as! UInt64
+        }
+
+        access(all)
+        fun getCounterProbabilityModifier(): [UFix64] {
+            return self.kv["counterProbabilityModifier"] as! [UFix64]
+        }
 
         /// Returns the probability ratio of the item
         ///
@@ -92,13 +99,17 @@ pub contract GachaPoolComponent: IComponent {
         /// Returns the probability ratio of the item with counter
         ///
         pub fun getProbabilityRatioWithCounter(_ itemEntityID: UInt64, _ counter: UInt64): UFix64 {
-            if self.boostingProbabilityItems.contains(itemEntityID) && counter >= self.counterThreshold {
-                let index = counter - self.counterThreshold
+            let boostingProbabilityItems = self.getBoostingProbabilityItems()
+            let threshold = self.getCounterThreshold()
+            if boostingProbabilityItems.contains(itemEntityID) && counter >= threshold {
+                let index = counter - threshold
                 var modifier: UFix64 = 0.0
-                if Int(index) >= self.counterProbabilityModifier.length {
-                    modifier = self.counterProbabilityModifier[self.counterProbabilityModifier.length - 1]
+                let modifierArr = self.getCounterProbabilityModifier()
+                let maxIndex = modifierArr.length
+                if Int(index) >= maxIndex - 1 {
+                    modifier = modifierArr[maxIndex - 1]
                 } else {
-                    modifier = self.counterProbabilityModifier[index]
+                    modifier = modifierArr[index]
                 }
                 return self.baseProbabilityPool[itemEntityID]! + modifier
             } else {
@@ -114,10 +125,19 @@ pub contract GachaPoolComponent: IComponent {
             emit ItemProbabilityModified(self.uuid, itemEntityID: itemEntityID, probabilityRatio: probabilityRatio)
         }
 
+        /// Adds items to the probability pool
+        ///
+        pub fun addItems(items: {UInt64: UFix64}): Void {
+            for itemEntityID in items.keys {
+                self.baseProbabilityPool[itemEntityID] = items[itemEntityID]
+                emit ItemProbabilityModified(self.uuid, itemEntityID: itemEntityID, probabilityRatio: items[itemEntityID]!)
+            }
+        }
+
         /// Set the boosting probability items
         ///
         pub fun setBoostingProbabilityItems(_ boostingProbabilityItems: [UInt64]): Void {
-            self.boostingProbabilityItems = boostingProbabilityItems
+            self.kv["boostingProbabilityItems"] = boostingProbabilityItems
 
             emit BoostingProbabilityItemsModified(self.uuid, boostingProbabilityItems: boostingProbabilityItems)
         }
@@ -125,8 +145,8 @@ pub contract GachaPoolComponent: IComponent {
         /// Set the counter modifier
         ///
         pub fun setCounterModifier(_ threshold: UInt64, _ mods: [UFix64]): Void {
-            self.counterThreshold = threshold
-            self.counterProbabilityModifier = mods
+            self.kv["counterThreshold"] = threshold
+            self.kv["counterProbabilityModifier"] = mods
 
             emit CounterModifierUpdated(self.uuid, threshold: threshold, probabilityModifier: mods)
         }

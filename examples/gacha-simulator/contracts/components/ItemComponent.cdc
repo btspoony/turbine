@@ -55,7 +55,7 @@ pub contract ItemComponent: IComponent {
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
         access(all) var enabled: Bool
-        access(self) let kv: {String: AnyStruct}  // key-value store
+        access(contract) let kv: {String: AnyStruct}
 
         init() {
             self.enabled = true
@@ -74,12 +74,6 @@ pub contract ItemComponent: IComponent {
                 "rarity",
                 "traits"
             ]
-        }
-
-        /// Returns the value of the key
-        ///
-        access(all) fun getKeyValue(_ key: String): AnyStruct? {
-            return self.kv[key]
         }
 
         /// Sets the value of the key

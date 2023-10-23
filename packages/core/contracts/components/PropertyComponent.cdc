@@ -11,8 +11,7 @@ pub contract PropertyComponent: IComponent {
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
         access(all) var enabled: Bool
-
-        access(self) let kv: {String: AnyStruct}  // key-value store
+        access(contract) let kv: {String: AnyStruct}
 
         init() {
             self.enabled = true
@@ -20,18 +19,6 @@ pub contract PropertyComponent: IComponent {
         }
 
         /// --- Data Provider methods ---
-
-        /// Returns the keys of the component
-        ///
-        access(all) fun getKeys(): [String] {
-            return self.kv.keys
-        }
-
-        /// Returns the value of the key
-        ///
-        access(all) fun getKeyValue(_ key: String): AnyStruct? {
-            return self.kv[key]
-        }
 
         /// Sets the value of the key
         ///
@@ -42,6 +29,7 @@ pub contract PropertyComponent: IComponent {
         }
 
         /** Private Methods */
+
         pub fun setKeyValue(_ key: String, _ value: AnyStruct) {
             self.kv[key] = value
 

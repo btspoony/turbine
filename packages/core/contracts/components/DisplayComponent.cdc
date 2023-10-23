@@ -14,18 +14,15 @@ pub contract DisplayComponent: IComponent {
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter, MetadataViews.Resolver {
         access(all) var enabled: Bool
-
-        access(all) var name: String
-        access(all) var description: String
-        access(all) var thumbnail: String
-        access(self) let extra: {String: AnyStruct}
+        access(contract) let kv: {String: AnyStruct}
 
         init() {
             self.enabled = true
-            self.name = "Untitled"
-            self.description = "No description"
-            self.thumbnail = ""
-            self.extra = {}
+            self.kv = {}
+
+            self.kv["name"] = "Untitled"
+            self.kv["description"] = "No description"
+            self.kv["thumbnail"] = ""
         }
 
         /// --- Data Provider methods ---
@@ -40,36 +37,21 @@ pub contract DisplayComponent: IComponent {
             ]
         }
 
-        /// Returns the value of the key
-        ///
-        access(all) fun getKeyValue(_ key: String): AnyStruct? {
-            switch key {
-                case "name":
-                    return self.name
-                case "description":
-                    return self.description
-                case "thumbnail":
-                    return self.thumbnail
-                default:
-                    return nil
-            }
-        }
-
         /// Sets the value of the key
         ///
         access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             for k in kv.keys {
-                let value = kv[k] as! String?
+                let value = kv[k] as! String? ?? panic("Invalid value type")
                 switch k {
                     case "name":
-                        self.name = value ?? "Untitled"
-                        emit DisplayValueSet(self.uuid, k, self.name)
+                        self.kv["name"] = value
+                        emit DisplayValueSet(self.uuid, k, value)
                     case "description":
-                        self.description = value ?? "No description"
-                        emit DisplayValueSet(self.uuid, k, self.description)
+                        self.kv["description"] = value
+                        emit DisplayValueSet(self.uuid, k, value)
                     case "thumbnail":
-                        self.thumbnail = value ?? ""
-                        emit DisplayValueSet(self.uuid, k, self.thumbnail)
+                        self.kv["thumbnail"] = value
+                        emit DisplayValueSet(self.uuid, k, value)
                     default:
                         break
                 }

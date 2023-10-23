@@ -13,19 +13,11 @@ pub contract IdentityComponent: IComponent {
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
         access(all) var enabled: Bool
-
-        access(all)
-        var username: String?
-        access(all)
-        var email: String?
-        access(all)
-        var linkedAddr: Address?
+        access(contract) let kv: {String: AnyStruct}
 
         init() {
             self.enabled = true
-            self.username = nil
-            self.email = nil
-            self.linkedAddr = nil
+            self.kv = {}
         }
 
         /// --- General Interface methods ---
@@ -38,21 +30,6 @@ pub contract IdentityComponent: IComponent {
                 "email",
                 "linkedAddr"
             ]
-        }
-
-        /// Returns the value of the key
-        ///
-        access(all) fun getKeyValue(_ key: String): AnyStruct? {
-            if key == "username" {
-                return self.username
-            }
-            if key == "email" {
-                return self.email
-            }
-            if key == "linkedAddr" {
-                return self.linkedAddr
-            }
-            return nil
         }
 
         /// Sets the value of the key
@@ -72,22 +49,37 @@ pub contract IdentityComponent: IComponent {
         /// --- Component Specific methods ---
 
         access(all)
+        fun getUsername(): String? {
+            return self.kv["username"] as! String?
+        }
+
+        access(all)
+        fun getEmail(): String? {
+            return self.kv["email"] as! String?
+        }
+
+        access(all)
+        fun getLinkedAddress(): Address? {
+            return self.kv["linkedAddr"] as! Address?
+        }
+
+        access(all)
         fun setUsername(_ username: String): Void {
-            self.username = username
+            self.kv["username"] = username
 
             emit UsernameSet(self.uuid, username: username)
         }
 
         access(all)
         fun setEmail(_ email: String): Void {
-            self.email = email
+            self.kv["email"] = email
 
             emit EmailSet(self.uuid, email: email)
         }
 
         access(all)
         fun setLinkedAddr(_ linkedAddr: Address): Void {
-            self.linkedAddr = linkedAddr
+            self.kv["linkedAddr"] = linkedAddr
 
             emit LinkedAddrSet(self.uuid, linkedAddr: linkedAddr)
         }

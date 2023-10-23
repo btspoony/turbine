@@ -9,6 +9,7 @@ pub contract PlayerComponent: IComponent {
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
         access(all) var enabled: Bool
+        access(contract) let kv: {String: AnyStruct}
 
         /// The player's gacha pool counter { gachaPoolId: gachaPoolCounter }
         access(all)
@@ -16,19 +17,15 @@ pub contract PlayerComponent: IComponent {
         /// The player's gacha pool last pulled rare { gachaPoolId: itemEntityId }
         access(all)
         var gachaPoolLastPulledRare: {UInt64: UInt64}
-        /// The player's experience
-        access(all)
-        var exp: UInt64
-        /// The player's level
-        access(all)
-        var level: UInt64
 
         init() {
             self.enabled = true
             self.gachaPoolCounter = {}
             self.gachaPoolLastPulledRare = {}
-            self.exp = 0
-            self.level = 1
+
+            self.kv = {}
+            self.kv["exp"] = 0
+            self.kv["level"] = 1
         }
 
         /// --- General Interface methods ---
@@ -51,12 +48,8 @@ pub contract PlayerComponent: IComponent {
                 return self.gachaPoolCounter
             } else if key == "gachaPoolLastPulledRare" {
                 return self.gachaPoolLastPulledRare
-            } else if key == "exp" {
-                return self.exp
-            } else if key == "level" {
-                return self.level
             } else {
-                return nil
+                return self.kv[key]
             }
         }
 
@@ -70,14 +63,28 @@ pub contract PlayerComponent: IComponent {
                 self.gachaPoolLastPulledRare = kv["gachaPoolLastPulledRare"] as! {UInt64: UInt64}? ?? panic("Invalid gachaPoolLastPulledRare")
             }
             if kv["exp"] != nil {
-                self.exp = kv["exp"] as! UInt64? ?? panic("Invalid exp")
+                self.kv["exp"] = kv["exp"] as! UInt64? ?? panic("Invalid exp")
             }
             if kv["level"] != nil {
-                self.level = kv["level"] as! UInt64? ?? panic("Invalid level")
+                self.kv["level"] = kv["level"] as! UInt64? ?? panic("Invalid level")
             }
         }
 
         /// --- Component Specific methods ---
+
+        /// Sets the player's exp
+        ///
+        access(all)
+        fun getExp(): UInt64 {
+            return self.kv["exp"] as! UInt64
+        }
+
+        /// Sets the player's level
+        ///
+        access(all)
+        fun getLevel(): UInt64 {
+            return self.kv["level"] as! UInt64
+        }
 
         /// Returns the player's gacha pool counter
         ///

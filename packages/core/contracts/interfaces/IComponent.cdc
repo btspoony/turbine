@@ -32,8 +32,10 @@ pub contract interface IComponent {
     /* --- Interfaces & Resources --- */
 
     pub resource Component: DataProvider, DataSetter {
-        access(all)
-        var enabled: Bool
+        /// Whether the component is enabled
+        access(all) var enabled: Bool
+        /// The key-value store of the component
+        access(contract) let kv: {String: AnyStruct}
 
         /// Sets the component enable status
         /// Can only be called by the CoreEntity contract
@@ -52,19 +54,19 @@ pub contract interface IComponent {
         /// Returns the keys of the component
         ///
         access(all) fun getKeys(): [String] {
-            return []
+            return self.kv.keys
         }
 
         /// Returns the value of the key
         ///
         access(all) fun getKeyValue(_ key: String): AnyStruct? {
-            return nil
+            return self.kv[key]
         }
 
         /// Sets the value of the key
         ///
         access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
-            panic("The component does not support data setting")
+            panic("You need to implement setData method in your component")
         }
     }
 

@@ -15,6 +15,7 @@ pub contract InventoryComponent: IComponent {
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
         access(all) var enabled: Bool
+        access(contract) let kv: {String: AnyStruct}
 
         /// Owned fungible items' enitity IDs
         access(all)
@@ -24,6 +25,8 @@ pub contract InventoryComponent: IComponent {
 
         init() {
             self.enabled = true
+            self.kv = {}
+
             self.fungibleItems = {}
             self.nonFungibleItems = {}
         }
