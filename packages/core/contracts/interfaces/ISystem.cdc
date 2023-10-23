@@ -123,6 +123,15 @@ pub contract interface ISystem {
         fun getEntityManager(): &EntityManager.Manager {
             return self.borrowWorld().borrowEntityManager()
         }
+
+        /// Returns the entity with the given id
+        ///
+        access(all)
+        fun borrowEntity(_ entityId: UInt64): &IEntity.Entity {
+            let world = self.borrowWorld()
+            return world.borrowEntity(uid: entityId)
+                ?? panic("Not Found, Entity:".concat(entityId.toString()))
+        }
     }
 
     /// The system factory resource
