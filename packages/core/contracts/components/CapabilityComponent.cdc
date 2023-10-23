@@ -29,13 +29,13 @@ pub contract CapabilityComponent: IComponent {
 
         /// Returns the keys of the component
         ///
-        pub fun getKeys(): [String] {
+        access(all) fun getKeys(): [String] {
             return ["address", "capability", "path"]
         }
 
         /// Returns the value of the key
         ///
-        pub fun getKeyValue(_ key: String): AnyStruct? {
+        access(all) fun getKeyValue(_ key: String): AnyStruct? {
             switch key {
             case "address":
                 return self.address
@@ -50,7 +50,7 @@ pub contract CapabilityComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        pub fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             for k in kv.keys {
                 switch k {
                 case "address":

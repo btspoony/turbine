@@ -65,7 +65,7 @@ pub contract ItemComponent: IComponent {
 
         /// Returns the keys of the component
         ///
-        pub fun getKeys(): [String] {
+        access(all) fun getKeys(): [String] {
             return [
                 "category",
                 "identity",
@@ -76,7 +76,7 @@ pub contract ItemComponent: IComponent {
 
         /// Returns the value of the key
         ///
-        pub fun getKeyValue(_ key: String): AnyStruct? {
+        access(all) fun getKeyValue(_ key: String): AnyStruct? {
             if key == "category" {
                 return self.category
             } else if key == "identity" {
@@ -92,7 +92,7 @@ pub contract ItemComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        pub fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             if kv["category"] != nil {
                 self.category = kv["category"] as! String? ?? panic("Invalid type for category")
             }

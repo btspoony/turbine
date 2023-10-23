@@ -6,11 +6,11 @@ pub contract interface IComponent {
     pub resource interface DataProvider {
         /// Returns the keys of the component
         ///
-        pub fun getKeys(): [String]
+        access(all) fun getKeys(): [String]
 
         /// Returns the value of the key
         ///
-        pub fun getKeyValue(_ key: String): AnyStruct?
+        access(all) fun getKeyValue(_ key: String): AnyStruct?
 
         /// Returns the data of the component
         ///
@@ -26,7 +26,7 @@ pub contract interface IComponent {
 
     pub resource interface DataSetter {
         /// Sets the value of the key
-        pub fun setData(_ kv: {String: AnyStruct?}): Void
+        access(all) fun setData(_ kv: {String: AnyStruct?}): Void
     }
 
     /* --- Interfaces & Resources --- */
@@ -50,19 +50,19 @@ pub contract interface IComponent {
 
         /// Returns the keys of the component
         ///
-        pub fun getKeys(): [String] {
+        access(all) fun getKeys(): [String] {
             return []
         }
 
         /// Returns the value of the key
         ///
-        pub fun getKeyValue(_ key: String): AnyStruct? {
+        access(all) fun getKeyValue(_ key: String): AnyStruct? {
             return nil
         }
 
         /// Sets the value of the key
         ///
-        pub fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             panic("The component does not support data setting")
         }
     }

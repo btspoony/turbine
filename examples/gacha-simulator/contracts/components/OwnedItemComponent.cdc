@@ -63,7 +63,7 @@ pub contract OwnedItemComponent: IComponent {
 
         /// Returns the keys of the component
         ///
-        pub fun getKeys(): [String] {
+        access(all) fun getKeys(): [String] {
             return [
                 "itemEntityID",
                 "exp",
@@ -74,7 +74,7 @@ pub contract OwnedItemComponent: IComponent {
 
         /// Returns the value of the key
         ///
-        pub fun getKeyValue(_ key: String): AnyStruct? {
+        access(all) fun getKeyValue(_ key: String): AnyStruct? {
             if key == "itemEntityID" {
                 return self.itemEntityID
             } else if key == "exp" {
@@ -90,7 +90,7 @@ pub contract OwnedItemComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        pub fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             if kv["itemEntityID"] != nil {
                 self.itemEntityID = kv["itemEntityID"] as! UInt64? ?? panic("Invalid type for itemEntityID")
             }

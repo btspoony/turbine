@@ -32,7 +32,7 @@ pub contract DisplayComponent: IComponent {
 
         /// Returns the keys of the component
         ///
-        pub fun getKeys(): [String] {
+        access(all) fun getKeys(): [String] {
             return [
                 "name",
                 "description",
@@ -42,7 +42,7 @@ pub contract DisplayComponent: IComponent {
 
         /// Returns the value of the key
         ///
-        pub fun getKeyValue(_ key: String): AnyStruct? {
+        access(all) fun getKeyValue(_ key: String): AnyStruct? {
             switch key {
                 case "name":
                     return self.name
@@ -57,7 +57,7 @@ pub contract DisplayComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        pub fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             for k in kv.keys {
                 let value = kv[k] as! String?
                 switch k {

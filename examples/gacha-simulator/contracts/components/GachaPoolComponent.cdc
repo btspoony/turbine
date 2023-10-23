@@ -39,7 +39,7 @@ pub contract GachaPoolComponent: IComponent {
 
         /// Returns the keys of the component
         ///
-        pub fun getKeys(): [String] {
+        access(all) fun getKeys(): [String] {
             return [
                 "baseProbabilityPool",
                 "boostingProbabilityItems",
@@ -50,7 +50,7 @@ pub contract GachaPoolComponent: IComponent {
 
         /// Returns the value of the key
         ///
-        pub fun getKeyValue(_ key: String): AnyStruct? {
+        access(all) fun getKeyValue(_ key: String): AnyStruct? {
             if key == "baseProbabilityPool" {
                 return self.baseProbabilityPool
             } else if key == "boostingProbabilityItems" {
@@ -66,7 +66,7 @@ pub contract GachaPoolComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        pub fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             if kv["baseProbabilityPool"] != nil {
                 self.baseProbabilityPool = kv["baseProbabilityPool"] as! {UInt64: UFix64}? ?? panic("Invalid baseProbabilityPool")
             }
