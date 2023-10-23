@@ -37,8 +37,9 @@ pub contract interface IComponent {
 
         /// Sets the component enable status
         /// Can only be called by the CoreEntity contract
+        /// TODO: add entitlement access check in Stable Cadence.
         ///
-        access(account)
+        access(all)
         fun setEnabled(_ enabled: Bool): Void {
             post {
                 self.enabled == enabled: "The component enable status is not set correctly"
