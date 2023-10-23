@@ -1,19 +1,27 @@
 import "IComponent"
 import "ISystem"
 import "IModule"
+import "GachaPoolComponent"
+import "IdentityComponent"
+import "InventoryComponent"
+import "ItemComponent"
+import "OwnedItemComponent"
+import "PlayerComponent"
+import "GachaGameSystem"
+import "GachaPoolSystem"
+import "InventorySystem"
+import "ItemSystem"
+import "PlayerRegSystem"
 
 pub contract GachaModule: IModule {
 
     pub resource Module: IModule.Installer  {
-        init() {
-
-        }
 
         /// Returns the name of the module
         ///
         access(all) view
         fun getName(): String {
-            return "GachaWorldModule"
+            return "GachaSimulatorGame"
         }
 
         /// Loads the system factories that are provided by the module.
@@ -21,7 +29,11 @@ pub contract GachaModule: IModule {
         access(all)
         fun loadSystemFactories(): @[AnyResource{ISystem.SystemFactory}] {
             let ret: @[AnyResource{ISystem.SystemFactory}] <- []
-            // TODO: add system factories
+            ret.append(<- GachaGameSystem.createFactory())
+            ret.append(<- GachaPoolSystem.createFactory())
+            ret.append(<- InventorySystem.createFactory())
+            ret.append(<- ItemSystem.createFactory())
+            ret.append(<- PlayerRegSystem.createFactory())
             return <- ret
         }
 
@@ -30,7 +42,12 @@ pub contract GachaModule: IModule {
         access(all)
         fun loadComponentFactories(): @[AnyResource{IComponent.ComponentFactory}] {
             let ret: @[AnyResource{IComponent.ComponentFactory}] <- []
-            // TODO: add component factories
+            ret.append(<- GachaPoolComponent.createFactory())
+            ret.append(<- IdentityComponent.createFactory())
+            ret.append(<- InventoryComponent.createFactory())
+            ret.append(<- ItemComponent.createFactory())
+            ret.append(<- OwnedItemComponent.createFactory())
+            ret.append(<- PlayerComponent.createFactory())
             return <- ret
         }
     }
