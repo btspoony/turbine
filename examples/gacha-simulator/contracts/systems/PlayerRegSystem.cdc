@@ -8,6 +8,9 @@ import "InventoryComponent"
 
 pub contract PlayerRegSystem: ISystem {
 
+    // Events
+    pub event PlayerRegistered(_ playerId: UInt64, username: String)
+
     pub resource System: ISystem.CoreLifecycle, Context.Consumer {
         access(contract)
         let worldCap: Capability<&AnyResource{Context.Provider, IWorld.WorldState}>
@@ -57,6 +60,8 @@ pub contract PlayerRegSystem: ISystem {
             })
             entityMgr.addComponent(Type<@PlayerComponent.Component>(), to: player, withData: nil)
             entityMgr.addComponent(Type<@InventoryComponent.Component>(), to: player, withData: nil)
+
+            emit PlayerRegistered(player.getId(), username: username)
 
             return player.getId()
         }
