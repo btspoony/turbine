@@ -6,8 +6,8 @@ pub contract InventoryComponent: IComponent {
     /// Events
     pub event InventoryReseted(_ uuid: UInt64)
 
-    pub event FungibleItemAdded(_ uuid: UInt64, itemID: UInt64, amount: UInt64)
-    pub event FungibleItemRemoved(_ uuid: UInt64, itemID: UInt64, amount: UInt64)
+    pub event FungibleItemAdded(_ uuid: UInt64, itemID: UInt64, amount: UFix64)
+    pub event FungibleItemRemoved(_ uuid: UInt64, itemID: UInt64, amount: UFix64)
     pub event NonFungibleItemAdded(_ uuid: UInt64, itemID: UInt64)
     pub event NonFungibleItemRemoved(_ uuid: UInt64, itemID: UInt64)
 
@@ -17,9 +17,12 @@ pub contract InventoryComponent: IComponent {
         access(all) var enabled: Bool
         access(contract) let kv: {String: AnyStruct}
 
-        /// Owned fungible items' enitity IDs
+        /// fungible items' enitity IDs: amount
+        /// Key is EntityId with ItemComponent
         access(all)
-        var fungibleItems: {UInt64: UInt64}
+        var fungibleItems: {UInt64: UFix64}
+        /// Owned non-fungible items' enitity IDs
+        /// Key is EntityId with OwnedItemComponent
         access(all)
         var nonFungibleItems: {UInt64: Bool}
 
@@ -61,7 +64,7 @@ pub contract InventoryComponent: IComponent {
             for k in kv.keys {
                 switch k {
                     case "fungibleItems":
-                        self.fungibleItems = kv["fungibleItems"] as! {UInt64: UInt64}?
+                        self.fungibleItems = kv["fungibleItems"] as! {UInt64: UFix64}?
                             ?? panic("Failed to set fungibleItems data")
                     case "nonFungibleItems":
                         self.nonFungibleItems = kv["nonFungibleItems"] as! {UInt64: Bool}?
@@ -78,7 +81,7 @@ pub contract InventoryComponent: IComponent {
 
         /// Adds a fungible item to the inventory
         ///
-        pub fun addFungibleItem(_ itemID: UInt64, _ amount: UInt64): Void {
+        pub fun addFungibleItem(_ itemID: UInt64, _ amount: UFix64): Void {
             if self.fungibleItems[itemID] == nil {
                 self.fungibleItems[itemID] = amount
             } else {
@@ -90,7 +93,7 @@ pub contract InventoryComponent: IComponent {
 
         /// Removes a fungible item from the inventory
         ///
-        pub fun removeFungibleItem(_ itemID: UInt64, _ amount: UInt64): Void {
+        pub fun removeFungibleItem(_ itemID: UInt64, _ amount: UFix64): Void {
             if self.fungibleItems[itemID] == nil {
                 panic("Item does not exist in inventory")
             } else {
@@ -122,9 +125,9 @@ pub contract InventoryComponent: IComponent {
 
         /// Returns the amount of a fungible item in the inventory
         ///
-        pub fun getFungibleItemAmount(_ itemID: UInt64): UInt64 {
+        pub fun getFungibleItemAmount(_ itemID: UInt64): UFix64 {
             if self.fungibleItems[itemID] == nil {
-                return 0
+                return 0.0
             } else {
                 return self.fungibleItems[itemID]!
             }

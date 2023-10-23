@@ -8,8 +8,10 @@ import "OwnedItemComponent"
 pub contract InventorySystem: ISystem {
 
     // Events
-
-    pub event ItemAddedToInventory(_ playerId: UInt64, _ itemId: UInt64, _ ownedItemId: UInt64)
+    pub event FungibleItemAddedToInventory(_ playerId: UInt64, _ itemId: UInt64, _ amount: UFix64)
+    pub event NonFungibleItemAddedToInventory(_ playerId: UInt64, _ itemId: UInt64, _ ownedItemId: UInt64)
+    pub event FungibleItemRemovedFromInventory(_ playerId: UInt64, _ itemId: UInt64, _ amount: UFix64)
+    pub event NonFungibleItemRemovedFromInventory(_ playerId: UInt64, _ itemId: UInt64, _ ownedItemId: UInt64)
 
     pub resource System: ISystem.CoreLifecycle, Context.Consumer {
         access(contract)
@@ -25,26 +27,63 @@ pub contract InventorySystem: ISystem {
         }
 
         access(all)
-        fun addItemToInventory(_ playerId: UInt64, _ itemEntityId: UInt64) {
+        fun addItemToInventory(_ playerId: UInt64, _ itemEntityId: UInt64, amount: UFix64?) {
             let playerInventory = self.borrowInventory(playerId)
             let item = self.borrowItem(itemEntityId)
 
-            // create owned item entity
-            let world = self.borrowWorld()
-            let entity = world.createEntity(nil)
-
-            let entityMgr = world.borrowEntityManager()
-            entityMgr.addComponent(Type<@OwnedItemComponent.Component>(), to: entity, withData: nil)
-            // TODO update ownedItem data
-
             let itemInfo = item.toStruct()
             if itemInfo.fungible {
-                playerInventory.addFungibleItem(itemEntityId, 1)
+                let addedAmount = amount ?? 1.0
+                playerInventory.addFungibleItem(itemEntityId, addedAmount)
+                emit FungibleItemAddedToInventory(playerId, itemEntityId, addedAmount)
             } else {
-                playerInventory.addNonFungibleItem(itemEntityId)
-            }
+                // create owned item entity
+                let world = self.borrowWorld()
+                let owned = world.createEntity(nil)
+                // add owned item component
+                let entityMgr = world.borrowEntityManager()
+                entityMgr.addComponent(
+                    Type<@OwnedItemComponent.Component>(),
+                    to: owned,
+                    withData: {
+                        "itemEntityID": itemEntityId
+                    }
+                )
 
-            emit ItemAddedToInventory(playerId, itemEntityId, entity.getId())
+                playerInventory.addNonFungibleItem(owned.getId())
+                emit NonFungibleItemAddedToInventory(playerId, itemEntityId, owned.getId())
+            }
+        }
+
+        access(all)
+        fun removeFungibleItem(_ playerId: UInt64, _ itemEntityId: UInt64, amount: UFix64) {
+            let playerInventory = self.borrowInventory(playerId)
+            let item = self.borrowItem(itemEntityId)
+
+            let itemInfo = item.toStruct()
+            assert(itemInfo.fungible, message: "Item is not fungible")
+
+            let currentAmt = playerInventory.getFungibleItemAmount(itemEntityId)
+            assert(currentAmt >= amount, message: "Not enough items to remove")
+
+            playerInventory.removeFungibleItem(itemEntityId, amount)
+
+            emit FungibleItemRemovedFromInventory(playerId, itemEntityId, amount)
+        }
+
+        access(all)
+        fun removeNonFungibleItem(_ playerId: UInt64, _ ownedItemId: UInt64) {
+            let playerInventory = self.borrowInventory(playerId)
+            let ownedItem = self.borrowOwnedItem(ownedItemId)
+
+            let info = ownedItem.toStruct()
+            let item = self.borrowItem(info.itemEntityID)
+            assert(item.toStruct().fungible == false, message: "Item is not non-fungible")
+            assert(playerInventory.hasNonFungibleItem(ownedItemId), message: "Player does not own item")
+
+            playerInventory.removeNonFungibleItem(ownedItemId)
+
+            emit NonFungibleItemRemovedFromInventory(playerId, info.itemEntityID, ownedItemId)
         }
 
         /// System event callback to add the work that your system must perform every frame.
@@ -68,6 +107,14 @@ pub contract InventorySystem: ISystem {
             let comp = itemEntity.borrowComponent(Type<@ItemComponent.Component>())
                 ?? panic("Item does not exist")
             return comp as! &ItemComponent.Component
+        }
+
+        access(self)
+        fun borrowOwnedItem(_ itemId: UInt64): &OwnedItemComponent.Component {
+            let itemEntity = self.borrowEntity(itemId)
+            let comp = itemEntity.borrowComponent(Type<@OwnedItemComponent.Component>())
+                ?? panic("Item does not exist")
+            return comp as! &OwnedItemComponent.Component
         }
     }
 
