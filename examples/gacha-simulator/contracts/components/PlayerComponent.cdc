@@ -64,16 +64,16 @@ pub contract PlayerComponent: IComponent {
         ///
         pub fun setData(_ kv: {String: AnyStruct?}): Void {
             if kv["gachaPoolCounter"] != nil {
-                self.gachaPoolCounter = kv["gachaPoolCounter"] as! {UInt64: UInt64}
+                self.gachaPoolCounter = kv["gachaPoolCounter"] as! {UInt64: UInt64}? ?? panic("Invalid gachaPoolCounter")
             }
             if kv["gachaPoolLastPulledRare"] != nil {
-                self.gachaPoolLastPulledRare = kv["gachaPoolLastPulledRare"] as! {UInt64: UInt64}
+                self.gachaPoolLastPulledRare = kv["gachaPoolLastPulledRare"] as! {UInt64: UInt64}? ?? panic("Invalid gachaPoolLastPulledRare")
             }
             if kv["exp"] != nil {
-                self.exp = kv["exp"] as! UInt64
+                self.exp = kv["exp"] as! UInt64? ?? panic("Invalid exp")
             }
             if kv["level"] != nil {
-                self.level = kv["level"] as! UInt64
+                self.level = kv["level"] as! UInt64? ?? panic("Invalid level")
             }
         }
 

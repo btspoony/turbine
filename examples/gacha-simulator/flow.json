@@ -180,6 +180,12 @@
         "emulator": "01cf0e2f2f715450"
       }
     },
+    "IdentityComponent": {
+      "source": "./contracts/components/IdentityComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
     "GachaPoolSystem": {
       "source": "./contracts/systems/GachaPoolSystem.cdc",
       "aliases": {
@@ -194,6 +200,12 @@
     },
     "ItemSystem": {
       "source": "./contracts/systems/ItemSystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "PlayerRegSystem": {
+      "source": "./contracts/systems/PlayerRegSystem.cdc",
       "aliases": {
         "emulator": "01cf0e2f2f715450"
       }
@@ -230,6 +242,8 @@
         "ItemSystem",
         "OwnedItemComponent",
         "PlayerComponent",
+        "IdentityComponent",
+        "PlayerRegSystem",
         "GachaModule",
         "GachaPlatform",
         "GachaGame"

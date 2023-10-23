@@ -60,16 +60,16 @@ pub contract ItemComponent: IComponent {
         ///
         pub fun setData(_ kv: {String: AnyStruct?}): Void {
             if kv["category"] != nil {
-                self.category = kv["category"] as! String
+                self.category = kv["category"] as! String? ?? panic("Invalid type for category")
             }
             if kv["identity"] != nil {
-                self.identity = kv["identity"] as! String
+                self.identity = kv["identity"] as! String? ?? panic("Invalid type for identity")
             }
             if kv["rarity"] != nil {
-                self.rarity = kv["rarity"] as! UInt8
+                self.rarity = kv["rarity"] as! UInt8? ?? panic("Invalid type for rarity")
             }
             if kv["traits"] != nil {
-                self.traits = kv["traits"] as! {String: UInt8}
+                self.traits = kv["traits"] as! {String: UInt8}? ?? panic("Invalid type for traits")
             }
         }
     }

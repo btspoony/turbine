@@ -62,16 +62,16 @@ pub contract OwnedItemComponent: IComponent {
         ///
         pub fun setData(_ kv: {String: AnyStruct?}): Void {
             if kv["itemEntityID"] != nil {
-                self.itemEntityID = kv["itemEntityID"] as! UInt64
+                self.itemEntityID = kv["itemEntityID"] as! UInt64? ?? panic("Invalid type for itemEntityID")
             }
             if kv["exp"] != nil {
-                self.exp = kv["exp"] as! UInt64
+                self.exp = kv["exp"] as! UInt64? ?? panic("Invalid type for exp")
             }
             if kv["level"] != nil {
-                self.level = kv["level"] as! UInt64
+                self.level = kv["level"] as! UInt64? ?? panic("Invalid type for level")
             }
             if kv["quality"] != nil {
-                self.quality = kv["quality"] as! UInt64
+                self.quality = kv["quality"] as! UInt64? ?? panic("Invalid type for quality")
             }
         }
     }

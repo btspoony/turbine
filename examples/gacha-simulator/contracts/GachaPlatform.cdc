@@ -1,3 +1,4 @@
+// import "CoreEntity"
 import "CoreWorld"
 
 pub contract GachaPlatform {
@@ -7,6 +8,7 @@ pub contract GachaPlatform {
     pub let GachaPlatformPublicPath: PublicPath
 
     // Events
+    pub event WorldManagerDelegated(address: Address)
 
     pub event WorldPublished(address: Address, name: String, at: UFix64)
     pub event WorldUnpublished(address: Address, name: String, at: UFix64)
@@ -34,23 +36,36 @@ pub contract GachaPlatform {
     pub resource interface PlatformPublic {
         /// Public a world to Dashboard
         access(all)
-        fun publishWorld(_ worldMgr: &CoreWorld.WorldManager, name: String)
+        fun publishWorld(_ worldMgrCap: Capability<&CoreWorld.WorldManager>, name: String)
     }
 
     /// The platform resource
     ///
     pub resource Platform: PlatformPublic {
         pub let listedWorlds: [ListedWorld]
+        pub let delegatedManagers: {Address: Capability<&CoreWorld.WorldManager>}
 
         init() {
             self.listedWorlds = []
+            self.delegatedManagers = {}
         }
 
         /// Public a world to Dashboard
         access(all)
-        fun publishWorld(_ worldMgr: &CoreWorld.WorldManager, name: String) {
-            let host = worldMgr.owner?.address ?? panic("WorldManager is without owner")
+        fun publishWorld(_ worldMgrCap: Capability<&CoreWorld.WorldManager>, name: String) {
+            pre {
+                worldMgrCap.check(): "WorldManager is not published"
+            }
+            let host = worldMgrCap.address
+            if self.delegatedManagers[host] == nil {
+                self.delegatedManagers[host] = worldMgrCap
+
+                emit WorldManagerDelegated(address: host)
+            }
+
+            let worldMgr = worldMgrCap.borrow() ?? panic("WorldManager is not published")
             worldMgr.borrowWorld(name) ?? panic("World not found")
+
             let listed = ListedWorld(host, name: name, at: getCurrentBlock().timestamp)
             self.listedWorlds.append(listed)
 
@@ -70,6 +85,14 @@ pub contract GachaPlatform {
                 i = i + 1
             }
             emit WorldUnpublished(address: host, name: name, at: getCurrentBlock().timestamp)
+        }
+
+        access(all)
+        fun borrowWorldManager(host: Address): &CoreWorld.WorldManager? {
+            if let mgr = self.delegatedManagers[host] {
+                return mgr.borrow()
+            }
+            return nil
         }
     }
 

@@ -64,16 +64,16 @@ pub contract GachaPoolComponent: IComponent {
         ///
         pub fun setData(_ kv: {String: AnyStruct?}): Void {
             if kv["baseProbabilityPool"] != nil {
-                self.baseProbabilityPool = kv["baseProbabilityPool"] as! {UInt64: UFix64}
+                self.baseProbabilityPool = kv["baseProbabilityPool"] as! {UInt64: UFix64}? ?? panic("Invalid baseProbabilityPool")
             }
             if kv["boostingProbabilityItems"] != nil {
-                self.boostingProbabilityItems = kv["boostingProbabilityItems"] as! [UInt64]
+                self.boostingProbabilityItems = kv["boostingProbabilityItems"] as! [UInt64]? ?? panic("Invalid boostingProbabilityItems")
             }
             if kv["counterThreshold"] != nil {
-                self.counterThreshold = kv["counterThreshold"] as! UInt64
+                self.counterThreshold = kv["counterThreshold"] as! UInt64? ?? panic("Invalid counterThreshold")
             }
             if kv["counterProbabilityModifier"] != nil {
-                self.counterProbabilityModifier = kv["counterProbabilityModifier"] as! [UFix64]
+                self.counterProbabilityModifier = kv["counterProbabilityModifier"] as! [UFix64]? ?? panic("Invalid counterProbabilityModifier")
             }
         }
 
