@@ -1,11 +1,11 @@
 import "Context"
 import "IWorld"
 import "ISystem"
-import "MetadataViews"
-import "DisplayComponent"
 import "ItemComponent"
+import "GachaPoolComponent"
+import "InventoryComponent"
 
-pub contract ItemSystem: ISystem {
+pub contract GachaGameSystem: ISystem {
 
     pub resource System: ISystem.CoreLifecycle, Context.Consumer {
         access(contract)
@@ -20,41 +20,16 @@ pub contract ItemSystem: ISystem {
             self.enabled = true
         }
 
-        access(all)
-        fun addItemEntity(itemInfo: ItemComponent.ItemInfo, display: MetadataViews.Display?): UInt64 {
-            let world = self.borrowWorld()
-            let entityMgr = world.borrowEntityManager()
+        // access(all)
+        // fun createNewGachaPoolEntity(): UInt64 {
 
-            // create new entity to the world
-            let newEntity = world.createEntity(nil)
-            // add item component
-            entityMgr.addComponent(
-                Type<@ItemComponent.Component>(),
-                to: newEntity,
-                withData: itemInfo.toDictionary()
-            )
-            if display == nil {
-                return newEntity.getId()
-            }
-            // add display component
-            let displayData: {String: AnyStruct} = {
-                "name": display!.name,
-                "description": display!.description,
-                "thumbnail": display!.thumbnail.uri()
-            }
-            entityMgr.addComponent(
-                Type<@DisplayComponent.Component>(),
-                to: newEntity,
-                withData: displayData
-            )
-            return newEntity.getId()
-        }
+        // }
 
         /// System event callback to add the work that your system must perform every frame.
         ///
         access(all)
         fun onUpdate(_ dt: UFix64): Void {
-            // NOTHING
+            // TODO: Add your system logic here
         }
     }
 

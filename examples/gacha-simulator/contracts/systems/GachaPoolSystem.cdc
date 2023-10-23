@@ -1,6 +1,9 @@
 import "Context"
 import "IWorld"
 import "ISystem"
+import "ItemComponent"
+import "GachaPoolComponent"
+import "InventoryComponent"
 
 pub contract GachaPoolSystem: ISystem {
 
@@ -16,6 +19,11 @@ pub contract GachaPoolSystem: ISystem {
             self.worldCap = world
             self.enabled = true
         }
+
+        // access(all)
+        // fun createNewGachaPoolEntity(): UInt64 {
+
+        // }
 
         /// System event callback to add the work that your system must perform every frame.
         ///

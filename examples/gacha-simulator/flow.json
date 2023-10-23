@@ -209,6 +209,12 @@
       "aliases": {
         "emulator": "01cf0e2f2f715450"
       }
+    },
+    "GachaGameSystem": {
+      "source": "./contracts/systems/GachaGameSystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
     }
   },
   "networks": {
@@ -244,6 +250,7 @@
         "PlayerComponent",
         "IdentityComponent",
         "PlayerRegSystem",
+        "GachaGameSystem",
         "GachaModule",
         "GachaPlatform",
         "GachaGame"
