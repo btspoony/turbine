@@ -5,6 +5,10 @@ pub contract GachaPoolComponent: IComponent {
 
     /// Events
 
+    pub event ItemProbabilityModified(_ uuid: UInt64, itemEntityID: UInt64, probabilityRatio: UFix64)
+    pub event BoostingProbabilityItemsModified(_ uuid: UInt64, boostingProbabilityItems: [UInt64])
+    pub event CounterModifierUpdated(_ uuid: UInt64, threshold: UInt64, probabilityModifier: [UFix64])
+
     /// The component implementation
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.ComponentState {
@@ -100,6 +104,31 @@ pub contract GachaPoolComponent: IComponent {
             } else {
                 return self.baseProbabilityPool[itemEntityID]!
             }
+        }
+
+        /// Adds an item to the probability pool
+        ///
+        pub fun addItem(_ itemEntityID: UInt64, _ probabilityRatio: UFix64): Void {
+            self.baseProbabilityPool[itemEntityID] = probabilityRatio
+
+            emit ItemProbabilityModified(self.uuid, itemEntityID: itemEntityID, probabilityRatio: probabilityRatio)
+        }
+
+        /// Set the boosting probability items
+        ///
+        pub fun setBoostingProbabilityItems(_ boostingProbabilityItems: [UInt64]): Void {
+            self.boostingProbabilityItems = boostingProbabilityItems
+
+            emit BoostingProbabilityItemsModified(self.uuid, boostingProbabilityItems: boostingProbabilityItems)
+        }
+
+        /// Set the counter modifier
+        ///
+        pub fun setCounterModifier(_ threshold: UInt64, _ mods: [UFix64]): Void {
+            self.counterThreshold = threshold
+            self.counterProbabilityModifier = mods
+
+            emit CounterModifierUpdated(self.uuid, threshold: threshold, probabilityModifier: mods)
         }
     }
 

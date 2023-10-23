@@ -7,6 +7,9 @@ import "ItemComponent"
 
 pub contract ItemSystem: ISystem {
 
+    // Events
+    pub event ItemAdded(_ entityId: UInt64)
+
     pub resource System: ISystem.CoreLifecycle, Context.Consumer {
         access(contract)
         let worldCap: Capability<&AnyResource{Context.Provider, IWorld.WorldState}>
@@ -27,6 +30,9 @@ pub contract ItemSystem: ISystem {
 
             // create new entity to the world
             let newEntity = world.createEntity(nil)
+
+            emit ItemAdded(newEntity.getId())
+
             // add item component
             entityMgr.addComponent(
                 Type<@ItemComponent.Component>(),

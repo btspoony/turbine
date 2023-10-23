@@ -7,6 +7,12 @@ import "InventoryComponent"
 
 pub contract GachaPoolSystem: ISystem {
 
+    // Events
+    pub event GachaPoolAdded(_ entityId: UInt64)
+    pub event GachaPoolItemAdded(_ entityId: UInt64, _ itemEntityId: UInt64, probability: UFix64)
+    pub event GachaPoolBoostingItemsSet(_ entityId: UInt64, _ itemEntities: [UInt64])
+    pub event GachaPoolCounterSet(_ entityId: UInt64, _ threshold: UInt64, _ probabilityMods: [UFix64])
+
     pub resource System: ISystem.CoreLifecycle, Context.Consumer {
         access(contract)
         let worldCap: Capability<&AnyResource{Context.Provider, IWorld.WorldState}>
@@ -20,16 +26,63 @@ pub contract GachaPoolSystem: ISystem {
             self.enabled = true
         }
 
-        // access(all)
-        // fun createNewGachaPoolEntity(): UInt64 {
+        access(all)
+        fun createNewGachaPoolEntity(): UInt64 {
+            let world = self.borrowWorld()
+            let entity = world.createEntity(nil)
 
-        // }
+            emit GachaPoolAdded(entity.getId())
+
+            let entityMgr = world.borrowEntityManager()
+            entityMgr.addComponent(
+                Type<@GachaPoolComponent.Component>(),
+                to: entity,
+                withData: nil
+            )
+            return entity.getId()
+        }
+
+        access(all)
+        fun addItemToPool(_ poolEntityId: UInt64, itemEntityId: UInt64, probability: UFix64) {
+            let comp = self.borrowGachaPool(poolEntityId)
+            comp.addItem(itemEntityId, probability)
+
+            emit GachaPoolItemAdded(poolEntityId, itemEntityId, probability: probability)
+        }
+
+        access(all)
+        fun setBoostingProbabilityItems(_ poolEntityId: UInt64, itemEntities: [UInt64]) {
+            let comp = self.borrowGachaPool(poolEntityId)
+            comp.setBoostingProbabilityItems(itemEntities)
+
+            emit GachaPoolBoostingItemsSet(poolEntityId, itemEntities)
+        }
+
+        access(all)
+        fun setGachaCounter(_ poolEntityId: UInt64, threshold: UInt64, probabilityMods: [UFix64]) {
+            let comp = self.borrowGachaPool(poolEntityId)
+            comp.setCounterModifier(threshold, probabilityMods)
+
+            emit GachaPoolCounterSet(poolEntityId, threshold, probabilityMods)
+        }
 
         /// System event callback to add the work that your system must perform every frame.
         ///
         access(all)
         fun onUpdate(_ dt: UFix64): Void {
-            // TODO: Add your system logic here
+            // NOTHING
+        }
+
+        /// Borrow the gacha pool component
+        ///
+        access(self)
+        fun borrowGachaPool(_ poolEntityId: UInt64): &GachaPoolComponent.Component {
+            let world = self.borrowWorld()
+            let poolEntity = world.borrowEntity(uid: poolEntityId)
+                ?? panic("Pool entity not found")
+            let comp = poolEntity.borrowComponent(Type<@GachaPoolComponent.Component>())
+                ?? panic("Pool component not found in Entity:".concat(poolEntityId.toString()))
+            return comp as! &GachaPoolComponent.Component
         }
     }
 
