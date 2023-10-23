@@ -7,9 +7,18 @@ pub contract ItemComponent: IComponent {
 
     /// Structs and Resources
 
+    pub enum ItemCategory: UInt8 {
+        pub case Character
+        pub case Weapon
+        pub case Consumable
+        pub case QuestItem
+    }
+
     pub struct ItemInfo {
         access(all)
-        let category: String
+        let category: ItemCategory
+        access(all)
+        let fungible: Bool
         access(all)
         let identity: String
         access(all)
@@ -18,12 +27,14 @@ pub contract ItemComponent: IComponent {
         let traits: {String: UInt8}
 
         init(
-            _ category: String,
+            _ category: ItemCategory,
+            _ fungible: Bool,
             _ identity: String,
             _ rarity: UInt8,
             _ traits: {String: UInt8}
         ) {
             self.category = category
+            self.fungible = fungible
             self.identity = identity
             self.rarity = rarity
             self.traits = traits
@@ -32,6 +43,7 @@ pub contract ItemComponent: IComponent {
         pub fun toDictionary(): {String: AnyStruct?} {
             return {
                 "category": self.category,
+                "fungible": self.fungible,
                 "identity": self.identity,
                 "rarity": self.rarity,
                 "traits": self.traits
@@ -43,22 +55,11 @@ pub contract ItemComponent: IComponent {
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
         access(all) var enabled: Bool
-
-        access(all)
-        var category: String
-        access(all)
-        var identity: String
-        access(all)
-        var rarity: UInt8
-        access(all)
-        var traits: {String: UInt8}
+        access(self) let kv: {String: AnyStruct}  // key-value store
 
         init() {
             self.enabled = true
-            self.category = ""
-            self.identity = ""
-            self.rarity = 0
-            self.traits = {}
+            self.kv = {}
         }
 
         /// --- General Interface methods ---
@@ -68,6 +69,7 @@ pub contract ItemComponent: IComponent {
         access(all) fun getKeys(): [String] {
             return [
                 "category",
+                "fungible",
                 "identity",
                 "rarity",
                 "traits"
@@ -77,53 +79,48 @@ pub contract ItemComponent: IComponent {
         /// Returns the value of the key
         ///
         access(all) fun getKeyValue(_ key: String): AnyStruct? {
-            if key == "category" {
-                return self.category
-            } else if key == "identity" {
-                return self.identity
-            } else if key == "rarity" {
-                return self.rarity
-            } else if key == "traits" {
-                return self.traits
-            } else {
-                return nil
-            }
+            return self.kv[key]
         }
 
         /// Sets the value of the key
         ///
         access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             if kv["category"] != nil {
-                self.category = kv["category"] as! String? ?? panic("Invalid type for category")
+                self.kv["category"] = kv["category"] as! ItemCategory? ?? panic("Invalid type for category")
+            }
+            if kv["fungible"] != nil {
+                self.kv["fungible"] = kv["fungible"] as! Bool? ?? panic("Invalid type for fungible")
             }
             if kv["identity"] != nil {
-                self.identity = kv["identity"] as! String? ?? panic("Invalid type for identity")
+                self.kv["identity"] = kv["identity"] as! String? ?? panic("Invalid type for identity")
             }
             if kv["rarity"] != nil {
-                self.rarity = kv["rarity"] as! UInt8? ?? panic("Invalid type for rarity")
+                self.kv["rarity"] = kv["rarity"] as! UInt8? ?? panic("Invalid type for rarity")
             }
             if kv["traits"] != nil {
-                self.traits = kv["traits"] as! {String: UInt8}? ?? panic("Invalid type for traits")
+                self.kv["traits"] = kv["traits"] as! {String: UInt8}? ?? panic("Invalid type for traits")
             }
         }
 
         /// Sets the state of the component
         ///
         pub fun fromStruct(_ info: ItemInfo): Void {
-            self.category = info.category
-            self.identity = info.identity
-            self.rarity = info.rarity
-            self.traits = info.traits
+            self.kv["category"]  = info.category
+            self.kv["fungible"]  = info.fungible
+            self.kv["identity"]  = info.identity
+            self.kv["rarity"]    = info.rarity
+            self.kv["traits"]    = info.traits
         }
 
         /// Returns the state of the component
         ///
         pub fun toStruct(): ItemInfo {
             return ItemInfo(
-                self.category,
-                self.identity,
-                self.rarity,
-                self.traits
+                self.getKeyValue("category") as! ItemCategory? ?? panic("Invalid type for category"),
+                self.getKeyValue("fungible") as! Bool? ?? panic("Invalid type for fungible"),
+                self.getKeyValue("identity") as! String? ?? panic("Invalid type for identity"),
+                self.getKeyValue("rarity") as! UInt8? ?? panic("Invalid type for rarity"),
+                self.getKeyValue("traits") as! {String: UInt8}? ?? panic("Invalid type for traits")
             )
         }
     }
