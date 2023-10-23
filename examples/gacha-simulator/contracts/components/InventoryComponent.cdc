@@ -13,8 +13,9 @@ pub contract InventoryComponent: IComponent {
 
     /// The component implementation
     ///
-    pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.ComponentState {
-        access(contract) var enabled: Bool
+    pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
+        access(all) var enabled: Bool
+
         /// Owned fungible items' enitity IDs
         access(all)
         var fungibleItems: {UInt64: UInt64}

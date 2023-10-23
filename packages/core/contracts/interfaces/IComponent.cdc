@@ -29,32 +29,17 @@ pub contract interface IComponent {
         pub fun setData(_ kv: {String: AnyStruct?}): Void
     }
 
-    /// The private interface for an Enableable Component
-    ///
-    pub resource interface ComponentState {
-        /// Returns if the component is enabled
-        ///
-        pub fun isEnabled(): Bool
-
-        /// Sets the component enable status
-        ///
-        pub fun setEnabled(_ enabled: Bool): Void
-    }
-
     /* --- Interfaces & Resources --- */
 
-    pub resource Component: DataProvider, DataSetter, ComponentState {
-        access(contract) var enabled: Bool
-
-        /// Returns if the component is enabled
-        ///
-        pub fun isEnabled(): Bool {
-            return self.enabled
-        }
+    pub resource Component: DataProvider, DataSetter {
+        access(all)
+        var enabled: Bool
 
         /// Sets the component enable status
+        /// Can only be called by the CoreEntity contract
         ///
-        pub fun setEnabled(_ enabled: Bool): Void {
+        access(account)
+        fun setEnabled(_ enabled: Bool): Void {
             post {
                 self.enabled == enabled: "The component enable status is not set correctly"
             }

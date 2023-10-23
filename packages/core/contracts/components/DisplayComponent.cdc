@@ -12,8 +12,9 @@ pub contract DisplayComponent: IComponent {
 
     /// The component implementation
     ///
-    pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.ComponentState, MetadataViews.Resolver {
-        access(contract) var enabled: Bool
+    pub resource Component: IComponent.DataProvider, IComponent.DataSetter, MetadataViews.Resolver {
+        access(all) var enabled: Bool
+
         access(all) var name: String
         access(all) var description: String
         access(all) var thumbnail: String

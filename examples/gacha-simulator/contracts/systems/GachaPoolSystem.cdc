@@ -1,6 +1,7 @@
 import "Context"
 import "IWorld"
 import "ISystem"
+import "IEntity"
 import "ItemComponent"
 import "GachaPoolComponent"
 import "InventoryComponent"
@@ -72,8 +73,8 @@ pub contract GachaPoolSystem: ISystem {
 
         access(all)
         fun setGachaPoolEnabled(_ poolEntityId: UInt64, enabled: Bool) {
-            let comp = self.borrowGachaPool(poolEntityId)
-            comp.setEnabled(enabled)
+            let entity = self.borrowGachaPoolEntity(poolEntityId)
+            entity.setComponentEnabled(Type<@GachaPoolComponent.Component>(), enabled)
         }
 
         /// System event callback to add the work that your system must perform every frame.
@@ -87,12 +88,20 @@ pub contract GachaPoolSystem: ISystem {
         ///
         access(self)
         fun borrowGachaPool(_ poolEntityId: UInt64): &GachaPoolComponent.Component {
-            let world = self.borrowWorld()
-            let poolEntity = world.borrowEntity(uid: poolEntityId)
-                ?? panic("Pool entity not found")
+            let poolEntity = self.borrowGachaPoolEntity(poolEntityId)
             let comp = poolEntity.borrowComponent(Type<@GachaPoolComponent.Component>())
                 ?? panic("Pool component not found in Entity:".concat(poolEntityId.toString()))
             return comp as! &GachaPoolComponent.Component
+        }
+
+        /// Borrow the gacha pool entity
+        ///
+        access(self)
+        fun borrowGachaPoolEntity(_ poolEntityId: UInt64): &IEntity.Entity {
+            let world = self.borrowWorld()
+            let poolEntity = world.borrowEntity(uid: poolEntityId)
+                ?? panic("Pool entity not found")
+            return poolEntity
         }
     }
 

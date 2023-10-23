@@ -7,8 +7,8 @@ pub contract PlayerComponent: IComponent {
 
     /// The component implementation
     ///
-    pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.ComponentState {
-        access(contract) var enabled: Bool
+    pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
+        access(all) var enabled: Bool
 
         /// The player's gacha pool counter { gachaPoolId: gachaPoolCounter }
         access(all)
