@@ -1,12 +1,22 @@
 import "IEntity"
 import "Context"
 import "EntityManager"
+import "EntityQuery"
 
 /// The world is the root of the object graph. It contains all the entities in the game.
 /// It is also responsible for managing entities.
 pub contract interface IWorld {
 
     pub resource interface WorldState {
+        // --- Module Methods ---
+
+        /// Fetch the installed modules' names.
+        ///
+        access(all)
+        fun getInstalledModules(): [String]
+
+        // --- Entity Manager Methods ---
+
         /// Fetch the entity manager
         ///
         access(all)
@@ -17,10 +27,21 @@ pub contract interface IWorld {
         access(all)
         fun getAvailableComponents(): [Type]
 
-        /// Fetch the installed modules' names.
+        /// Passthrough to the entity manager.
         ///
         access(all)
-        fun getInstalledModules(): [String]
+        fun addComponent(_ compType: Type, to: &IEntity.Entity, withData: {String: AnyStruct}?) {
+            let entityMgr = self.borrowEntityManager()
+            entityMgr.addComponent(compType, to: to, withData: withData)
+        }
+
+        /// Passthrough to the entity manager.
+        ///
+        access(all)
+        fun addComponentBatch(_ compType: Type, to: EntityQuery.Builder, ctx: &AnyResource{Context.Provider}) {
+            let entityMgr = self.borrowEntityManager()
+            entityMgr.addComponentBatch(compType, to: to, ctx: ctx)
+        }
 
         // --- Lifecycle Methods ---
 
