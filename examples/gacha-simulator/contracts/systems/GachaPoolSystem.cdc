@@ -77,13 +77,6 @@ pub contract GachaPoolSystem: ISystem {
             entity.setComponentEnabled(Type<@GachaPoolComponent.Component>(), enabled)
         }
 
-        /// System event callback to add the work that your system must perform every frame.
-        ///
-        access(all)
-        fun onUpdate(_ dt: UFix64): Void {
-            // NOTHING
-        }
-
         /// Borrow the gacha pool component
         ///
         access(self)
@@ -93,6 +86,14 @@ pub contract GachaPoolSystem: ISystem {
                 ?? panic("Pool component not found in Entity:".concat(poolEntityId.toString()))
             return comp as! &GachaPoolComponent.Component
         }
+
+        /// System event callback to add the work that your system must perform every frame.
+        ///
+        access(all)
+        fun onUpdate(_ dt: UFix64): Void {
+            // NOTHING
+        }
+
     }
 
     /// The system factory resource

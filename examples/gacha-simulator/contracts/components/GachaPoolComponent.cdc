@@ -76,6 +76,11 @@ pub contract GachaPoolComponent: IComponent {
         /// --- Component Specific methods ---
 
         access(all)
+        fun getAllItems(): [UInt64] {
+            return self.baseProbabilityPool.keys
+        }
+
+        access(all)
         fun getBoostingProbabilityItems(): [UInt64] {
             return self.kv["boostingProbabilityItems"] as! [UInt64]
         }
@@ -93,7 +98,7 @@ pub contract GachaPoolComponent: IComponent {
         /// Returns the probability ratio of the item
         ///
         pub fun getProbabilityRatio(_ itemEntityID: UInt64): UFix64 {
-            return self.baseProbabilityPool[itemEntityID]!
+            return self.baseProbabilityPool[itemEntityID] ?? panic("Invalid itemEntityID")
         }
 
         /// Returns the probability ratio of the item with counter
