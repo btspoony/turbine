@@ -5,6 +5,40 @@ pub contract ItemComponent: IComponent {
 
     /// Events
 
+    /// Structs and Resources
+
+    pub struct ItemInfo {
+        access(all)
+        let category: String
+        access(all)
+        let identity: String
+        access(all)
+        let rarity: UInt8
+        access(all)
+        let traits: {String: UInt8}
+
+        init(
+            _ category: String,
+            _ identity: String,
+            _ rarity: UInt8,
+            _ traits: {String: UInt8}
+        ) {
+            self.category = category
+            self.identity = identity
+            self.rarity = rarity
+            self.traits = traits
+        }
+
+        pub fun toDictionary(): {String: AnyStruct?} {
+            return {
+                "category": self.category,
+                "identity": self.identity,
+                "rarity": self.rarity,
+                "traits": self.traits
+            }
+        }
+    }
+
     /// The component implementation
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.ComponentState {
@@ -71,6 +105,26 @@ pub contract ItemComponent: IComponent {
             if kv["traits"] != nil {
                 self.traits = kv["traits"] as! {String: UInt8}? ?? panic("Invalid type for traits")
             }
+        }
+
+        /// Sets the state of the component
+        ///
+        pub fun fromStruct(_ info: ItemInfo): Void {
+            self.category = info.category
+            self.identity = info.identity
+            self.rarity = info.rarity
+            self.traits = info.traits
+        }
+
+        /// Returns the state of the component
+        ///
+        pub fun toStruct(): ItemInfo {
+            return ItemInfo(
+                self.category,
+                self.identity,
+                self.rarity,
+                self.traits
+            )
         }
     }
 

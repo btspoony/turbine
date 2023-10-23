@@ -95,7 +95,7 @@ pub contract interface ISystem {
         ///
         access(all)
         fun getStoragePath(): StoragePath {
-            let worldRef = self.getWorld()
+            let worldRef = self.borrowWorld()
             let identifier = "Turbine.Systems.".concat(self.getType().identifier)
                 .concat(".of.world.").concat(worldRef.getName())
                 .concat("@").concat(worldRef.getAddress().toString())
@@ -112,7 +112,7 @@ pub contract interface ISystem {
         /// The capability for the world state.
         ///
         access(all)
-        fun getWorld(): &AnyResource{Context.Provider, IWorld.WorldState} {
+        fun borrowWorld(): &AnyResource{Context.Provider, IWorld.WorldState} {
             return self.worldCap.borrow()
                 ?? panic("System has no world")
         }
@@ -121,7 +121,7 @@ pub contract interface ISystem {
         ///
         access(all)
         fun getEntityManager(): &EntityManager.Manager {
-            return self.getWorld().borrowEntityManager()
+            return self.borrowWorld().borrowEntityManager()
         }
     }
 

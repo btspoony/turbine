@@ -7,6 +7,36 @@ pub contract OwnedItemComponent: IComponent {
 
     /// Events
 
+    /// Structs
+
+    pub struct OwnedItemInfo {
+        pub let itemEntityID: UInt64
+        pub let exp: UInt64
+        pub let level: UInt64
+        pub let quality: UInt64
+
+        init(
+            _ itemEntityID: UInt64,
+            _ exp: UInt64,
+            _ level: UInt64,
+            _ quality: UInt64
+        ) {
+            self.itemEntityID = itemEntityID
+            self.exp = exp
+            self.level = level
+            self.quality = quality
+        }
+
+        pub fun toDictionary(): {String: AnyStruct?} {
+            return {
+                "itemEntityID": self.itemEntityID,
+                "exp": self.exp,
+                "level": self.level,
+                "quality": self.quality
+            }
+        }
+    }
+
     /// The component implementation
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter, IComponent.ComponentState {
@@ -73,6 +103,24 @@ pub contract OwnedItemComponent: IComponent {
             if kv["quality"] != nil {
                 self.quality = kv["quality"] as! UInt64? ?? panic("Invalid type for quality")
             }
+        }
+
+        access(all)
+        fun fromStruct(_ info: OwnedItemInfo) {
+            self.itemEntityID = info.itemEntityID
+            self.exp = info.exp
+            self.level = info.level
+            self.quality = info.quality
+        }
+
+        access(all)
+        fun toStruct(): OwnedItemInfo {
+            return OwnedItemInfo(
+                self.itemEntityID,
+                self.exp,
+                self.level,
+                self.quality
+            )
         }
     }
 
