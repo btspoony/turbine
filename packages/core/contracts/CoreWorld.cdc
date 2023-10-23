@@ -47,7 +47,7 @@ pub contract CoreWorld: IWorld {
         let installedModules: [String]
         /// The collection of systems that the world supports.
         access(self)
-        let systems: {Type: Capability<&ISystem.System>}
+        let systems: {Type: Capability<auth &ISystem.System>}
         /// The changes of systems' enabled status.
         access(self)
         var systemsEnabledStatusChanged: {Type: Bool}
@@ -165,14 +165,14 @@ pub contract CoreWorld: IWorld {
         /// Fetches the system capability for the given type.
         ///
         access(all)
-        fun getSystemCapability(type: Type): Capability<&ISystem.System> {
+        fun getSystemCapability(type: Type): Capability<auth &ISystem.System> {
             return self.systems[type] ?? panic("System not found")
         }
 
         /// Adds a system to the context provider.
         ///
         access(all)
-        fun addSystem(system: Capability<&ISystem.System>) {
+        fun addSystem(system: Capability<auth &ISystem.System>) {
             pre {
                 system.check(): "Invalid system capability"
             }
@@ -449,7 +449,8 @@ pub contract CoreWorld: IWorld {
             acct.save(<- systemIns, to: systemStoragePath)
 
             // Add the system to the world
-            let systemCap = acct.capabilities.storage.issue<&ISystem.System>(systemStoragePath)
+            let systemCap = acct.capabilities.storage
+                .issue<auth &ISystem.System>(systemStoragePath)
             assert(systemCap.check(), message: "Failed to create system capability")
 
             world.addSystem(system: systemCap)

@@ -27,7 +27,7 @@ pub contract PlayerRegSystem: ISystem {
         /// Query the player by username
         ///
         access(all)
-        fun queryPlayerByUsername(_ username: String): &IdentityComponent.Component? {
+        fun queryPlayerByUsername(_ username: String): UInt64? {
             let query = EntityQuery.Builder()
             query.withAll(types: [
                 Type<@IdentityComponent.Component>(),
@@ -39,7 +39,7 @@ pub contract PlayerRegSystem: ISystem {
                 if let comp = entity.borrowComponent(Type<@IdentityComponent.Component>()) {
                     let identity = comp as! &IdentityComponent.Component
                     if identity.getUsername() == username {
-                        return identity
+                        return entity.getId()
                     }
                 }
             }
@@ -47,10 +47,13 @@ pub contract PlayerRegSystem: ISystem {
         }
 
         access(all)
-        fun registerPlayer(_ username: String): UInt64 {
-            let existing = self.queryPlayerByUsername(username)
-            assert(existing == nil, message: "Player already exists")
+        fun fetchOrRegisterPlayer(_ username: String): UInt64 {
+            // For the player already exists
+            if let existing = self.queryPlayerByUsername(username){
+                return existing
+            }
 
+            // Create the player
             let world = self.borrowWorld()
             let player = world.createEntity(nil)
 
