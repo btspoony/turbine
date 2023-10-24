@@ -14,7 +14,7 @@
     "fund:emulator": "flow transactions send ./node_modules/@turbine/core/transactions/for-dev/transfer-token.cdc 0x01cf0e2f2f715450 1000.0 --signer=emulator-account",
     "dev": "pnpm fund:emulator && pnpm deploy:emulator"
   },
-  "devDependencies": {
+  "dependencies": {
     "@turbine/core": "workspace:^"
   }
 }
