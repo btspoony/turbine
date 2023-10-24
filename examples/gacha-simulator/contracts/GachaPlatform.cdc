@@ -1,4 +1,3 @@
-// import "CoreEntity"
 import "CoreWorld"
 
 pub contract GachaPlatform {
@@ -34,6 +33,10 @@ pub contract GachaPlatform {
     /// The platform resource interface
     ///
     pub resource interface PlatformPublic {
+        // The listed worlds
+        access(all)
+        fun getListedWorlds(): [ListedWorld]
+
         /// Public a world to Dashboard
         access(all)
         fun publishWorld(_ worldMgrCap: Capability<&CoreWorld.WorldManager>, name: String)
@@ -42,12 +45,19 @@ pub contract GachaPlatform {
     /// The platform resource
     ///
     pub resource Platform: PlatformPublic {
-        pub let listedWorlds: [ListedWorld]
-        pub let delegatedManagers: {Address: Capability<&CoreWorld.WorldManager>}
+        access(self)
+        let listedWorlds: [ListedWorld]
+        access(self)
+        let delegatedManagers: {Address: Capability<&CoreWorld.WorldManager>}
 
         init() {
             self.listedWorlds = []
             self.delegatedManagers = {}
+        }
+
+        access(all)
+        fun getListedWorlds(): [ListedWorld] {
+            return self.listedWorlds
         }
 
         /// Public a world to Dashboard
@@ -87,12 +97,22 @@ pub contract GachaPlatform {
             emit WorldUnpublished(address: host, name: name, at: getCurrentBlock().timestamp)
         }
 
+        /// Borrow the world manager
+        ///
         access(all)
-        fun borrowWorldManager(host: Address): &CoreWorld.WorldManager? {
+        fun borrowWorldManager(_ host: Address): &CoreWorld.WorldManager? {
             if let mgr = self.delegatedManagers[host] {
                 return mgr.borrow()
             }
             return nil
+        }
+
+        /// Borrow the world
+        ///
+        access(all)
+        fun borrowWorld(_ host: Address, _ name: String): &CoreWorld.World {
+            let worldMgr = self.borrowWorldManager(host) ?? panic("WorldManager not found")
+            return worldMgr.borrowWorld(name) ?? panic("World not found")
         }
     }
 

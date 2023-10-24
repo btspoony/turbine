@@ -630,6 +630,14 @@ pub contract CoreWorld: IWorld {
             ?? panic("WorldManager not found")
     }
 
+    /// Check if the given account has the manager
+    ///
+    pub fun hasManager(acct: Address): Bool {
+        let cap = getAccount(acct).capabilities
+            .get<&WorldManager{IWorld.WorldManagerPublic}>(self.WorldManagerPublicPath)
+        return cap != nil && cap!.check()
+    }
+
     init() {
         let identifier = "TurbineEngineWorldManager_".concat(self.account.address.toString())
         self.WorldManagerStoragePath = StoragePath(identifier: identifier)!
