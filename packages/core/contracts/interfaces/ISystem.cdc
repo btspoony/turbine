@@ -1,3 +1,6 @@
+// Third party imports
+import "StringUtils"
+// Turbine imports
 import "IEntity"
 import "IComponent"
 import "IWorld"
@@ -96,10 +99,13 @@ pub contract interface ISystem {
         access(all)
         fun getStoragePath(): StoragePath {
             let worldRef = self.borrowWorld()
-            let identifier = "Turbine.Systems.".concat(self.getType().identifier)
-                .concat(".of.world.").concat(worldRef.getName())
-                .concat("@").concat(worldRef.getAddress().toString())
-            return StoragePath(identifier: identifier)!
+
+            let identifier = self.getType().identifier
+            let path = "Turbine_Systems_".concat(
+                StringUtils.replaceAll(identifier, ".", "_")
+            ).concat("_of_World_").concat(worldRef.getName())
+             .concat("_").concat(worldRef.getAddress().toString())
+            return StoragePath(identifier: path)!
         }
 
         /// The capability for the context provider.

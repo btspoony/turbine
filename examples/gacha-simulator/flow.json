@@ -1,5 +1,21 @@
 {
   "contracts": {
+    "ArrayUtils": {
+      "source": "./deps/ArrayUtils.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "mainnet": "a340dc0a4ec828ab",
+        "testnet": "31ad40c07a2a9788"
+      }
+    },
+    "StringUtils": {
+      "source": "./deps/StringUtils.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "mainnet": "a340dc0a4ec828ab",
+        "testnet": "31ad40c07a2a9788"
+      }
+    },
     "NonFungibleToken": {
       "source": "./deps/NonFungibleToken.cdc",
       "aliases": {
@@ -249,6 +265,8 @@
         "GachaPlatform"
       ],
       "emulator-account": [
+        "ArrayUtils",
+        "StringUtils",
         "NonFungibleToken",
         "FungibleToken",
         "MetadataViews",

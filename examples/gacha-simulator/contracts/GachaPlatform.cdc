@@ -1,6 +1,8 @@
 import "CoreWorld"
 import "GachaModule"
 
+/// GachaPlatform is a contract that manages the creation of worlds and gachas
+///
 pub contract GachaPlatform {
 
     // Paths
@@ -17,6 +19,8 @@ pub contract GachaPlatform {
 
     // Functions
 
+    /// The listed world
+    ///
     pub struct ListedWorld {
         pub let address: Address
         pub let name: String
@@ -40,7 +44,13 @@ pub contract GachaPlatform {
         access(all)
         fun getListedWorlds(): [ListedWorld]
 
+        /// Check if a world is published
+        ///
+        access(all)
+        fun hasWorld(_ name: String): Bool
+
         /// Public a world to Dashboard
+        ///
         access(all)
         fun publishWorld(_ worldMgrCap: Capability<&CoreWorld.WorldManager>, name: String)
     }
@@ -49,18 +59,25 @@ pub contract GachaPlatform {
     ///
     pub resource Platform: PlatformPublic {
         access(self)
-        let listedWorlds: [ListedWorld]
+        let listedWorlds: {String: ListedWorld}
         access(self)
         let delegatedManagers: {Address: Capability<&CoreWorld.WorldManager>}
 
         init() {
-            self.listedWorlds = []
+            self.listedWorlds = {}
             self.delegatedManagers = {}
         }
 
         access(all)
         fun getListedWorlds(): [ListedWorld] {
-            return self.listedWorlds
+            return self.listedWorlds.values
+        }
+
+        /// Check if a world is published
+        ///
+        access(all)
+        fun hasWorld(_ name: String): Bool {
+            return self.listedWorlds[name] != nil
         }
 
         /// Public a world to Dashboard
@@ -80,23 +97,15 @@ pub contract GachaPlatform {
             worldMgr.borrowWorld(name) ?? panic("World not found")
 
             let listed = ListedWorld(host, name: name, at: getCurrentBlock().timestamp)
-            self.listedWorlds.append(listed)
+            self.listedWorlds[name] = listed
 
             emit WorldPublished(address: host, name: listed.name, at: listed.listedAt)
         }
 
         access(all)
         fun unpublishWorld(host: Address, name: String) {
-            let len = self.listedWorlds.length
-            var i = 0
-            while i < len {
-                let listed = self.listedWorlds[i]
-                if listed.address == host && listed.name == name {
-                    self.listedWorlds.remove(at: i)
-                    break
-                }
-                i = i + 1
-            }
+            self.listedWorlds.remove(key: name) ?? panic("World not found")
+
             emit WorldUnpublished(address: host, name: name, at: getCurrentBlock().timestamp)
         }
 

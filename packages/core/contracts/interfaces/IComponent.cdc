@@ -1,3 +1,6 @@
+// Third party imports
+import "StringUtils"
+
 /// The contract interface for the component resource, which is the base of all components
 /// in the system.
 ///
@@ -84,8 +87,11 @@ pub contract interface IComponent {
         /// Returns the storage path of the component factory
         ///
         pub fun getStoragePath(): StoragePath {
-            let identifier = "Turbine.ComponentFactory.".concat(self.getType().identifier)
-            return StoragePath(identifier: identifier)!
+            let identifier = self.getType().identifier
+            let path = "Turbine_ComponentFactory_".concat(
+                StringUtils.replaceAll(identifier, ".", "_")
+            )
+            return StoragePath(identifier: path)!
         }
     }
 
