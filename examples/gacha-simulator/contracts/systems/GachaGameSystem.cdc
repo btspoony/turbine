@@ -72,7 +72,7 @@ pub contract GachaGameSystem: ISystem {
             // basic pool info
             var topRarity: UInt8 = 0
             var secRarity: UInt8 = 0
-            let basicProb: {UInt8: UFix64} = {}
+            let basicProb: {UInt8: UFix64} = poolComp.getRarityProbabilityPool()
             let itemRarityDic: {UInt8: [UInt64]} = {}
             let boostingRarityDic: {UInt8: [UInt64]} = {}
             for itemId in allItems.keys {

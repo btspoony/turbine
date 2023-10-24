@@ -5,8 +5,9 @@ pub contract GachaPoolComponent: IComponent {
 
     /// Events
 
-    pub event ItemProbabilityModified(_ uuid: UInt64, itemEntityID: UInt64, probabilityRatio: UFix64)
+    pub event ItemProbabilityModified(_ uuid: UInt64, itemEntityID: UInt64, extraRatio: UFix64)
     pub event BoostingProbabilityItemsModified(_ uuid: UInt64, items: [UInt64], boostingRatio: UFix64)
+    pub event RarityProbabilityPoolModified(_ uuid: UInt64, ratioPool: {UInt8: UFix64})
     pub event CounterModifierUpdated(_ uuid: UInt64, threshold: UInt64, probabilityModifier: UFix64)
 
     /// The component implementation
@@ -17,10 +18,12 @@ pub contract GachaPoolComponent: IComponent {
 
         /// The base probability pool {itemEntityID: probability ratio}
         access(self) var baseProbabilityPool: {UInt64: UFix64}
+        access(self) var rarityProbabilityPool: {UInt8: UFix64}
 
         init() {
             self.enabled = true
             self.baseProbabilityPool = {}
+            self.rarityProbabilityPool = {}
 
             self.kv = {}
             /// The boosting probability items [itemEntityID]
@@ -41,6 +44,7 @@ pub contract GachaPoolComponent: IComponent {
         access(all) fun getKeys(): [String] {
             return [
                 "baseProbabilityPool",
+                "rarityProbabilityPool",
                 "boostingProbabilityItems",
                 "boostingProbabilityRatio",
                 "counterThreshold",
@@ -53,6 +57,8 @@ pub contract GachaPoolComponent: IComponent {
         access(all) fun getKeyValue(_ key: String): AnyStruct? {
             if key == "baseProbabilityPool" {
                 return self.baseProbabilityPool
+            } else if key == "rarityProbabilityPool" {
+                return self.rarityProbabilityPool
             } else {
                 return self.kv[key]
             }
@@ -63,6 +69,9 @@ pub contract GachaPoolComponent: IComponent {
         access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             if kv["baseProbabilityPool"] != nil {
                 self.baseProbabilityPool = kv["baseProbabilityPool"] as! {UInt64: UFix64}? ?? panic("Invalid baseProbabilityPool")
+            }
+            if kv["rarityProbabilityPool"] != nil {
+                self.rarityProbabilityPool = kv["rarityProbabilityPool"] as! {UInt8: UFix64}? ?? panic("Invalid rarityProbabilityPool")
             }
             if kv["boostingProbabilityItems"] != nil {
                 self.kv["boostingProbabilityItems"] = kv["boostingProbabilityItems"] as! [UInt64]? ?? panic("Invalid boostingProbabilityItems")
@@ -83,6 +92,11 @@ pub contract GachaPoolComponent: IComponent {
         access(all)
         fun getAllItems(): [UInt64] {
             return self.baseProbabilityPool.keys
+        }
+
+        access(all)
+        fun getRarityProbabilityPool(): {UInt8: UFix64} {
+            return self.rarityProbabilityPool
         }
 
         access(all)
@@ -108,7 +122,7 @@ pub contract GachaPoolComponent: IComponent {
         /// Returns the probability ratio of the item
         ///
         pub fun getProbabilityRatio(_ itemEntityID: UInt64): UFix64 {
-            return self.baseProbabilityPool[itemEntityID] ?? panic("Invalid itemEntityID")
+            return self.baseProbabilityPool[itemEntityID] ?? 0.0
         }
 
         /// Returns the probability ratio of the item with counter
@@ -127,19 +141,27 @@ pub contract GachaPoolComponent: IComponent {
 
         /// Adds an item to the probability pool
         ///
-        pub fun addItem(_ itemEntityID: UInt64, _ probabilityRatio: UFix64): Void {
-            self.baseProbabilityPool[itemEntityID] = probabilityRatio
+        pub fun addItem(_ itemEntityID: UInt64, _ extraRatio: UFix64?): Void {
+            self.baseProbabilityPool[itemEntityID] = extraRatio ?? 0.0
 
-            emit ItemProbabilityModified(self.uuid, itemEntityID: itemEntityID, probabilityRatio: probabilityRatio)
+            emit ItemProbabilityModified(self.uuid, itemEntityID: itemEntityID, extraRatio: extraRatio ?? 0.0)
         }
 
         /// Adds items to the probability pool
         ///
         pub fun addItems(items: {UInt64: UFix64}): Void {
             for itemEntityID in items.keys {
-                self.baseProbabilityPool[itemEntityID] = items[itemEntityID]
-                emit ItemProbabilityModified(self.uuid, itemEntityID: itemEntityID, probabilityRatio: items[itemEntityID]!)
+                self.baseProbabilityPool[itemEntityID] = items[itemEntityID] ?? 0.0
+                emit ItemProbabilityModified(self.uuid, itemEntityID: itemEntityID, extraRatio: items[itemEntityID] ?? 0.0)
             }
+        }
+
+        /// Set the rarity probability pool
+        ///
+        pub fun setRareProbabilityPool(_ pool: {UInt8: UFix64}): Void {
+            self.rarityProbabilityPool = pool
+
+            emit RarityProbabilityPoolModified(self.uuid, ratioPool: pool)
         }
 
         /// Set the boosting probability items
