@@ -282,7 +282,7 @@ pub contract CoreWorld: IWorld {
         /// Fetch the address of the world
         ///
         access(self)
-        fun borrowSystem(_ type: Type): &ISystem.System {
+        fun borrowSystem(_ type: Type): auth &ISystem.System {
             pre {
                 self.systems[type] != nil: "System not found"
             }

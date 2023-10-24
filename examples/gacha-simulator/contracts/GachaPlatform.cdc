@@ -41,13 +41,20 @@ pub contract GachaPlatform {
     ///
     pub resource interface PlatformPublic {
         // The listed worlds
-        access(all)
+        access(all) view
         fun getListedWorlds(): [ListedWorld]
+
+        /// Get the listed world
+        ///
+        access(all) view
+        fun getListedWorld(_ name: String): ListedWorld?
 
         /// Check if a world is published
         ///
-        access(all)
-        fun hasWorld(_ name: String): Bool
+        access(all) view
+        fun hasWorld(_ name: String): Bool {
+            return self.getListedWorld(name) != nil
+        }
 
         /// Public a world to Dashboard
         ///
@@ -68,16 +75,18 @@ pub contract GachaPlatform {
             self.delegatedManagers = {}
         }
 
-        access(all)
+        /// The listed worlds
+        ///
+        access(all) view
         fun getListedWorlds(): [ListedWorld] {
             return self.listedWorlds.values
         }
 
-        /// Check if a world is published
+        /// Get the listed world
         ///
-        access(all)
-        fun hasWorld(_ name: String): Bool {
-            return self.listedWorlds[name] != nil
+        access(all) view
+        fun getListedWorld(_ name: String): ListedWorld? {
+            return self.listedWorlds[name]
         }
 
         /// Public a world to Dashboard
