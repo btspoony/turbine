@@ -5,6 +5,9 @@ pub contract PlayerComponent: IComponent {
 
     /// Events
 
+    pub event GachaPoolCounterUpdated(_ uuid: UInt64, _ gachaPoolId: UInt64, counter: UInt64, rareCounter: UInt64)
+    pub event GachaPoolLastPulledRareUpdated(_ uuid: UInt64, _ gachaPoolId: UInt64, _ itemEntityId: UInt64)
+
     /// The component implementation
     ///
     pub resource Component: IComponent.DataProvider, IComponent.DataSetter {
@@ -14,6 +17,9 @@ pub contract PlayerComponent: IComponent {
         /// The player's gacha pool counter { gachaPoolId: gachaPoolCounter }
         access(all)
         var gachaPoolCounter: {UInt64: UInt64}
+        /// The player's gacha pool counter { gachaPoolId: gachaPoolCounter }
+        access(all)
+        var gachaPoolRareCounter: {UInt64: UInt64}
         /// The player's gacha pool last pulled rare { gachaPoolId: itemEntityId }
         access(all)
         var gachaPoolLastPulledRare: {UInt64: UInt64}
@@ -21,6 +27,7 @@ pub contract PlayerComponent: IComponent {
         init() {
             self.enabled = true
             self.gachaPoolCounter = {}
+            self.gachaPoolRareCounter = {}
             self.gachaPoolLastPulledRare = {}
 
             self.kv = {}
@@ -35,6 +42,7 @@ pub contract PlayerComponent: IComponent {
         access(all) fun getKeys(): [String] {
             return [
                 "gachaPoolCounter",
+                "gachaPoolRareCounter",
                 "gachaPoolLastPulledRare",
                 "exp",
                 "level"
@@ -46,6 +54,8 @@ pub contract PlayerComponent: IComponent {
         access(all) fun getKeyValue(_ key: String): AnyStruct? {
             if key == "gachaPoolCounter" {
                 return self.gachaPoolCounter
+            } else if key == "gachaPoolRareCounter" {
+                return self.gachaPoolRareCounter
             } else if key == "gachaPoolLastPulledRare" {
                 return self.gachaPoolLastPulledRare
             } else {
@@ -58,6 +68,9 @@ pub contract PlayerComponent: IComponent {
         access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
             if kv["gachaPoolCounter"] != nil {
                 self.gachaPoolCounter = kv["gachaPoolCounter"] as! {UInt64: UInt64}? ?? panic("Invalid gachaPoolCounter")
+            }
+            if kv["gachaPoolRareCounter"] != nil {
+                self.gachaPoolRareCounter = kv["gachaPoolRareCounter"] as! {UInt64: UInt64}? ?? panic("Invalid gachaPoolRareCounter")
             }
             if kv["gachaPoolLastPulledRare"] != nil {
                 self.gachaPoolLastPulledRare = kv["gachaPoolLastPulledRare"] as! {UInt64: UInt64}? ?? panic("Invalid gachaPoolLastPulledRare")
@@ -93,18 +106,25 @@ pub contract PlayerComponent: IComponent {
             return self.gachaPoolCounter[gachaPoolId] ?? 0
         }
 
-        /// Sets the player's gacha pool counter
+        /// Returns the player's gacha pool rare counter
         ///
         access(all)
-        fun setGachaPoolCounter(_ gachaPoolId: UInt64, _ counter: UInt64): Void {
-            self.gachaPoolCounter[gachaPoolId] = counter
+        fun getGachaPoolRareCounter(_ gachaPoolId: UInt64): UInt64 {
+            return self.gachaPoolRareCounter[gachaPoolId] ?? 0
         }
 
         /// Increments the player's gacha pool counter
         ///
         access(all)
-        fun incrementGachaPoolCounter(_ gachaPoolId: UInt64): Void {
-            self.gachaPoolCounter[gachaPoolId] = (self.gachaPoolCounter[gachaPoolId] ?? 0) + 1
+        fun incrementGachaPoolCounter(_ gachaPoolId: UInt64, amount: UInt64): Void {
+            self.gachaPoolCounter[gachaPoolId] = (self.gachaPoolCounter[gachaPoolId] ?? 0) + amount
+            self.gachaPoolRareCounter[gachaPoolId] = (self.gachaPoolRareCounter[gachaPoolId] ?? 0) + amount
+
+            emit GachaPoolCounterUpdated(
+                self.uuid, gachaPoolId,
+                counter: self.gachaPoolCounter[gachaPoolId]!,
+                rareCounter: self.gachaPoolRareCounter[gachaPoolId]!
+            )
         }
 
         /// Returns the player's gacha pool last pulled rare
@@ -112,6 +132,9 @@ pub contract PlayerComponent: IComponent {
         access(all)
         fun setGachaPoolLastPulledRare(_ gachaPoolId: UInt64, _ itemEntityId: UInt64): Void {
             self.gachaPoolLastPulledRare[gachaPoolId] = itemEntityId
+            self.gachaPoolRareCounter[gachaPoolId] = 0
+
+            emit GachaPoolLastPulledRareUpdated(self.uuid, gachaPoolId, itemEntityId)
         }
 
         /// Returns the player's gacha pool last pulled rare

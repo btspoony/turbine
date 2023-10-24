@@ -23,20 +23,20 @@ pub contract GachaGameSystem: ISystem {
             self.enabled = true
         }
 
+        /// Pull from a gacha pool
+        /// Returns the owned item ids
         access(all)
         fun pullFromCachaPool(
             _ username: String,
             _ poolEntityId: UInt64,
             _ times: UInt64,
-        ): Void {
+        ): [UInt64] {
             // Get the world
             let world = self.borrowWorld()
 
             // get gacha pool
             let poolComp = self.borrowGachaPoolComponent(poolEntityId)
             let boostingUpItems = poolComp.getBoostingProbabilityItems()
-            // let threshold = poolComp.getCounterThreshold()
-            // let probMods = poolComp.getCounterProbabilityModifier()
 
             // get all Items' info
             let allItemIds = poolComp.getAllItems()
@@ -69,33 +69,63 @@ pub contract GachaGameSystem: ISystem {
             ) as! Capability<auth &ISystem.System>
             let inventorySystem = inventorySystemCap.borrow() as! &InventorySystem.System
 
-            // last pulled info
-            var currentCounter = playerComp.getGachaPoolCounter(poolEntityId)
-            var lastPulledRareItem = playerComp.getGachaPoolLastPulledRare(poolEntityId)
-            // sum of probability
-            var sumProb: {UInt8: UFix64} = {}
+            // basic pool info
+            var topRarity: UInt8 = 0
+            var secRarity: UInt8 = 0
+            let basicProb: {UInt8: UFix64} = {}
+            let itemRarityDic: {UInt8: [UInt64]} = {}
+            let boostingRarityDic: {UInt8: [UInt64]} = {}
             for itemId in allItems.keys {
                 let item = allItems[itemId]!
-                var prob: UFix64 = 0.0
-                if boostingUpItems.contains(itemId) {
-                    prob = poolComp.getProbabilityRatioWithCounter(itemId, currentCounter)
-                } else {
-                    prob = poolComp.getProbabilityRatio(itemId)
+                if topRarity < item.rarity {
+                    secRarity = topRarity
+                    topRarity = item.rarity
                 }
-                sumProb[item.rarity] = (sumProb[item.rarity] ?? 0.0) + prob
+                basicProb[item.rarity] = (basicProb[item.rarity] ?? 0.0) + poolComp.getProbabilityRatio(itemId)
+                // check if item is boosting up item
+                if boostingUpItems.contains(itemId) {
+                    boostingRarityDic[item.rarity] = (boostingRarityDic[item.rarity] ?? []).concat([itemId])
+                } else {
+                    itemRarityDic[item.rarity] = (itemRarityDic[item.rarity] ?? []).concat([itemId])
+                }
+            }
+            let boostingRatio = poolComp.getBoostingProbabilityRatio()
+
+            // The return array
+            let newOwnedItemIds: [UInt64] = []
+
+            // --- calculate dynamic probability ---
+            // last pulled info
+            var currentCounter = playerComp.getGachaPoolCounter(poolEntityId)
+            var currentRareCounter = playerComp.getGachaPoolRareCounter(poolEntityId)
+            var lastPulledRareItem = playerComp.getGachaPoolLastPulledRare(poolEntityId)
+
+            let sumProb: {UInt8: UFix64} = {}
+            for rarity in basicProb.keys {
+                basicProb[rarity] = basicProb[rarity]
+            }
+            // For every 10 pull, there is a basic guarantee
+            // add probablity ratio for basic guarantee
+            if currentCounter % 10 == 0 {
+                sumProb[secRarity] = (sumProb[secRarity] ?? 0.0) + 1.0
+            }
+            // add probablity ratio for boosting up items
+            let counterMod = poolComp.getProbabilityRatioModWithRareCounter(currentRareCounter)
+            if counterMod != 0.0 {
+                sumProb[topRarity] = (sumProb[topRarity] ?? 0.0) + counterMod
             }
 
             // sum of probability for rare items
             var totalProb: UFix64 = 0.0
-            let rarityArr: [UFix64] = []
-            let rarityDic: {Int: UInt8} = {}
+            let probArr: [UFix64] = []
+            let rarityIdxDic: {Int: UInt8} = {}
             // reverse order for rare probs
             var i: UInt8 = 10
             while i >= 0 {
                 if let prob = sumProb[i] {
                     totalProb = totalProb + prob
-                    rarityArr.append(prob)
-                    rarityDic[rarityArr.length - 1] = i
+                    probArr.append(prob)
+                    rarityIdxDic[probArr.length - 1] = i
                 }
                 i = i - 1
             }
@@ -103,15 +133,42 @@ pub contract GachaGameSystem: ISystem {
             // pull one item
             var rarityRand = self.geneRandomPercentage()
             var pickedRarity: UInt8? = nil
-            for rarity, prob in rarityArr {
+            for idx, prob in probArr {
                 rarityRand = rarityRand.saturatingSubtract(prob)
                 if rarityRand == 0.0 {
-                    pickedRarity = rarityDic[rarity]
+                    pickedRarity = rarityIdxDic[idx]
                     break
                 }
             }
 
-            // TODO: pick from rarity pool
+            // check boosting up items for rare items
+            var itemsArrToPick: [UInt64] = itemRarityDic[pickedRarity!]!
+            if pickedRarity == secRarity || pickedRarity == topRarity {
+                // create a random number for picking item
+                let rand = self.geneRandomPercentage()
+                if rand < boostingRatio {
+                    // Pick from boosting up items
+                    itemsArrToPick = boostingRarityDic[pickedRarity!]!
+                }
+            }
+
+            // pick from the item array
+            let randIdx = self.geneRandomInRange(UInt64(itemsArrToPick.length))
+            let pickedItemId = itemsArrToPick[randIdx]
+            let pickedItemInfo = allItems[pickedItemId]!
+
+            // add to Player's inventory
+            let ownedId = inventorySystem.addItemToInventory(playerEntityId, pickedItemId, amount: pickedItemInfo.fungible ? 1.0 : nil)
+            newOwnedItemIds.append(ownedId)
+
+            // add counter to PlayerComponent
+            playerComp.incrementGachaPoolCounter(poolEntityId, amount: 1)
+            // set last pulled rare item
+            if pickedRarity == topRarity {
+                playerComp.setGachaPoolLastPulledRare(poolEntityId, pickedItemId)
+            }
+
+            return newOwnedItemIds
         }
 
         access(all)
@@ -123,12 +180,22 @@ pub contract GachaGameSystem: ISystem {
             return poolComp
         }
 
+        /// --- Internal Methods ---
+
         access(self)
         fun geneRandomPercentage(): UFix64 {
             let rand = unsafeRandom()
             let randStr = "0.".concat(rand.toString().slice(from: 0, upTo: 5))
             return UFix64.fromString(randStr)!
         }
+
+        access(self)
+        fun geneRandomInRange(_ max: UInt64): UInt64 {
+            let rand = unsafeRandom()
+            return rand % max
+        }
+
+        // --- ISystem.CoreLifecycle ---
 
         /// System event callback to add the work that your system must perform every frame.
         ///

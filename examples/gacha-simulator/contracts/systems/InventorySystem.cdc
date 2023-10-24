@@ -9,8 +9,8 @@ import "OwnedItemComponent"
 pub contract InventorySystem: ISystem {
 
     // Events
-    pub event FungibleItemAddedToInventory(_ playerId: UInt64, _ itemId: UInt64, _ amount: UFix64)
-    pub event FungibleItemRemovedFromInventory(_ playerId: UInt64, _ itemId: UInt64, _ amount: UFix64)
+    pub event FungibleItemAddedToInventory(_ playerId: UInt64, _ itemId: UInt64, _ ownedItemId: UInt64, amount: UFix64)
+    pub event FungibleItemRemovedFromInventory(_ playerId: UInt64, _ itemId: UInt64, _ ownedItemId: UInt64, amount: UFix64)
     pub event NonFungibleItemAddedToInventory(_ playerId: UInt64, _ itemId: UInt64, _ ownedItemId: UInt64)
     pub event NonFungibleItemRemovedFromInventory(_ playerId: UInt64, _ itemId: UInt64, _ ownedItemId: UInt64)
 
@@ -27,31 +27,37 @@ pub contract InventorySystem: ISystem {
             self.enabled = true
         }
 
+        /// Add an item to the player's inventory
+        /// Returns the owned item id
+        ///
         access(all)
-        fun addItemToInventory(_ playerId: UInt64, _ itemEntityId: UInt64, amount: UFix64?): Void {
+        fun addItemToInventory(_ playerId: UInt64, _ itemEntityId: UInt64, amount: UFix64?): UInt64 {
             let playerInventory = self.borrowInventory(playerId)
             let item = self.borrowItem(itemEntityId)
 
+            var ownedId: UInt64? = nil
             let itemInfo = item.toStruct()
             if itemInfo.fungible {
                 let addedAmount = amount ?? 1.0
                 if let existingOwnedItemId = playerInventory.getOwnedItemIdByOriginItemId(itemEntityId) {
+                    ownedId = existingOwnedItemId
                     let ownedItem: &OwnedItemComponent.Component = self.borrowOwnedItem(existingOwnedItemId)
                     let ownedItemInfo = ownedItem.toStruct()
                     assert(ownedItemInfo.itemEntityID == itemEntityId, message: "Owned item does not match item entity id")
                     ownedItem.setData({ "quantity": ownedItemInfo.quantity + addedAmount })
                 } else {
-                    let ownedId = self.createNewOwnedEntity(itemEntityId)
-                    playerInventory.addOwnedItem(ownedId, itemEntityId)
-                    let newOwnedItem = self.borrowOwnedItem(ownedId)
+                    ownedId = self.createNewOwnedEntity(itemEntityId)
+                    playerInventory.addOwnedItem(ownedId!, itemEntityId)
+                    let newOwnedItem = self.borrowOwnedItem(ownedId!)
                     newOwnedItem.setData({ "quantity": addedAmount })
                 }
-                emit FungibleItemAddedToInventory(playerId, itemEntityId, addedAmount)
+                emit FungibleItemAddedToInventory(playerId, itemEntityId, ownedId!, amount: addedAmount)
             } else {
-                let ownedId = self.createNewOwnedEntity(itemEntityId)
-                playerInventory.addOwnedItem(ownedId, itemEntityId)
-                emit NonFungibleItemAddedToInventory(playerId, itemEntityId, ownedId)
+                ownedId = self.createNewOwnedEntity(itemEntityId)
+                playerInventory.addOwnedItem(ownedId!, itemEntityId)
+                emit NonFungibleItemAddedToInventory(playerId, itemEntityId, ownedId!)
             }
+            return ownedId!
         }
 
         /// Removes an item from the player's inventory
@@ -76,7 +82,7 @@ pub contract InventorySystem: ISystem {
             ownedItem.setData({ "quantity": ownedItemInfo.quantity.saturatingSubtract(amount) })
 
             // Emit event
-            emit FungibleItemRemovedFromInventory(playerId, itemEntityId, amount)
+            emit FungibleItemRemovedFromInventory(playerId, itemEntityId, ownedItemId!, amount: amount)
         }
 
         access(all)
