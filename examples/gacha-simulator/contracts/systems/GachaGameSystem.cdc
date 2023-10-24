@@ -149,7 +149,9 @@ pub contract GachaGameSystem: ISystem {
                 if pickedRarity == secRarity || pickedRarity == topRarity {
                     // create a random number for picking item
                     let rand = self.geneRandomPercentage()
-                    if rand < boostingRatio {
+                    // if rand < boostingRatio or last pulled item is not boosting up item
+                    // then pick from boosting up items
+                    if rand < boostingRatio || (pickedRarity == topRarity && lastPulledRareItem != nil && !boostingUpItems.contains(lastPulledRareItem!)) {
                         // Pick from boosting up items
                         itemsArrToPick = boostingRarityDic[pickedRarity!]!
                     }
