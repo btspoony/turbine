@@ -4,6 +4,7 @@ import "ISystem"
 import "MetadataViews"
 import "DisplayComponent"
 import "ItemComponent"
+import "EntityQuery"
 
 pub contract ItemSystem: ISystem {
 
@@ -21,6 +22,23 @@ pub contract ItemSystem: ISystem {
         ) {
             self.worldCap = world
             self.enabled = true
+        }
+
+        access(all)
+        fun listItems(): {UInt64: ItemComponent.ItemInfo} {
+            let world = self.borrowWorld()
+
+            let query = EntityQuery.Builder()
+            query.withAll(types: [Type<@ItemComponent.Component>()])
+            let entities = query.executeQuery(self.borrowProvider())
+
+            let items: {UInt64: ItemComponent.ItemInfo} = {}
+            for entity in entities {
+                if let comp = entity.borrowComponent(Type<@ItemComponent.Component>()) {
+                    items[entity.getId()] = (comp as! &ItemComponent.Component).toStruct()
+                }
+            }
+            return items
         }
 
         access(all)
