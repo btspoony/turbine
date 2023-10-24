@@ -95,77 +95,84 @@ pub contract GachaGameSystem: ISystem {
             let newOwnedItemIds: [UInt64] = []
 
             // --- calculate dynamic probability ---
-            // last pulled info
-            var currentCounter = playerComp.getGachaPoolCounter(poolEntityId)
-            var currentRareCounter = playerComp.getGachaPoolRareCounter(poolEntityId)
-            var lastPulledRareItem = playerComp.getGachaPoolLastPulledRare(poolEntityId)
+            var pullCnt: UInt64 = 0
+            // Now Pull for one item for free
+            while pullCnt < times {
+                // last pulled info
+                var currentCounter = playerComp.getGachaPoolCounter(poolEntityId)
+                var currentRareCounter = playerComp.getGachaPoolRareCounter(poolEntityId)
+                var lastPulledRareItem = playerComp.getGachaPoolLastPulledRare(poolEntityId)
 
-            let sumProb: {UInt8: UFix64} = {}
-            for rarity in basicProb.keys {
-                basicProb[rarity] = basicProb[rarity]
-            }
-            // For every 10 pull, there is a basic guarantee
-            // add probablity ratio for basic guarantee
-            if currentCounter % 10 == 0 {
-                sumProb[secRarity] = (sumProb[secRarity] ?? 0.0) + 1.0
-            }
-            // add probablity ratio for boosting up items
-            let counterMod = poolComp.getProbabilityRatioModWithRareCounter(currentRareCounter)
-            if counterMod != 0.0 {
-                sumProb[topRarity] = (sumProb[topRarity] ?? 0.0) + counterMod
-            }
-
-            // sum of probability for rare items
-            var totalProb: UFix64 = 0.0
-            let probArr: [UFix64] = []
-            let rarityIdxDic: {Int: UInt8} = {}
-            // reverse order for rare probs
-            var i: UInt8 = 10
-            while i >= 0 {
-                if let prob = sumProb[i] {
-                    totalProb = totalProb + prob
-                    probArr.append(prob)
-                    rarityIdxDic[probArr.length - 1] = i
+                let sumProb: {UInt8: UFix64} = {}
+                for rarity in basicProb.keys {
+                    basicProb[rarity] = basicProb[rarity]
                 }
-                i = i - 1
-            }
-
-            // pull one item
-            var rarityRand = self.geneRandomPercentage()
-            var pickedRarity: UInt8? = nil
-            for idx, prob in probArr {
-                rarityRand = rarityRand.saturatingSubtract(prob)
-                if rarityRand == 0.0 {
-                    pickedRarity = rarityIdxDic[idx]
-                    break
+                // For every 10 pull, there is a basic guarantee
+                // add probablity ratio for basic guarantee
+                if currentCounter % 10 == 0 {
+                    sumProb[secRarity] = (sumProb[secRarity] ?? 0.0) + 1.0
                 }
-            }
-
-            // check boosting up items for rare items
-            var itemsArrToPick: [UInt64] = itemRarityDic[pickedRarity!]!
-            if pickedRarity == secRarity || pickedRarity == topRarity {
-                // create a random number for picking item
-                let rand = self.geneRandomPercentage()
-                if rand < boostingRatio {
-                    // Pick from boosting up items
-                    itemsArrToPick = boostingRarityDic[pickedRarity!]!
+                // add probablity ratio for boosting up items
+                let counterMod = poolComp.getProbabilityRatioModWithRareCounter(currentRareCounter)
+                if counterMod != 0.0 {
+                    sumProb[topRarity] = (sumProb[topRarity] ?? 0.0) + counterMod
                 }
-            }
 
-            // pick from the item array
-            let randIdx = self.geneRandomInRange(UInt64(itemsArrToPick.length))
-            let pickedItemId = itemsArrToPick[randIdx]
-            let pickedItemInfo = allItems[pickedItemId]!
+                // sum of probability for rare items
+                var totalProb: UFix64 = 0.0
+                let probArr: [UFix64] = []
+                let rarityIdxDic: {Int: UInt8} = {}
+                // reverse order for rare probs
+                var i: UInt8 = 10
+                while i >= 0 {
+                    if let prob = sumProb[i] {
+                        totalProb = totalProb + prob
+                        probArr.append(prob)
+                        rarityIdxDic[probArr.length - 1] = i
+                    }
+                    i = i - 1
+                }
 
-            // add to Player's inventory
-            let ownedId = inventorySystem.addItemToInventory(playerEntityId, pickedItemId, amount: pickedItemInfo.fungible ? 1.0 : nil)
-            newOwnedItemIds.append(ownedId)
+                // pull one item
+                var rarityRand = self.geneRandomPercentage()
+                var pickedRarity: UInt8? = nil
+                for idx, prob in probArr {
+                    rarityRand = rarityRand.saturatingSubtract(prob)
+                    if rarityRand == 0.0 {
+                        pickedRarity = rarityIdxDic[idx]
+                        break
+                    }
+                }
 
-            // add counter to PlayerComponent
-            playerComp.incrementGachaPoolCounter(poolEntityId, amount: 1)
-            // set last pulled rare item
-            if pickedRarity == topRarity {
-                playerComp.setGachaPoolLastPulledRare(poolEntityId, pickedItemId)
+                // check boosting up items for rare items
+                var itemsArrToPick: [UInt64] = itemRarityDic[pickedRarity!]!
+                if pickedRarity == secRarity || pickedRarity == topRarity {
+                    // create a random number for picking item
+                    let rand = self.geneRandomPercentage()
+                    if rand < boostingRatio {
+                        // Pick from boosting up items
+                        itemsArrToPick = boostingRarityDic[pickedRarity!]!
+                    }
+                }
+
+                // pick from the item array
+                let randIdx = self.geneRandomInRange(UInt64(itemsArrToPick.length))
+                let pickedItemId = itemsArrToPick[randIdx]
+                let pickedItemInfo = allItems[pickedItemId]!
+
+                // add to Player's inventory
+                let ownedId = inventorySystem.addItemToInventory(playerEntityId, pickedItemId, amount: pickedItemInfo.fungible ? 1.0 : nil)
+                newOwnedItemIds.append(ownedId)
+
+                // add counter to PlayerComponent
+                playerComp.incrementGachaPoolCounter(poolEntityId, amount: 1)
+                // set last pulled rare item
+                if pickedRarity == topRarity {
+                    playerComp.setGachaPoolLastPulledRare(poolEntityId, pickedItemId)
+                }
+
+                // increment pull counter
+                pullCnt = pullCnt + 1
             }
 
             return newOwnedItemIds
@@ -201,7 +208,7 @@ pub contract GachaGameSystem: ISystem {
         ///
         access(all)
         fun onUpdate(_ dt: UFix64): Void {
-            // TODO: Add your system logic here
+            // NOTHING
         }
     }
 
