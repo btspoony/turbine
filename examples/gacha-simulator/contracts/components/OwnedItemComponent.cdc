@@ -14,17 +14,20 @@ pub contract OwnedItemComponent: IComponent {
         pub let exp: UInt64
         pub let level: UInt64
         pub let quality: UInt64
+        pub let quantity: UFix64
 
         init(
             _ itemEntityID: UInt64,
             _ exp: UInt64,
             _ level: UInt64,
-            _ quality: UInt64
+            _ quality: UInt64,
+            _ quantity: UFix64
         ) {
             self.itemEntityID = itemEntityID
             self.exp = exp
             self.level = level
             self.quality = quality
+            self.quantity = quantity
         }
 
         pub fun toDictionary(): {String: AnyStruct?} {
@@ -32,7 +35,8 @@ pub contract OwnedItemComponent: IComponent {
                 "itemEntityID": self.itemEntityID,
                 "exp": self.exp,
                 "level": self.level,
-                "quality": self.quality
+                "quality": self.quality,
+                "quantity": self.quantity
             }
         }
     }
@@ -51,6 +55,7 @@ pub contract OwnedItemComponent: IComponent {
             self.kv["exp"] = 0
             self.kv["level"] = 1
             self.kv["quality"] = 0
+            self.kv["quantity"] = 1.0
         }
 
         /// --- General Interface methods ---
@@ -62,7 +67,8 @@ pub contract OwnedItemComponent: IComponent {
                 "itemEntityID",
                 "exp",
                 "level",
-                "quality"
+                "quality",
+                "quantity"
             ]
         }
 
@@ -81,6 +87,9 @@ pub contract OwnedItemComponent: IComponent {
             if kv["quality"] != nil {
                 self.kv["quality"] = kv["quality"] as! UInt64? ?? panic("Invalid type for quality")
             }
+            if kv["quantity"] != nil {
+                self.kv["quantity"] = kv["quantity"] as! UFix64? ?? panic("Invalid type for quantity")
+            }
         }
 
         access(all)
@@ -89,6 +98,7 @@ pub contract OwnedItemComponent: IComponent {
             self.kv["exp"] = info.exp
             self.kv["level"] = info.level
             self.kv["quality"] = info.quality
+            self.kv["quantity"] = info.quantity
         }
 
         access(all)
@@ -97,7 +107,8 @@ pub contract OwnedItemComponent: IComponent {
                 self.kv["itemEntityID"] as! UInt64,
                 self.kv["exp"] as! UInt64,
                 self.kv["level"] as! UInt64,
-                self.kv["quality"] as! UInt64
+                self.kv["quality"] as! UInt64,
+                self.kv["quantity"] as! UFix64
             )
         }
     }
