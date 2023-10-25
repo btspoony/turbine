@@ -60,6 +60,13 @@ pub contract ItemComponent: IComponent {
         init() {
             self.enabled = true
             self.kv = {}
+
+            self.kv["category"] = ItemCategory.Character
+            self.kv["identity"] = "default"
+            self.kv["rarity"] = 0
+            self.kv["fungible"] = false
+            let traits: {String: UInt8} = {}
+            self.kv["traits"] = traits
         }
 
         /// --- General Interface methods ---
