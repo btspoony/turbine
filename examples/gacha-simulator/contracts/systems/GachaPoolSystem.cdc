@@ -11,6 +11,7 @@ pub contract GachaPoolSystem: ISystem {
     // Events
     pub event GachaPoolAdded(_ entityId: UInt64)
     pub event GachaPoolItemAdded(_ entityId: UInt64, _ itemEntityId: UInt64, probability: UFix64)
+    pub event GachaPoolItemsAdded(_ entityId: UInt64, _ itemEntityIds: [UInt64])
     pub event GachaPoolBoostingItemsSet(_ entityId: UInt64, _ itemEntities: [UInt64])
     pub event GachaPoolCounterSet(_ entityId: UInt64, _ threshold: UInt64, _ probabilityMod: UFix64)
 
@@ -53,6 +54,24 @@ pub contract GachaPoolSystem: ISystem {
             comp.addItem(itemEntityId, probability)
 
             emit GachaPoolItemAdded(poolEntityId, itemEntityId, probability: probability)
+        }
+
+        access(all)
+        fun addItemsToPool(_ poolEntityId: UInt64, itemEntityIds: [UInt64]) {
+            let comp = self.borrowGachaPool(poolEntityId)
+            let itemDic: {UInt64: UFix64} = {}
+            for id in itemEntityIds {
+                itemDic[id] = 0.0
+            }
+            comp.addItems(items: itemDic)
+
+            emit GachaPoolItemsAdded(poolEntityId, itemEntityIds)
+        }
+
+        access(all)
+        fun setRareProbabilityPool(_ poolEntityId: UInt64, _ probPool: {UInt8: UFix64}) {
+            let comp = self.borrowGachaPool(poolEntityId)
+            comp.setRareProbabilityPool(pool: probPool)
         }
 
         access(all)

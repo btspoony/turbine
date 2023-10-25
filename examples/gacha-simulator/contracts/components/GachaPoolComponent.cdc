@@ -5,7 +5,7 @@ pub contract GachaPoolComponent: IComponent {
 
     /// Events
 
-    pub event ItemProbabilityModified(_ uuid: UInt64, itemEntityID: UInt64, extraRatio: UFix64)
+    pub event ItemAdded(_ uuid: UInt64, itemEntityID: UInt64, extraRatio: UFix64)
     pub event BoostingProbabilityItemsModified(_ uuid: UInt64, items: [UInt64], boostingRatio: UFix64)
     pub event RarityProbabilityPoolModified(_ uuid: UInt64, ratioPool: {UInt8: UFix64})
     pub event CounterModifierUpdated(_ uuid: UInt64, threshold: UInt64, probabilityModifier: UFix64)
@@ -144,7 +144,7 @@ pub contract GachaPoolComponent: IComponent {
         pub fun addItem(_ itemEntityID: UInt64, _ extraRatio: UFix64?): Void {
             self.baseProbabilityPool[itemEntityID] = extraRatio ?? 0.0
 
-            emit ItemProbabilityModified(self.uuid, itemEntityID: itemEntityID, extraRatio: extraRatio ?? 0.0)
+            emit ItemAdded(self.uuid, itemEntityID: itemEntityID, extraRatio: extraRatio ?? 0.0)
         }
 
         /// Adds items to the probability pool
@@ -152,13 +152,13 @@ pub contract GachaPoolComponent: IComponent {
         pub fun addItems(items: {UInt64: UFix64}): Void {
             for itemEntityID in items.keys {
                 self.baseProbabilityPool[itemEntityID] = items[itemEntityID] ?? 0.0
-                emit ItemProbabilityModified(self.uuid, itemEntityID: itemEntityID, extraRatio: items[itemEntityID] ?? 0.0)
+                emit ItemAdded(self.uuid, itemEntityID: itemEntityID, extraRatio: items[itemEntityID] ?? 0.0)
             }
         }
 
         /// Set the rarity probability pool
         ///
-        pub fun setRareProbabilityPool(_ pool: {UInt8: UFix64}): Void {
+        pub fun setRareProbabilityPool(pool: {UInt8: UFix64}): Void {
             self.rarityProbabilityPool = pool
 
             emit RarityProbabilityPoolModified(self.uuid, ratioPool: pool)
