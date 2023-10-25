@@ -1,0 +1,826 @@
+{
+  "rarityProbabilityPool": [
+    {
+      "rarity": 3,
+      "probability": "0.943"
+    },
+    {
+      "rarity": 4,
+      "probability": "0.051"
+    },
+    {
+      "rarity": 5,
+      "probability": "0.006"
+    }
+  ],
+  "counterThreshold": 73,
+  "counterProbabilityModifier": "0.006",
+  "boostingProbabilityRatio": "0.5",
+  "boostingProbabilityItems": [],
+  "items": [
+    {
+      "data": {
+        "category": 0,
+        "rarity": 5,
+        "identity": "Char_JingLiu"
+      },
+      "display": {
+        "name": "JingLiu",
+        "description": "Charactor JingLiu",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/b/b5/skmc2r78nn9wkbeyrgcbxuut4f0nz5z.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 5,
+        "identity": "Char_YanQing"
+      },
+      "display": {
+        "name": "YanQing",
+        "description": "Charactor YanQing",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/5/5a/e8surf2k9jw23u61s0epnw4oquvj6ik.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 5,
+        "identity": "Char_BaiLu"
+      },
+      "display": {
+        "name": "BaiLu",
+        "description": "Charactor BaiLu",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/f/f8/5oknkpsrd4eehmrd77ohd14o08xpg0p.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 5,
+        "identity": "Char_Himeko"
+      },
+      "display": {
+        "name": "Himeko",
+        "description": "Charactor Himeko",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/0/08/3gv4qax2cdksleouchs6vr0y8jgdg6g.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 5,
+        "identity": "Char_Gepard"
+      },
+      "display": {
+        "name": "Gepard",
+        "description": "Charactor Gepard",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/8/88/3agvv2qxkyet71zgm3ba66cy1zk8cba.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 5,
+        "identity": "Char_Clara"
+      },
+      "display": {
+        "name": "Clara",
+        "description": "Charactor Clara",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/1/12/6m5mom0ft5sqm5m7imc74l9a2tb2epm.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 5,
+        "identity": "Char_Welt"
+      },
+      "display": {
+        "name": "Welt",
+        "description": "Welt",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/f/fd/pdixxirg30wm7y2ladhf7q59qv9qptp.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 5,
+        "identity": "Char_Bronya"
+      },
+      "display": {
+        "name": "Bronya",
+        "description": "Charactor Bronya",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/f/f2/ewwhu3glp2b9pxts0zmnk6o3hx0wyzi.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Lynx"
+      },
+      "display": {
+        "name": "Lynx",
+        "description": "Lynx",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/5/5f/rz1lnx09wc21fv5m8409f3xpvqbqx99.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Luka"
+      },
+      "display": {
+        "name": "Luka",
+        "description": "Luka",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/1/1f/qb9pytrok6o1ma7fpev9x4vpkafrnfr.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_YuKong"
+      },
+      "display": {
+        "name": "YuKong",
+        "description": "Charactor YuKong",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/5/5a/roqw9zwz3f5n0ok2o9w7t76o0has5h1.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_TingYun"
+      },
+      "display": {
+        "name": "TingYun",
+        "description": "Charactor TingYun",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/e/e5/ftauo8qb1vvrs1pl15764kz1rs3q5bf.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_QingQue"
+      },
+      "display": {
+        "name": "QingQue",
+        "description": "Charactor QingQue",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/0/0f/pvswlbd6mf5vv3hrm1844bgn2n42opl.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Herta"
+      },
+      "display": {
+        "name": "Herta",
+        "description": "Charactor Herta",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/7/71/8cenilo4k3qipbg51cbxhk4lqplig7v.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Arlan"
+      },
+      "display": {
+        "name": "Arlan",
+        "description": "Charactor Arlan",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/1/11/1a47vur36821gyod0yk9mfjoy30f17t.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_SuShang"
+      },
+      "display": {
+        "name": "SuShang",
+        "description": "Charactor SuShang",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/8/8e/tpyxwpq83si1nhhu1bhrsd42k6si5ae.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Natasha"
+      },
+      "display": {
+        "name": "Natasha",
+        "description": "Charactor Natasha",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/2/23/b5ljww54yzx6vtb804y87kkhyl7g4sl.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Serval"
+      },
+      "display": {
+        "name": "Serval",
+        "description": "Charactor Serval",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/e/e5/gs65n8u6m09i8careulnhk7on212otw.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Sampo"
+      },
+      "display": {
+        "name": "Sampo",
+        "description": "Charactor Sampo",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/e/e4/ie116u3a9vdgb7ddnshpyae972olcpn.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Pela"
+      },
+      "display": {
+        "name": "Pela",
+        "description": "Pela",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/7/77/of8ucqcial28pzon8en6bu52kqv1mya.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Hook"
+      },
+      "display": {
+        "name": "Hook",
+        "description": "Hook",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/1/1f/hhpdhxl7l9axo7bx9a7q7r9nvf36s6m.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Merch7th"
+      },
+      "display": {
+        "name": "Merch7th",
+        "description": "Charactor Merch7th",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/5/52/m23phhx1o8xgdvflhfhcp6debtlsial.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Asta"
+      },
+      "display": {
+        "name": "Asta",
+        "description": "Asta",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/2/2f/6dvewh69zisq5d7u4a7rs8emaa6rd3j.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_DanHeng"
+      },
+      "display": {
+        "name": "DanHeng",
+        "description": "Charactor DanHeng",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/7/7e/nyx2cc7w3yv8lytrhi0jn75dylar500.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": ""
+      },
+      "display": {
+        "name": "",
+        "description": "Light Cone - ",
+        "thumbnail": ""
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_此时恰好"
+      },
+      "display": {
+        "name": "此时恰好",
+        "description": "Light Cone - 此时恰好",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/6/61/iv495j58c8fdet5i8sko1ba81f48u70.png/150px-%E6%AD%A4%E6%97%B6%E6%81%B0%E5%A5%BD.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_同一种心情"
+      },
+      "display": {
+        "name": "同一种心情",
+        "description": "Light Cone - 同一种心情",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/7/71/ciwxhdtx0b0jzbmvdv0qrvp3o0s8shk.png/150px-%E5%90%8C%E4%B8%80%E7%A7%8D%E5%BF%83%E6%83%85.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_一场术后对话"
+      },
+      "display": {
+        "name": "一场术后对话",
+        "description": "Light Cone - 一场术后对话",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/2/2e/qephd8t9uw308te2h7puiwzi55itzy1.png/150px-%E4%B8%80%E5%9C%BA%E6%9C%AF%E5%90%8E%E5%AF%B9%E8%AF%9D.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_与行星相会"
+      },
+      "display": {
+        "name": "与行星相会",
+        "description": "Light Cone - 与行星相会",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/0/00/5cl56v29ww6lrnpn1p1len41glannhq.png/150px-%E4%B8%8E%E8%A1%8C%E6%98%9F%E7%9B%B8%E4%BC%9A.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_记忆中的模样"
+      },
+      "display": {
+        "name": "记忆中的模样",
+        "description": "Light Cone - 记忆中的模样",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/2/22/b5x3n7cae4ub17lfct2kw9qzyn1eag6.png/150px-%E8%AE%B0%E5%BF%86%E4%B8%AD%E7%9A%84%E6%A8%A1%E6%A0%B7.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_舞！舞！舞！"
+      },
+      "display": {
+        "name": "舞！舞！舞！",
+        "description": "Light Cone - 舞！舞！舞！",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/2/20/h6m4pvmqh0hq7i88zz00rwyr3hqdbul.png/150px-%E8%88%9E%EF%BC%81%E8%88%9E%EF%BC%81%E8%88%9E%EF%BC%81.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_余生的第一天"
+      },
+      "display": {
+        "name": "余生的第一天",
+        "description": "Light Cone - 余生的第一天",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/8/8c/d4ee8tjaikyg1oshu6annvxdhnpigst.png/150px-%E4%BD%99%E7%94%9F%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A4%A9.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_宇宙市场趋势"
+      },
+      "display": {
+        "name": "宇宙市场趋势",
+        "description": "Light Cone - 宇宙市场趋势",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/e/e9/8uibukvsf9g7yafatcr6z3ih71tugwy.png/150px-%E5%AE%87%E5%AE%99%E5%B8%82%E5%9C%BA%E8%B6%8B%E5%8A%BF.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_朗道的选择"
+      },
+      "display": {
+        "name": "朗道的选择",
+        "description": "Light Cone - 朗道的选择",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/9/95/nssngfddhxojwuwzr4ui75viowtcyhs.png/150px-%E6%9C%97%E9%81%93%E7%9A%84%E9%80%89%E6%8B%A9.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_论剑"
+      },
+      "display": {
+        "name": "论剑",
+        "description": "Light Cone - 论剑",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/0/01/1i790vp2z853u4u7eiwd8pzby26lk3p.png/150px-%E8%AE%BA%E5%89%91.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_唯有沉默"
+      },
+      "display": {
+        "name": "唯有沉默",
+        "description": "Light Cone - 唯有沉默",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/7/79/o72e536subttx210ahh1pxhgg00oajk.png/150px-%E5%94%AF%E6%9C%89%E6%B2%89%E9%BB%98.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_点个关注吧！"
+      },
+      "display": {
+        "name": "点个关注吧！",
+        "description": "Light Cone - 点个关注吧！",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/f/fd/skncz1rl4k44r6i8h7gbhgb62yx9mzf.png/150px-%E7%82%B9%E4%B8%AA%E5%85%B3%E6%B3%A8%E5%90%A7%EF%BC%81.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_天才们的休憩"
+      },
+      "display": {
+        "name": "天才们的休憩",
+        "description": "Light Cone - 天才们的休憩",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/f/fc/4glh3rvpc0lgsuzmsm9jkuhh1zhjskq.png/150px-%E5%A4%A9%E6%89%8D%E4%BB%AC%E7%9A%84%E4%BC%91%E6%86%A9.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_「我」的诞生"
+      },
+      "display": {
+        "name": "「我」的诞生",
+        "description": "Light Cone - 「我」的诞生",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/3/3d/e936oqxwgkkjry0hnxrxwa0mvpblp8n.png/150px-%E3%80%8C%E6%88%91%E3%80%8D%E7%9A%84%E8%AF%9E%E7%94%9F.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_别让世界静下来"
+      },
+      "display": {
+        "name": "别让世界静下来",
+        "description": "Light Cone - 别让世界静下来",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/7/77/elt9omhqfwefide3yhb9e3a7d3c84b6.png/150px-%E5%88%AB%E8%AE%A9%E4%B8%96%E7%95%8C%E9%9D%99%E4%B8%8B%E6%9D%A5.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_在蓝天下"
+      },
+      "display": {
+        "name": "在蓝天下",
+        "description": "Light Cone - 在蓝天下",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/c/ce/pbsxitugh0f2bw59ad7xn71qdy0t82h.png/150px-%E5%9C%A8%E8%93%9D%E5%A4%A9%E4%B8%8B.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_鼹鼠党欢迎你"
+      },
+      "display": {
+        "name": "鼹鼠党欢迎你",
+        "description": "Light Cone - 鼹鼠党欢迎你",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/4/4d/p3qhuopa71dtvj82jvvr7t51ml1onji.png/150px-%E9%BC%B9%E9%BC%A0%E5%85%9A%E6%AC%A2%E8%BF%8E%E4%BD%A0.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_秘密誓心"
+      },
+      "display": {
+        "name": "秘密誓心",
+        "description": "Light Cone - 秘密誓心",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/b/b8/0ivpjfh5uml71p8z3ejcntnbcsvtcdr.png/150px-%E7%A7%98%E5%AF%86%E8%AA%93%E5%BF%83.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_决心如汗珠般闪耀"
+      },
+      "display": {
+        "name": "决心如汗珠般闪耀",
+        "description": "Light Cone - 决心如汗珠般闪耀",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/e/ee/lxf9170hekk45caz9lutfh10ln4a7o1.png/150px-%E5%86%B3%E5%BF%83%E5%A6%82%E6%B1%97%E7%8F%A0%E8%88%AC%E9%97%AA%E8%80%80.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_猎物的视线"
+      },
+      "display": {
+        "name": "猎物的视线",
+        "description": "Light Cone - 猎物的视线",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/1/14/hb5cqdyuvmy265318ak4t99s6p9hcaj.png/150px-%E7%8C%8E%E7%89%A9%E7%9A%84%E8%A7%86%E7%BA%BF.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 4,
+        "identity": "LC_晚安与睡颜"
+      },
+      "display": {
+        "name": "晚安与睡颜",
+        "description": "Light Cone - 晚安与睡颜",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/2/2e/m4x2ul3sipzx9dsgys8g9c6r575birq.png/150px-%E6%99%9A%E5%AE%89%E4%B8%8E%E7%9D%A1%E9%A2%9C.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_物穰"
+      },
+      "display": {
+        "name": "物穰",
+        "description": "Light Cone - 物穰",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/d/d7/nxwi8f4hjck6qwjrkt2comxowcnutig.png/150px-%E7%89%A9%E7%A9%B0.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_嘉果"
+      },
+      "display": {
+        "name": "嘉果",
+        "description": "Light Cone - 嘉果",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/0/09/aihfwqgaaa2le03xod920w4ywqn0vcv.png/150px-%E5%98%89%E6%9E%9C.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_蕃息"
+      },
+      "display": {
+        "name": "蕃息",
+        "description": "Light Cone - 蕃息",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/e/ef/mfxtkce7g5tohmfoigz3cctcwe04m6d.png/150px-%E8%95%83%E6%81%AF.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_齐颂"
+      },
+      "display": {
+        "name": "齐颂",
+        "description": "Light Cone - 齐颂",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/0/07/du8xfhjioaibncjjti9w6jtt2ug281k.png/150px-%E9%BD%90%E9%A2%82.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_轮契"
+      },
+      "display": {
+        "name": "轮契",
+        "description": "Light Cone - 轮契",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/c/cc/efhwx1g43jjg4t89v58n0op1ibe82hc.png/150px-%E8%BD%AE%E5%A5%91.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_调和"
+      },
+      "display": {
+        "name": "调和",
+        "description": "Light Cone - 调和",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/c/cc/h206ovg4m48gvx6gl1qldl3ammooktl.png/150px-%E8%B0%83%E5%92%8C.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_戍御"
+      },
+      "display": {
+        "name": "戍御",
+        "description": "Light Cone - 戍御",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/c/cf/dbv94baww8hy7u8o85737b43vs4937d.png/150px-%E6%88%8D%E5%BE%A1.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_开疆"
+      },
+      "display": {
+        "name": "开疆",
+        "description": "Light Cone - 开疆",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/1/15/hbhu5rx2opcdchqtctgxyh4y7vx3llf.png/150px-%E5%BC%80%E7%96%86.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_琥珀"
+      },
+      "display": {
+        "name": "琥珀",
+        "description": "Light Cone - 琥珀",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/e/ea/sa4gfnn0fuqsa1uo0uqcegsl2ef1chp.png/150px-%E7%90%A5%E7%8F%80.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_离弦"
+      },
+      "display": {
+        "name": "离弦",
+        "description": "Light Cone - 离弦",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/9/95/0zg1osnxz3amdob0al47d3w4qqq879p.png/150px-%E7%A6%BB%E5%BC%A6.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_锋镝"
+      },
+      "display": {
+        "name": "锋镝",
+        "description": "Light Cone - 锋镝",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/d/df/anx6amafcdf503gvsn748brgvsoznwv.png/150px-%E9%94%8B%E9%95%9D.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_相抗"
+      },
+      "display": {
+        "name": "相抗",
+        "description": "Light Cone - 相抗",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/9/9a/ss1jgpi4qc2rp5niii83da9s2y5y9tl.png/150px-%E7%9B%B8%E6%8A%97.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_灵钥"
+      },
+      "display": {
+        "name": "灵钥",
+        "description": "Light Cone - 灵钥",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/8/8e/cgqhvkjud49yghc444m2swg39radnz3.png/150px-%E7%81%B5%E9%92%A5.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_睿见"
+      },
+      "display": {
+        "name": "睿见",
+        "description": "Light Cone - 睿见",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/f/f2/1zx05dmmkw58y5cwdxql27skb9ha8j5.png/150px-%E7%9D%BF%E8%A7%81.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_智库"
+      },
+      "display": {
+        "name": "智库",
+        "description": "Light Cone - 智库",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/0/02/mqh47wgxyj9eqz5qkyww0errv2nqdi5.png/150px-%E6%99%BA%E5%BA%93.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_乐圮"
+      },
+      "display": {
+        "name": "乐圮",
+        "description": "Light Cone - 乐圮",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/a/a1/69886t3b4zzj5g7y5ghcdv58thoc8m4.png/150px-%E4%B9%90%E5%9C%AE.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_天倾"
+      },
+      "display": {
+        "name": "天倾",
+        "description": "Light Cone - 天倾",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/a/a3/9b965xxgstcd8z3x842gb81yirbxi9a.png/150px-%E5%A4%A9%E5%80%BE.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_俱殁"
+      },
+      "display": {
+        "name": "俱殁",
+        "description": "Light Cone - 俱殁",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/a/af/ggdjxy5uv2rj8mt97fv9hcv49i1idx1.png/150px-%E4%BF%B1%E6%AE%81.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_幽邃"
+      },
+      "display": {
+        "name": "幽邃",
+        "description": "Light Cone - 幽邃",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/6/68/2qpvuwwba3n35zxzdm6x1m696p7dw65.png/150px-%E5%B9%BD%E9%82%83.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_匿影"
+      },
+      "display": {
+        "name": "匿影",
+        "description": "Light Cone - 匿影",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/2/23/jk5hxo3eo4ju8gxc8wvzuo0rg3ko6g6.png/150px-%E5%8C%BF%E5%BD%B1.png"
+      }
+    },
+    {
+      "data": {
+        "category": 1,
+        "rarity": 3,
+        "identity": "LC_渊环"
+      },
+      "display": {
+        "name": "渊环",
+        "description": "Light Cone - 渊环",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/d/d6/em6kh6mhfxmf4jix3hc967bof529st0.png/150px-%E6%B8%8A%E7%8E%AF.png"
+      }
+    }
+  ]
+}

@@ -14,6 +14,7 @@ Basics:
 
 角色一览-镜流 JingLiu
 
+- Key: Char_JingLiu
 - UpOnly: true
 - Rarity: 5
 
@@ -21,6 +22,7 @@ Basics:
 
 角色一览-符玄 FuXuan
 
+- Key: Char_FuXuan
 - UpOnly: true
 - Rarity: 5
 
@@ -28,6 +30,7 @@ Basics:
 
 角色一览-丹恒•饮月 Dan Heng * Imbibitor Lunae
 
+- Key: Char_DanHeng_ImbibitorLunae
 - UpOnly: true
 - Rarity: 5
 
@@ -35,6 +38,7 @@ Basics:
 
 角色一览-卡芙卡 Kafka
 
+- Key: Char_Kafka
 - UpOnly: true
 - Rarity: 5
 
@@ -42,6 +46,7 @@ Basics:
 
 角色一览-刃 Blade
 
+- Key: Char_Blade
 - UpOnly: true
 - Rarity: 5
 
@@ -49,6 +54,7 @@ Basics:
 
 角色一览-罗刹 Luocha
 
+- Key: Char_Luocha
 - UpOnly: true
 - Rarity: 5
 
@@ -56,6 +62,7 @@ Basics:
 
 角色一览-银狼 Silver Wolf
 
+- Key: Char_SilverWolf
 - UpOnly: true
 - Rarity: 5
 
@@ -63,29 +70,15 @@ Basics:
 
 角色一览-景元 JingYuan
 
+- Key: Char_JingYuan
 - UpOnly: true
 - Rarity: 5
 
 ![角色一览-景元](https://patchwiki.biligame.com/images/sr/0/08/pveenzc88gdslg14opkac9o85qpkdz9.png)
 
-角色一览-开拓者•存护 Trailblazer * Custos
-
-- UpOnly: false
-- Rarity: 5
-- Pullable: false
-
-![角色一览-开拓者•存护](https://patchwiki.biligame.com/images/sr/a/ae/sy92hmpuyr8egyqgsjre9pfblidoky4.png)
-
-角色一览-开拓者•毁灭 Trailblazer * Exterminator
-
-- UpOnly: false
-- Rarity: 5
-- Pullable: false
-
-![角色一览-开拓者•毁灭](https://patchwiki.biligame.com/images/sr/b/b8/qq2a8rl6a14zl2u2v7d9jll3hwjep13.png)
-
 角色一览-彦卿 YanQing
 
+- Key: Char_YanQing
 - UpOnly: false
 - Rarity: 5
 
@@ -93,6 +86,7 @@ Basics:
 
 角色一览-白露 BaiLu
 
+- Key: Char_BaiLu
 - UpOnly: false
 - Rarity: 5
 
@@ -100,6 +94,7 @@ Basics:
 
 角色一览-姬子 Himeko
 
+- Key: Char_Himeko
 - UpOnly: false
 - Rarity: 5
 
@@ -107,6 +102,7 @@ Basics:
 
 角色一览-杰帕德 Gepard
 
+- Key: Char_Gepard
 - UpOnly: false
 - Rarity: 5
 
@@ -114,6 +110,7 @@ Basics:
 
 角色一览-克拉拉 Clara
 
+- Key: Char_Clara
 - UpOnly: false
 - Rarity: 5
 
@@ -121,6 +118,7 @@ Basics:
 
 角色一览-瓦尔特 Welt
 
+- Key: Char_Welt
 - UpOnly: false
 - Rarity: 5
 
@@ -128,6 +126,7 @@ Basics:
 
 角色一览-希儿 Seele
 
+- Key: Char_Seele
 - UpOnly: true
 - Rarity: 5
 
@@ -135,6 +134,7 @@ Basics:
 
 角色一览-布洛妮娅 Bronya
 
+- Key: Char_Bronya
 - UpOnly: false
 - Rarity: 5
 
@@ -142,6 +142,7 @@ Basics:
 
 角色一览-玲可 Lynx
 
+- Key: Char_Lynx
 - UpOnly: false
 - Rarity: 4
 
@@ -149,6 +150,7 @@ Basics:
 
 角色一览-卢卡 Luka
 
+- Key: Char_Luka
 - UpOnly: false
 - Rarity: 4
 
@@ -156,6 +158,7 @@ Basics:
 
 角色一览-驭空 YuKong
 
+- Key: Char_YuKong
 - UpOnly: false
 - Rarity: 4
 
@@ -163,6 +166,7 @@ Basics:
 
 角色一览-停云 TingYun
 
+- Key: Char_TingYun
 - UpOnly: false
 - Rarity: 4
 
@@ -170,6 +174,7 @@ Basics:
 
 角色一览-青雀 QingQue
 
+- Key: Char_QingQue
 - UpOnly: false
 - Rarity: 4
 
@@ -177,6 +182,7 @@ Basics:
 
 角色一览-黑塔 Herta
 
+- Key: Char_Herta
 - UpOnly: false
 - Rarity: 4
 
@@ -184,6 +190,7 @@ Basics:
 
 角色一览-阿兰 Arlan
 
+- Key: Char_Arlan
 - UpOnly: false
 - Rarity: 4
 
@@ -191,6 +198,7 @@ Basics:
 
 角色一览-素裳 SuShang
 
+- Key: Char_SuShang
 - UpOnly: false
 - Rarity: 4
 
@@ -198,6 +206,7 @@ Basics:
 
 角色一览-娜塔莎 Natasha
 
+- Key: Char_Natasha
 - UpOnly: false
 - Rarity: 4
 
@@ -205,6 +214,7 @@ Basics:
 
 角色一览-希露瓦 Serval
 
+- Key: Char_Serval
 - UpOnly: false
 - Rarity: 4
 
@@ -212,6 +222,7 @@ Basics:
 
 角色一览-桑博 Sampo
 
+- Key: Char_Sampo
 - UpOnly: false
 - Rarity: 4
 
@@ -219,6 +230,7 @@ Basics:
 
 角色一览-佩拉 Pela
 
+- Key: Char_Pela
 - UpOnly: false
 - Rarity: 4
 
@@ -226,6 +238,7 @@ Basics:
 
 角色一览-虎克 Hook
 
+- Key: Char_Hook
 - UpOnly: false
 - Rarity: 4
 
@@ -233,6 +246,7 @@ Basics:
 
 角色一览-三月七 Merch 7th
 
+- Key: Char_Merch7th
 - UpOnly: false
 - Rarity: 4
 
@@ -240,6 +254,7 @@ Basics:
 
 角色一览-艾丝妲 Asta
 
+- Key: Char_Asta
 - UpOnly: false
 - Rarity: 4
 
@@ -247,96 +262,285 @@ Basics:
 
 角色一览-丹恒 DanHeng
 
+- Key: Char_DanHeng
 - UpOnly: false
 - Rarity: 4
 
 ![角色一览-丹恒](https://patchwiki.biligame.com/images/sr/7/7e/nyx2cc7w3yv8lytrhi0jn75dylar500.png)
 
+---
+
+角色一览-开拓者•存护 Trailblazer * Custos
+
+- Key: Char_Trailblazer_Custos
+- UpOnly: false
+- Rarity: 5
+- Pullable: false
+
+![开拓者•存护](https://patchwiki.biligame.com/images/sr/a/ae/sy92hmpuyr8egyqgsjre9pfblidoky4.png)
+
+角色一览-开拓者•毁灭 Trailblazer * Exterminator
+
+- Key: Char_Trailblazer_Exterminator
+- UpOnly: false
+- Rarity: 5
+- Pullable: false
+
+![开拓者•毁灭](https://patchwiki.biligame.com/images/sr/b/b8/qq2a8rl6a14zl2u2v7d9jll3hwjep13.png)
+
 ## Weapon(Light Cone)
 
 ### Available in Charactor Gacha
 
+- Key: LC_此时恰好
+- Rarity: 4
+- UpOnly: false
+
 ![此时恰好.png](https://patchwiki.biligame.com/images/sr/thumb/6/61/iv495j58c8fdet5i8sko1ba81f48u70.png/150px-%E6%AD%A4%E6%97%B6%E6%81%B0%E5%A5%BD.png)
+
+- Key: LC_同一种心情
+- Rarity: 4
+- UpOnly: false
 
 ![同一种心情.png](https://patchwiki.biligame.com/images/sr/thumb/7/71/ciwxhdtx0b0jzbmvdv0qrvp3o0s8shk.png/150px-%E5%90%8C%E4%B8%80%E7%A7%8D%E5%BF%83%E6%83%85.png)
 
+- Key: LC_一场术后对话
+- Rarity: 4
+- UpOnly: false
+
 ![一场术后对话.png](https://patchwiki.biligame.com/images/sr/thumb/2/2e/qephd8t9uw308te2h7puiwzi55itzy1.png/150px-%E4%B8%80%E5%9C%BA%E6%9C%AF%E5%90%8E%E5%AF%B9%E8%AF%9D.png)
+
+- Key: LC_与行星相会
+- Rarity: 4
+- UpOnly: false
 
 ![与行星相会.png](https://patchwiki.biligame.com/images/sr/thumb/0/00/5cl56v29ww6lrnpn1p1len41glannhq.png/150px-%E4%B8%8E%E8%A1%8C%E6%98%9F%E7%9B%B8%E4%BC%9A.png)
 
+- Key: LC_记忆中的模样
+- Rarity: 4
+- UpOnly: false
+
 ![记忆中的模样.png](https://patchwiki.biligame.com/images/sr/thumb/2/22/b5x3n7cae4ub17lfct2kw9qzyn1eag6.png/150px-%E8%AE%B0%E5%BF%86%E4%B8%AD%E7%9A%84%E6%A8%A1%E6%A0%B7.png)
+
+- Key: LC_舞！舞！舞！
+- Rarity: 4
+- UpOnly: false
 
 ![舞！舞！舞！.png](https://patchwiki.biligame.com/images/sr/thumb/2/20/h6m4pvmqh0hq7i88zz00rwyr3hqdbul.png/150px-%E8%88%9E%EF%BC%81%E8%88%9E%EF%BC%81%E8%88%9E%EF%BC%81.png)
 
+- Key: LC_余生的第一天
+- Rarity: 4
+- UpOnly: false
+
 ![余生的第一天.png](https://patchwiki.biligame.com/images/sr/thumb/8/8c/d4ee8tjaikyg1oshu6annvxdhnpigst.png/150px-%E4%BD%99%E7%94%9F%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A4%A9.png)
+
+- Key: LC_宇宙市场趋势
+- Rarity: 4
+- UpOnly: false
 
 ![宇宙市场趋势.png](https://patchwiki.biligame.com/images/sr/thumb/e/e9/8uibukvsf9g7yafatcr6z3ih71tugwy.png/150px-%E5%AE%87%E5%AE%99%E5%B8%82%E5%9C%BA%E8%B6%8B%E5%8A%BF.png)
 
+- Key: LC_朗道的选择
+- Rarity: 4
+- UpOnly: false
+
 ![朗道的选择.png](https://patchwiki.biligame.com/images/sr/thumb/9/95/nssngfddhxojwuwzr4ui75viowtcyhs.png/150px-%E6%9C%97%E9%81%93%E7%9A%84%E9%80%89%E6%8B%A9.png)
+
+- Key: LC_论剑
+- Rarity: 4
+- UpOnly: false
 
 ![论剑.png](https://patchwiki.biligame.com/images/sr/thumb/0/01/1i790vp2z853u4u7eiwd8pzby26lk3p.png/150px-%E8%AE%BA%E5%89%91.png)
 
+- Key: LC_唯有沉默
+- Rarity: 4
+- UpOnly: false
+
 ![唯有沉默.png](https://patchwiki.biligame.com/images/sr/thumb/7/79/o72e536subttx210ahh1pxhgg00oajk.png/150px-%E5%94%AF%E6%9C%89%E6%B2%89%E9%BB%98.png)
+
+- Key: LC_点个关注吧！
+- Rarity: 4
+- UpOnly: false
 
 ![点个关注吧！.png](https://patchwiki.biligame.com/images/sr/thumb/f/fd/skncz1rl4k44r6i8h7gbhgb62yx9mzf.png/150px-%E7%82%B9%E4%B8%AA%E5%85%B3%E6%B3%A8%E5%90%A7%EF%BC%81.png)
 
+- Key: LC_天才们的休憩
+- Rarity: 4
+- UpOnly: false
+
 ![天才们的休憩.png](https://patchwiki.biligame.com/images/sr/thumb/f/fc/4glh3rvpc0lgsuzmsm9jkuhh1zhjskq.png/150px-%E5%A4%A9%E6%89%8D%E4%BB%AC%E7%9A%84%E4%BC%91%E6%86%A9.png)
+
+- Key: LC_「我」的诞生
+- Rarity: 4
+- UpOnly: false
 
 ![「我」的诞生.png](https://patchwiki.biligame.com/images/sr/thumb/3/3d/e936oqxwgkkjry0hnxrxwa0mvpblp8n.png/150px-%E3%80%8C%E6%88%91%E3%80%8D%E7%9A%84%E8%AF%9E%E7%94%9F.png)
 
+- Key: LC_别让世界静下来
+- Rarity: 4
+- UpOnly: false
+
 ![别让世界静下来.png](https://patchwiki.biligame.com/images/sr/thumb/7/77/elt9omhqfwefide3yhb9e3a7d3c84b6.png/150px-%E5%88%AB%E8%AE%A9%E4%B8%96%E7%95%8C%E9%9D%99%E4%B8%8B%E6%9D%A5.png)
+
+- Key: LC_在蓝天下
+- Rarity: 4
+- UpOnly: false
 
 ![在蓝天下.png](https://patchwiki.biligame.com/images/sr/thumb/c/ce/pbsxitugh0f2bw59ad7xn71qdy0t82h.png/150px-%E5%9C%A8%E8%93%9D%E5%A4%A9%E4%B8%8B.png)
 
+- Key: LC_鼹鼠党欢迎你
+- Rarity: 4
+- UpOnly: false
+
 ![鼹鼠党欢迎你.png](https://patchwiki.biligame.com/images/sr/thumb/4/4d/p3qhuopa71dtvj82jvvr7t51ml1onji.png/150px-%E9%BC%B9%E9%BC%A0%E5%85%9A%E6%AC%A2%E8%BF%8E%E4%BD%A0.png)
+
+- Key: LC_秘密誓心
+- Rarity: 4
+- UpOnly: false
 
 ![秘密誓心.png](https://patchwiki.biligame.com/images/sr/thumb/b/b8/0ivpjfh5uml71p8z3ejcntnbcsvtcdr.png/150px-%E7%A7%98%E5%AF%86%E8%AA%93%E5%BF%83.png)
 
+- Key: LC_决心如汗珠般闪耀
+- Rarity: 4
+- UpOnly: false
+
 ![决心如汗珠般闪耀.png](https://patchwiki.biligame.com/images/sr/thumb/e/ee/lxf9170hekk45caz9lutfh10ln4a7o1.png/150px-%E5%86%B3%E5%BF%83%E5%A6%82%E6%B1%97%E7%8F%A0%E8%88%AC%E9%97%AA%E8%80%80.png)
+
+- Key: LC_猎物的视线
+- Rarity: 4
+- UpOnly: false
 
 ![猎物的视线.png](https://patchwiki.biligame.com/images/sr/thumb/1/14/hb5cqdyuvmy265318ak4t99s6p9hcaj.png/150px-%E7%8C%8E%E7%89%A9%E7%9A%84%E8%A7%86%E7%BA%BF.png)
 
+- Key: LC_晚安与睡颜
+- Rarity: 4
+- UpOnly: false
+
 ![晚安与睡颜.png](https://patchwiki.biligame.com/images/sr/thumb/2/2e/m4x2ul3sipzx9dsgys8g9c6r575birq.png/150px-%E6%99%9A%E5%AE%89%E4%B8%8E%E7%9D%A1%E9%A2%9C.png)
+
+- Key: LC_物穰
+- Rarity: 3
+- UpOnly: false
 
 ![物穰.png](https://patchwiki.biligame.com/images/sr/thumb/d/d7/nxwi8f4hjck6qwjrkt2comxowcnutig.png/150px-%E7%89%A9%E7%A9%B0.png)
 
+- Key: LC_嘉果
+- Rarity: 3
+- UpOnly: false
+
 ![嘉果.png](https://patchwiki.biligame.com/images/sr/thumb/0/09/aihfwqgaaa2le03xod920w4ywqn0vcv.png/150px-%E5%98%89%E6%9E%9C.png)
+
+- Key: LC_蕃息
+- Rarity: 3
+- UpOnly: false
 
 ![蕃息.png](https://patchwiki.biligame.com/images/sr/thumb/e/ef/mfxtkce7g5tohmfoigz3cctcwe04m6d.png/150px-%E8%95%83%E6%81%AF.png)
 
+- Key: LC_齐颂
+- Rarity: 3
+- UpOnly: false
+
 ![齐颂.png](https://patchwiki.biligame.com/images/sr/thumb/0/07/du8xfhjioaibncjjti9w6jtt2ug281k.png/150px-%E9%BD%90%E9%A2%82.png)
+
+- Key: LC_轮契
+- Rarity: 3
+- UpOnly: false
 
 ![轮契.png](https://patchwiki.biligame.com/images/sr/thumb/c/cc/efhwx1g43jjg4t89v58n0op1ibe82hc.png/150px-%E8%BD%AE%E5%A5%91.png)
 
+- Key: LC_调和
+- Rarity: 3
+- UpOnly: false
+
 ![调和.png](https://patchwiki.biligame.com/images/sr/thumb/c/cc/h206ovg4m48gvx6gl1qldl3ammooktl.png/150px-%E8%B0%83%E5%92%8C.png)
+
+- Key: LC_戍御
+- Rarity: 3
+- UpOnly: false
 
 ![戍御.png](https://patchwiki.biligame.com/images/sr/thumb/c/cf/dbv94baww8hy7u8o85737b43vs4937d.png/150px-%E6%88%8D%E5%BE%A1.png)
 
+- Key: LC_开疆
+- Rarity: 3
+- UpOnly: false
+
 ![开疆.png](https://patchwiki.biligame.com/images/sr/thumb/1/15/hbhu5rx2opcdchqtctgxyh4y7vx3llf.png/150px-%E5%BC%80%E7%96%86.png)
+
+- Key: LC_琥珀
+- Rarity: 3
+- UpOnly: false
 
 ![琥珀.png](https://patchwiki.biligame.com/images/sr/thumb/e/ea/sa4gfnn0fuqsa1uo0uqcegsl2ef1chp.png/150px-%E7%90%A5%E7%8F%80.png)
 
+- Key: LC_离弦
+- Rarity: 3
+- UpOnly: false
+
 ![离弦.png](https://patchwiki.biligame.com/images/sr/thumb/9/95/0zg1osnxz3amdob0al47d3w4qqq879p.png/150px-%E7%A6%BB%E5%BC%A6.png)
+
+- Key: LC_锋镝
+- Rarity: 3
+- UpOnly: false
 
 ![锋镝.png](https://patchwiki.biligame.com/images/sr/thumb/d/df/anx6amafcdf503gvsn748brgvsoznwv.png/150px-%E9%94%8B%E9%95%9D.png)
 
+- Key: LC_相抗
+- Rarity: 3
+- UpOnly: false
+
 ![相抗.png](https://patchwiki.biligame.com/images/sr/thumb/9/9a/ss1jgpi4qc2rp5niii83da9s2y5y9tl.png/150px-%E7%9B%B8%E6%8A%97.png)
+
+- Key: LC_灵钥
+- Rarity: 3
+- UpOnly: false
 
 ![灵钥.png](https://patchwiki.biligame.com/images/sr/thumb/8/8e/cgqhvkjud49yghc444m2swg39radnz3.png/150px-%E7%81%B5%E9%92%A5.png)
 
+- Key: LC_睿见
+- Rarity: 3
+- UpOnly: false
+
 ![睿见.png](https://patchwiki.biligame.com/images/sr/thumb/f/f2/1zx05dmmkw58y5cwdxql27skb9ha8j5.png/150px-%E7%9D%BF%E8%A7%81.png)
+
+- Key: LC_智库
+- Rarity: 3
+- UpOnly: false
 
 ![智库.png](https://patchwiki.biligame.com/images/sr/thumb/0/02/mqh47wgxyj9eqz5qkyww0errv2nqdi5.png/150px-%E6%99%BA%E5%BA%93.png)
 
+- Key: LC_乐圮
+- Rarity: 3
+- UpOnly: false
+
 ![乐圮.png](https://patchwiki.biligame.com/images/sr/thumb/a/a1/69886t3b4zzj5g7y5ghcdv58thoc8m4.png/150px-%E4%B9%90%E5%9C%AE.png)
+
+- Key: LC_天倾
+- Rarity: 3
+- UpOnly: false
 
 ![天倾.png](https://patchwiki.biligame.com/images/sr/thumb/a/a3/9b965xxgstcd8z3x842gb81yirbxi9a.png/150px-%E5%A4%A9%E5%80%BE.png)
 
+- Key: LC_俱殁
+- Rarity: 3
+- UpOnly: false
+
 ![俱殁.png](https://patchwiki.biligame.com/images/sr/thumb/a/af/ggdjxy5uv2rj8mt97fv9hcv49i1idx1.png/150px-%E4%BF%B1%E6%AE%81.png)
+
+- Key: LC_幽邃
+- Rarity: 3
+- UpOnly: false
 
 ![幽邃.png](https://patchwiki.biligame.com/images/sr/thumb/6/68/2qpvuwwba3n35zxzdm6x1m696p7dw65.png/150px-%E5%B9%BD%E9%82%83.png)
 
+- Key: LC_匿影
+- Rarity: 3
+- UpOnly: false
+
 ![匿影.png](https://patchwiki.biligame.com/images/sr/thumb/2/23/jk5hxo3eo4ju8gxc8wvzuo0rg3ko6g6.png/150px-%E5%8C%BF%E5%BD%B1.png)
+
+- Key: LC_渊环
+- Rarity: 3
+- UpOnly: false
 
 ![渊环.png](https://patchwiki.biligame.com/images/sr/thumb/d/d6/em6kh6mhfxmf4jix3hc967bof529st0.png/150px-%E6%B8%8A%E7%8E%AF.png)
 
