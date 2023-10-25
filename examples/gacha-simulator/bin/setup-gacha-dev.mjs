@@ -1,7 +1,8 @@
-import fs from "node:fs/promises";
-import path from "node:path";
+import cp from "node:child_process";
+// import fs from "node:fs/promises";
+// import path from "node:path";
 
-import json from "./hsr-gacha-1.4.json" assert { type: "json" };
+import json from "../reference/hsr-gacha-1.4.json" assert { type: "json" };
 
 // Build Transaction
 function generateSetupTransactionParams() {
@@ -86,5 +87,8 @@ function generateSetupTransactionParams() {
   return params;
 }
 
-const paramsJson = JSON.stringify(generateSetupTransactionParams());
-fs.writeFile(path.resolve(process.cwd(), "./tmp-gene-params.json"), paramsJson);
+const paramsJsonStr = JSON.stringify(generateSetupTransactionParams());
+
+cp.execSync(
+  `flow transactions send ./transactions/platform/setup-gacha-pool.cdc --args-json='${paramsJsonStr}' --signer=default`
+);
