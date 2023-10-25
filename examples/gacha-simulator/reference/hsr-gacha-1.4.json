@@ -16,7 +16,12 @@
   "counterThreshold": 73,
   "counterProbabilityModifier": "0.006",
   "boostingProbabilityRatio": "0.5",
-  "boostingProbabilityItems": [],
+  "boostingProbabilityItems": [
+    "Char_JingLiu",
+    "Char_TingYun",
+    "Char_QingQue",
+    "Char_Sampo"
+  ],
   "items": [
     {
       "data": {
