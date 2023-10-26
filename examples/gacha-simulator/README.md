@@ -2,7 +2,13 @@
 
 ## How to use (for Developement)
 
-> Initialize a gacha world
+> Deploy contracts to local emulator
+
+```bash
+pnpm dev
+```
+
+> Initialize a gacha world (name: sample)
 
 ```bash
 node bin/init-world.mjs
@@ -16,7 +22,7 @@ Setup Gacha Pool referred from "Honkai Starrail 1.4 version"
 node bin/setup-gacha-dev.mjs
 ```
 
-> Pull Items from Gacha pool (for Dev)
+> Pull Items from Gacha pool (for Dev, user: bt.wood, times: 10)
 
 ```bash
 node bin/pull-gacha-dev.mjs
