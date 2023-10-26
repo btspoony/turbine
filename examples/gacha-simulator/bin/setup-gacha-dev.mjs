@@ -90,6 +90,6 @@ function generateSetupTransactionParams() {
 const paramsJsonStr = JSON.stringify(generateSetupTransactionParams());
 
 const out = cp.execSync(
-  `flow transactions send ./transactions/platform/setup-gacha-pool.cdc --args-json='${paramsJsonStr}' --signer=default`
+  `flow transactions send ./transactions/platform/setup-gacha-pool.cdc --args-json='${paramsJsonStr}' --signer=default --gas-limit 9999`
 );
 console.log("Result: ", out.toString());

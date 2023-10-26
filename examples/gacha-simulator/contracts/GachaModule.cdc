@@ -7,6 +7,7 @@ import "InventoryComponent"
 import "ItemComponent"
 import "OwnedItemComponent"
 import "PlayerComponent"
+import "DisplayComponent"
 import "GachaGameSystem"
 import "GachaPoolSystem"
 import "InventorySystem"
@@ -42,6 +43,7 @@ pub contract GachaModule: IModule {
         access(all)
         fun loadComponentFactories(): @[AnyResource{IComponent.ComponentFactory}] {
             let ret: @[AnyResource{IComponent.ComponentFactory}] <- []
+            ret.append(<- DisplayComponent.createFactory())
             ret.append(<- GachaPoolComponent.createFactory())
             ret.append(<- IdentityComponent.createFactory())
             ret.append(<- InventoryComponent.createFactory())
