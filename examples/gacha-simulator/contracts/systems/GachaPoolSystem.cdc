@@ -11,10 +11,10 @@ pub contract GachaPoolSystem: ISystem {
 
     // Events
     pub event GachaPoolAdded(_ entityId: UInt64, name: String)
-    pub event GachaPoolItemAdded(_ entityId: UInt64, _ itemEntityId: UInt64, probability: UFix64)
-    pub event GachaPoolItemsAdded(_ entityId: UInt64, _ itemEntityIds: [UInt64])
-    pub event GachaPoolBoostingItemsSet(_ entityId: UInt64, _ itemEntities: [UInt64])
-    pub event GachaPoolCounterSet(_ entityId: UInt64, _ threshold: UInt64, _ probabilityMod: UFix64)
+    pub event GachaPoolItemAdded(_ entityId: UInt64, name: String, item: UInt64, probability: UFix64)
+    pub event GachaPoolItemsAdded(_ entityId: UInt64, name: String, items: [UInt64])
+    pub event GachaPoolBoostingItemsSet(_ entityId: UInt64, name: String, items: [UInt64])
+    pub event GachaPoolCounterSet(_ entityId: UInt64, name: String, threshold: UInt64, mod: UFix64)
 
     pub resource System: ISystem.CoreLifecycle, Context.Consumer {
         access(contract)
@@ -102,7 +102,12 @@ pub contract GachaPoolSystem: ISystem {
             let comp = self.borrowGachaPool(poolEntityId)
             comp.addItem(itemEntityId, probability)
 
-            emit GachaPoolItemAdded(poolEntityId, itemEntityId, probability: probability)
+            emit GachaPoolItemAdded(
+                poolEntityId,
+                name: comp.getName(),
+                item: itemEntityId,
+                probability: probability
+            )
         }
 
         /// Addd multiple items to the pool
@@ -116,7 +121,11 @@ pub contract GachaPoolSystem: ISystem {
             }
             comp.addItems(items: itemDic)
 
-            emit GachaPoolItemsAdded(poolEntityId, itemEntityIds)
+            emit GachaPoolItemsAdded(
+                poolEntityId,
+                name: comp.getName(),
+                items: itemEntityIds
+            )
         }
 
         /// Set the rare probability pool
@@ -132,7 +141,11 @@ pub contract GachaPoolSystem: ISystem {
             let comp = self.borrowGachaPool(poolEntityId)
             comp.setBoostingProbabilityItems(itemEntities, probability)
 
-            emit GachaPoolBoostingItemsSet(poolEntityId, itemEntities)
+            emit GachaPoolBoostingItemsSet(
+                poolEntityId,
+                name: comp.getName(),
+                items: itemEntities
+            )
         }
 
         access(all)
@@ -140,7 +153,12 @@ pub contract GachaPoolSystem: ISystem {
             let comp = self.borrowGachaPool(poolEntityId)
             comp.setCounterModifier(threshold, probabilityMod)
 
-            emit GachaPoolCounterSet(poolEntityId, threshold, probabilityMod)
+            emit GachaPoolCounterSet(
+                poolEntityId,
+                name: comp.getName(),
+                threshold: threshold,
+                mod: probabilityMod
+            )
         }
 
         access(all)
