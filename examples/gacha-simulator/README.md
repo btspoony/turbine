@@ -5,7 +5,8 @@
 > Deploy contracts to local emulator
 
 ```bash
-pnpm dev
+flow emulator // start emulator
+pnpm dev // deploy contracts
 ```
 
 > Initialize a gacha world (name: sample)
