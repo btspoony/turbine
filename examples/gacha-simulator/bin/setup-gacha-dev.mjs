@@ -8,10 +8,16 @@ import json from "../reference/hsr-gacha-1.4.json" assert { type: "json" };
 function generateSetupTransactionParams() {
   const params = [];
 
-  // name: String,
+  // worldName: String,
   params.push({
     type: "String",
     value: "sample",
+  });
+
+  // poolName: String,
+  params.push({
+    type: "String",
+    value: "HSR_Gacha_1.4_Charactor_A",
   });
 
   // rarityProbabilityPool: {UInt8: UFix64},

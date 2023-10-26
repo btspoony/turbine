@@ -104,11 +104,11 @@ pub contract OwnedItemComponent: IComponent {
         access(all)
         fun toStruct(): OwnedItemInfo {
             return OwnedItemInfo(
-                self.kv["itemEntityID"] as! UInt64,
-                self.kv["exp"] as! UInt64,
-                self.kv["level"] as! UInt64,
-                self.kv["quality"] as! UInt64,
-                self.kv["quantity"] as! UFix64
+                self.getKeyValue("itemEntityID") as! UInt64? ?? panic("itemEntityID"),
+                self.getKeyValue("exp") as! UInt64? ?? panic("exp"),
+                self.getKeyValue("level") as! UInt64? ?? panic("level"),
+                self.getKeyValue("quality") as! UInt64? ?? panic("quality"),
+                self.getKeyValue("quantity") as! UFix64? ?? panic("quantity")
             )
         }
     }

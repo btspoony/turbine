@@ -9,7 +9,8 @@ import "GachaPoolComponent"
 /// Setup the gacha pool by Platform Account
 /// This is called by the platform owner
 transaction(
-    name: String,
+    worldName: String,
+    poolName: String,
     rarityProbabilityPool: {UInt8: UFix64},
     counterThreshold: UInt64,
     counterProbabilityModifier: UFix64,
@@ -24,9 +25,9 @@ transaction(
         let platform = acct.borrow<&GachaPlatform.Platform>(from: GachaPlatform.GachaPlatformStoragePath)
             ?? panic("Cannot borrow platform from storage")
 
-        let listed = platform.getListedWorld(name) ?? panic("Cannot find listed world")
+        let listed = platform.getListedWorld(worldName) ?? panic("Cannot find listed world")
         self.worldMgr = platform.borrowWorldManager(listed.address) ?? panic("Cannot borrow world manager")
-        self.world = self.worldMgr.borrowWorld(name) ?? panic("Cannot borrow world")
+        self.world = self.worldMgr.borrowWorld(worldName) ?? panic("Cannot borrow world")
     }
 
     execute {
@@ -79,7 +80,7 @@ transaction(
         }
 
         // --- create a new gacha pool ---
-        let poolId = gachaPoolSystem.createNewGachaPoolEntity()
+        let poolId = gachaPoolSystem.createNewGachaPoolEntity(poolName)
 
         // --- Add items to gacha pool ---
         gachaPoolSystem.setRareProbabilityPool(poolId, rarityProbabilityPool)

@@ -89,14 +89,14 @@ pub contract PlayerComponent: IComponent {
         ///
         access(all)
         fun getExp(): UInt64 {
-            return self.kv["exp"] as! UInt64
+            return self.kv["exp"] as! UInt64? ?? panic("Invalid exp")
         }
 
         /// Sets the player's level
         ///
         access(all)
         fun getLevel(): UInt64 {
-            return self.kv["level"] as! UInt64
+            return self.kv["level"] as! UInt64? ?? panic("Invalid level")
         }
 
         /// Returns the player's gacha pool counter
