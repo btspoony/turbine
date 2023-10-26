@@ -26,15 +26,32 @@ pub fun main(
     let inventorySystem = world.borrowSystem(Type<@InventorySystem.System>()) as! &InventorySystem.System
     let inventory = inventorySystem.borrowInventory(playerId)
 
+    log("---------- Inventory of ".concat(username).concat(" ----------"))
+    let counterDic: {String: UInt64} = {}
+    let logStrDic: {String: String} = {}
+
     let ret: [ItemData] = []
     // get owned items
     let ownedItems = inventory.getOwnedItemIds()
     // get owned item component
     for id in ownedItems {
         let ownedItem = inventorySystem.borrowOwnedItem(id)
-        let info = ownedItem.toStruct()
-        let item = inventorySystem.borrowItem(info.itemEntityID)
-        ret.append(ItemData(owned: info, item: item.toStruct()))
+        let ownedInfo = ownedItem.toStruct()
+        let item = inventorySystem.borrowItem(ownedInfo.itemEntityID)
+        let itemInfo = item.toStruct()
+
+        ret.append(ItemData(owned: ownedInfo, item: itemInfo))
+
+        counterDic[itemInfo.identity] = (counterDic[itemInfo.identity] ?? 0) + 1
+        if logStrDic[itemInfo.identity] == nil {
+            logStrDic[itemInfo.identity] = "Item: ".concat(itemInfo.identity)
+                .concat(" Type: ").concat(itemInfo.category == ItemComponent.ItemCategory.Weapon ? "Weapon" : "Character")
+                .concat(" Rarity: ").concat(itemInfo.rarity.toString())
+        }
+    }
+
+    for key in logStrDic.keys {
+        log(key.concat(" x ").concat(counterDic[key]!.toString()))
     }
     return ret
 }
