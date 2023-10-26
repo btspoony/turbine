@@ -42,7 +42,7 @@ pub contract GachaPoolSystem: ISystem {
             entityMgr.addComponent(
                 compType,
                 to: entity,
-                withData: { name: name }
+                withData: { "name": name }
             )
             emit GachaPoolAdded(entity.getId(), name: name)
 
@@ -65,7 +65,9 @@ pub contract GachaPoolSystem: ISystem {
             let entities = query.executeQuery(world)
             let ret: [&GachaPoolComponent.Component] = []
             for entity in entities {
-                ret.append(entity.borrowComponent(compType) as! &GachaPoolComponent.Component)
+                if let comp = entity.borrowComponent(compType) {
+                    ret.append(comp as! &GachaPoolComponent.Component)
+                }
             }
             return ret
         }
@@ -74,17 +76,20 @@ pub contract GachaPoolSystem: ISystem {
         fun findGachaPoolEntity(name: String): &IEntity.Entity? {
             let world = self.borrowWorld()
 
-            let compType = Type<@GachaPoolComponent.Component>()
             let query = EntityQuery.Builder()
+            let compType = Type<@GachaPoolComponent.Component>()
             query.withAll(types: [compType])
 
             let entities = query.executeQuery(world)
             var found: &IEntity.Entity? = nil
             for entity in entities {
-                let comp = entity.borrowComponent(compType) as! &GachaPoolComponent.Component
-                if comp.getName() == name {
-                    found = entity
-                    break
+                if let comp = entity.borrowComponent(compType) {
+                    let poolName = (comp as! &GachaPoolComponent.Component).getName()
+                    log("Found Pool name: ".concat(poolName))
+                    if poolName == name {
+                        found = entity
+                        break
+                    }
                 }
             }
             return found

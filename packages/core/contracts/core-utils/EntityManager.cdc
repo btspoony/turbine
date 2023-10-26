@@ -10,7 +10,7 @@ pub contract EntityManager {
     // Events
     pub event EntityCreated(managerUuid: UInt64, id: UInt64)
     pub event ComponentFactoryRegistered(managerUuid: UInt64, type: Type)
-    pub event ComponentAdded(managerUuid: UInt64, uuid: UInt64, type: Type)
+    pub event ComponentAdded(managerUuid: UInt64, entity: UInt64, type: Type)
 
     /// The resource that manages the entities.
     ///
@@ -97,7 +97,7 @@ pub contract EntityManager {
 
             emit ComponentAdded(
                 managerUuid: self.uuid,
-                uuid: to.uuid,
+                entity: to.getId(),
                 type: compType
             )
         }
@@ -122,7 +122,7 @@ pub contract EntityManager {
 
                 emit ComponentAdded(
                     managerUuid: self.uuid,
-                    uuid: entity.uuid,
+                    entity: entity.getId(),
                     type: compType
                 )
             }

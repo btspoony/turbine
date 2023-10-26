@@ -12,10 +12,10 @@ pub contract CoreEntity: IEntity {
 
     // Events
 
-    pub event ComponentAdded(uuid: UInt64, _ componentType: Type)
-    pub event ComponentRemoved(uuid: UInt64, _ componentType: Type)
-    pub event ComponentSet(uuid: UInt64, _ componentType: Type)
-    pub event ComponentEnabled(uuid: UInt64, _ componentType: Type, _ enabled: Bool)
+    pub event ComponentAdded(_ entity: UInt64, _ componentType: Type)
+    pub event ComponentRemoved(_ entity: UInt64, _ componentType: Type)
+    pub event ComponentSet(_ entity: UInt64, _ componentType: Type)
+    pub event ComponentEnabled(_ entity: UInt64, _ componentType: Type, _ enabled: Bool)
 
     /// The entity resource
     ///
@@ -107,7 +107,7 @@ pub contract CoreEntity: IEntity {
             self.borrowComponent(type)?.setEnabled(true)
 
             emit ComponentAdded(
-                uuid: self.uuid,
+                self.getId(),
                 type
             )
         }
@@ -125,7 +125,7 @@ pub contract CoreEntity: IEntity {
             }
 
             emit ComponentRemoved(
-                uuid: self.uuid,
+                self.getId(),
                 componentType
             )
             return <- comp
@@ -142,7 +142,7 @@ pub contract CoreEntity: IEntity {
             self.addComponent(<-component)
 
             emit ComponentSet(
-                uuid: self.uuid,
+                self.getId(),
                 type
             )
             return <- oldComp
@@ -161,7 +161,7 @@ pub contract CoreEntity: IEntity {
                 ref.setEnabled(enabled)
 
                 emit ComponentEnabled(
-                    uuid: self.uuid,
+                    self.getId(),
                     componentType,
                     enabled
                 )
