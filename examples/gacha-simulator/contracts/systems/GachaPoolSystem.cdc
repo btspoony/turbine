@@ -32,6 +32,9 @@ pub contract GachaPoolSystem: ISystem {
         access(all)
         fun createNewGachaPoolEntity(_ name: String): UInt64 {
             let world = self.borrowWorld()
+            let existing = self.findGachaPoolEntity(name: name)
+            assert(existing == nil, message: "Already exists: Gacha pool - ".concat(name))
+
             let entity = world.createEntity(nil)
 
             let entityMgr = world.borrowEntityManager()

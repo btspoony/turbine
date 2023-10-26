@@ -48,7 +48,9 @@ pub contract interface IEntity {
         /// Iterates over all components
         ///
         pub fun forEachComponents(_ callback: ((Type, &IComponent.Component): Void)) {
-            for componentType in self.getComponetKeys() {
+            let keys = self.getComponetKeys()
+            for componentType in keys {
+                log("Debug: Entity[".concat(self.getId().toString()).concat("] forEachComponents: ").concat(componentType.identifier))
                 if let component = self.borrowComponent(componentType) {
                     callback(componentType, component)
                 }

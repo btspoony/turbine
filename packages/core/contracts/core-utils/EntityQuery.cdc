@@ -104,55 +104,121 @@ pub contract EntityQuery {
             var i = 0
             while i < len {
                 let entity = all[i]
+                let entityLogStr = "Debug: Entity[".concat(entity.getId().toString()).concat("] - ")
+                // quick increment
+                i = i + 1
                 // init match variables
-                var allMatch = self.all.length == 0
-                var presentMatch = self.present.length == 0
-                var anyMatch = self.any.length == 0
-                var disabledMatch = self.disabled.length == 0
-                var noneMatch = self.none.length == 0
-                var absentMatch = self.absent.length == 0
-                // for each component type, check if it matches
-                entity.forEachComponents(fun (type: Type, component: &IComponent.Component) {
-                    if (allMatch && presentMatch && anyMatch && disabledMatch && noneMatch && absentMatch) {
-                        return
-                    }
+                var allMatch = self.all.length == 0 ? true : nil
+                var presentMatch = self.present.length == 0 ? true : nil
+                var anyMatch = self.any.length == 0 ? true : nil
+                var disabledMatch = self.disabled.length == 0 ? true : nil
+                var noneMatch = self.none.length == 0 ? true : nil
+                var absentMatch = self.absent.length == 0 ? true : nil
 
-                    let enabled = component.enabled
-                    // check all
-                    if self.all.length > 0 {
-                        allMatch = allMatch && (self.all.contains(type) && enabled)
+                // check all
+                if self.all.length > 0 {
+                    for required in self.all {
+                        let comp = entity.borrowComponent(required)
+                        allMatch = (allMatch ?? true) && comp != nil && comp!.enabled
+                        if comp != nil {
+                            log(entityLogStr.concat("WithAll Found - component:".concat(required.identifier))
+                                .concat(allMatch == true ? "- T" : "- F"))
+                        }
                     }
+                }
+                // fast continue if allMatch is false
+                if allMatch == false {
+                    log(entityLogStr.concat("Checking All - Failure"))
+                    continue
+                }
 
-                    // check present
-                    if self.present.length > 0 {
-                        presentMatch = presentMatch && self.present.contains(type)
+                // check present
+                if self.present.length > 0 {
+                    for required in self.present {
+                        let comp = entity.borrowComponent(required)
+                        presentMatch = (presentMatch ?? true) && comp != nil
+                        if comp != nil {
+                            log(entityLogStr.concat("WithPresent Found - component:".concat(required.identifier))
+                                .concat(presentMatch == true ? "- T" : "- F"))
+                        }
                     }
+                }
+                // fast continue if presentMatch is false
+                if presentMatch == false {
+                    log(entityLogStr.concat("Checking Present - Failure"))
+                    continue
+                }
 
-                    // check any
-                    if self.any.length > 0 {
-                        anyMatch = anyMatch || (self.any.contains(type) && enabled)
+                // check any
+                if self.any.length > 0 {
+                    for required in self.any {
+                        let comp = entity.borrowComponent(required)
+                        anyMatch = (anyMatch ?? false) || (comp != nil && comp!.enabled)
+                        if comp != nil {
+                            log(entityLogStr.concat("WithAny Found - component:".concat(required.identifier))
+                                .concat(anyMatch == true ? "- T" : "- F"))
+                        }
+                        if anyMatch == true { // fast break if anyMatch is true
+                            break
+                        }
                     }
+                }
+                // fast continue if anyMatch is false
+                if anyMatch == false {
+                    log(entityLogStr.concat("Checking Any - Failure"))
+                    continue
+                }
 
-                    // check none
-                    if self.none.length > 0 {
-                        noneMatch = noneMatch && (!self.none.contains(type) || !enabled)
+                // check none
+                if self.none.length > 0 {
+                    for required in self.none {
+                        let comp = entity.borrowComponent(required)
+                        noneMatch = (noneMatch ?? true) && (comp == nil || !comp!.enabled)
                     }
+                }
+                // fast continue if noneMatch is false
+                if noneMatch == false {
+                    log(entityLogStr.concat("Checking None - Failure"))
+                    continue
+                }
 
-                    // check disabled
-                    if self.disabled.length > 0 {
-                        disabledMatch = disabledMatch && (self.disabled.contains(type) && !enabled)
+                // check disabled
+                if self.disabled.length > 0 {
+                    for required in self.disabled {
+                        let comp = entity.borrowComponent(required)
+                        disabledMatch = (disabledMatch ?? true) && (comp != nil && !comp!.enabled)
                     }
+                }
+                // fast continue if disabledMatch is false
+                if disabledMatch == false {
+                    log(entityLogStr.concat("Checking Disabled - Failure"))
+                    continue
+                }
 
-                    // check absent
-                    if self.absent.length > 0 {
-                        absentMatch = absentMatch && !self.absent.contains(type)
+                // check absent
+                if self.absent.length > 0 {
+                    for required in self.absent {
+                        let comp = entity.borrowComponent(required)
+                        absentMatch = (absentMatch ?? true) && comp == nil
                     }
-                })
+                }
+                // fast continue if absentMatch is false
+                if absentMatch == false {
+                    log(entityLogStr.concat("Checking Absent - Failure"))
+                    continue
+                }
+
                 // if matched, add to filtered
-                if allMatch && presentMatch && anyMatch && disabledMatch && noneMatch && absentMatch {
+                let isMatched = allMatch == true &&
+                    presentMatch == true &&
+                    anyMatch == true &&
+                    disabledMatch == true &&
+                    noneMatch == true &&
+                    absentMatch == true
+                if isMatched {
                     filtered.append(entity)
                 }
-                i = i + 1
+                log(entityLogStr.concat("Reault: ").concat(isMatched ? "T" : "F"))
             } // end while
             return filtered
         }

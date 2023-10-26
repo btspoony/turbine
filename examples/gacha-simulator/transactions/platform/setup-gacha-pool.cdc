@@ -87,7 +87,7 @@ transaction(
         gachaPoolSystem.addItemsToPool(poolId, itemEntityIds: addedItemIds)
         gachaPoolSystem.setGachaCounter(poolId, threshold: counterThreshold, probabilityMod: counterProbabilityModifier)
         gachaPoolSystem.setBoostingProbabilityItems(poolId, itemEntities: boostingItemIds, probability: boostingProbabilityRatio)
-        gachaPoolSystem.setEnabled(enabled: true)
+        gachaPoolSystem.setGachaPoolEnabled(poolId, enabled: true)
 
         log("Complete setup gacha pool")
     }
