@@ -53,7 +53,7 @@ pub contract GachaGameSystem: ISystem {
             let playerRegSystemCap = world.getSystemCapability(
                 type: Type<@PlayerRegSystem.System>()
             ) as! Capability<auth &ISystem.System>
-            let playerRegSystem = playerRegSystemCap.borrow() as! &PlayerRegSystem.System
+            let playerRegSystem = playerRegSystemCap.borrow() as! &PlayerRegSystem.System? ?? panic("PlayerRegSystem not found")
 
             // Get the player entity
             let playerEntityId = playerRegSystem.fetchOrRegisterPlayer(username)
@@ -67,19 +67,26 @@ pub contract GachaGameSystem: ISystem {
             let inventorySystemCap = world.getSystemCapability(
                 type: Type<@InventorySystem.System>()
             ) as! Capability<auth &ISystem.System>
-            let inventorySystem = inventorySystemCap.borrow() as! &InventorySystem.System
+            let inventorySystem = inventorySystemCap.borrow() as! &InventorySystem.System? ?? panic("InventorySystem not found")
 
             // basic pool info
             var topRarity: UInt8 = 0
             var secRarity: UInt8 = 0
+            var btnRarity: UInt8 = UInt8.max
             let basicProb: {UInt8: UFix64} = poolComp.getRarityProbabilityPool()
             let itemRarityDic: {UInt8: [UInt64]} = {}
             let boostingRarityDic: {UInt8: [UInt64]} = {}
+            // set probability for each rarity
             for itemId in allItems.keys {
                 let item = allItems[itemId]!
                 if topRarity < item.rarity {
-                    secRarity = topRarity
                     topRarity = item.rarity
+                }
+                if secRarity < item.rarity && item.rarity < topRarity {
+                    secRarity = item.rarity
+                }
+                if btnRarity > item.rarity {
+                    btnRarity = item.rarity
                 }
                 basicProb[item.rarity] = (basicProb[item.rarity] ?? 0.0) + poolComp.getProbabilityRatio(itemId)
                 // check if item is boosting up item
@@ -91,6 +98,12 @@ pub contract GachaGameSystem: ISystem {
             }
             let boostingRatio = poolComp.getBoostingProbabilityRatio()
 
+            log("DEBUG: topRarity: ".concat(topRarity.toString())
+                .concat(" secRarity: ").concat(secRarity.toString())
+                .concat(" btnRarity: ").concat(btnRarity.toString())
+                .concat(" counterThreshold: ").concat(poolComp.getCounterThreshold().toString())
+                .concat(" boostingRatio: ").concat(boostingRatio.toString()))
+
             // The return array
             let newOwnedItemIds: [UInt64] = []
 
@@ -98,18 +111,23 @@ pub contract GachaGameSystem: ISystem {
             var pullCnt: UInt64 = 0
             // Now Pull for one item for free
             while pullCnt < times {
+                let counterStr = "DEBUG: Pulling ".concat((pullCnt+1).toString()).concat("/").concat(times.toString()).concat(": ")
+
                 // last pulled info
                 var currentCounter = playerComp.getGachaPoolCounter(poolEntityId)
                 var currentRareCounter = playerComp.getGachaPoolRareCounter(poolEntityId)
                 var lastPulledRareItem = playerComp.getGachaPoolLastPulledRare(poolEntityId)
 
+                log(counterStr.concat("Current TotalCtr: ").concat(currentCounter.toString())
+                    .concat(" Current RareCtr: ").concat(currentRareCounter.toString()))
+
                 let sumProb: {UInt8: UFix64} = {}
                 for rarity in basicProb.keys {
-                    basicProb[rarity] = basicProb[rarity]
+                    sumProb[rarity] = basicProb[rarity]
                 }
                 // For every 10 pull, there is a basic guarantee
                 // add probablity ratio for basic guarantee
-                if currentCounter % 10 == 0 {
+                if currentCounter % 10 == 9 {
                     sumProb[secRarity] = (sumProb[secRarity] ?? 0.0) + 1.0
                 }
                 // add probablity ratio for boosting up items
@@ -123,29 +141,36 @@ pub contract GachaGameSystem: ISystem {
                 let probArr: [UFix64] = []
                 let rarityIdxDic: {Int: UInt8} = {}
                 // reverse order for rare probs
-                var i: UInt8 = 10
-                while i >= 0 {
+                var i: UInt8 = topRarity
+                while i >= btnRarity {
                     if let prob = sumProb[i] {
                         totalProb = totalProb + prob
                         probArr.append(prob)
-                        rarityIdxDic[probArr.length - 1] = i
+                        // random index for rarity
+                        let idx = probArr.length - 1
+                        rarityIdxDic[idx] = i
+                        log(counterStr.concat("[").concat(idx.toString()).concat("] Rarity<".concat(i.toString()).concat("> Prob = ")
+                            .concat(prob.toString())))
                     }
-                    i = i - 1
+                    i = i.saturatingSubtract(1)
                 }
 
                 // pull one item
-                var rarityRand = self.geneRandomPercentage()
-                var pickedRarity: UInt8? = nil
+                let rarityRand = self.geneRandomPercentage()
+                var pickedRarity: UInt8 = btnRarity
+                var currRandAmt = rarityRand
                 for idx, prob in probArr {
-                    rarityRand = rarityRand.saturatingSubtract(prob)
-                    if rarityRand == 0.0 {
-                        pickedRarity = rarityIdxDic[idx]
+                    currRandAmt = currRandAmt.saturatingSubtract(prob)
+                    if currRandAmt == 0.0 {
+                        pickedRarity = rarityIdxDic[idx]!
                         break
                     }
                 }
+                log(counterStr.concat("Pull rarityRand: ").concat(rarityRand.toString())
+                    .concat(" Picked Rarity: ").concat(pickedRarity.toString()))
 
                 // check boosting up items for rare items
-                var itemsArrToPick: [UInt64] = itemRarityDic[pickedRarity!]!
+                var itemsArrToPick: [UInt64] = itemRarityDic[pickedRarity]!
                 if pickedRarity == secRarity || pickedRarity == topRarity {
                     // create a random number for picking item
                     let rand = self.geneRandomPercentage()
@@ -153,7 +178,7 @@ pub contract GachaGameSystem: ISystem {
                     // then pick from boosting up items
                     if rand < boostingRatio || (pickedRarity == topRarity && lastPulledRareItem != nil && !boostingUpItems.contains(lastPulledRareItem!)) {
                         // Pick from boosting up items
-                        itemsArrToPick = boostingRarityDic[pickedRarity!]!
+                        itemsArrToPick = boostingRarityDic[pickedRarity]!
                     }
                 }
 
@@ -166,6 +191,9 @@ pub contract GachaGameSystem: ISystem {
                 let ownedId = inventorySystem.addItemToInventory(playerEntityId, pickedItemId, amount: pickedItemInfo.fungible ? 1.0 : nil)
                 newOwnedItemIds.append(ownedId)
 
+                log(counterStr.concat("Picked Item: ").concat(pickedItemInfo.identity)
+                    .concat("Created Owned Item: ").concat(ownedId.toString()))
+
                 // add counter to PlayerComponent
                 playerComp.incrementGachaPoolCounter(poolEntityId, amount: 1)
                 // set last pulled rare item
@@ -174,7 +202,7 @@ pub contract GachaGameSystem: ISystem {
                 }
 
                 // increment pull counter
-                pullCnt = pullCnt + 1
+                pullCnt = pullCnt.saturatingAdd(1)
             }
 
             return newOwnedItemIds
@@ -193,9 +221,12 @@ pub contract GachaGameSystem: ISystem {
 
         access(self)
         fun geneRandomPercentage(): UFix64 {
-            let rand = unsafeRandom()
-            let randStr = "0.".concat(rand.toString().slice(from: 0, upTo: 5))
-            return UFix64.fromString(randStr)!
+            var randStr = unsafeRandom().toString()
+            if randStr.length < 5 {
+                randStr = "00000".concat(randStr)
+            }
+            let lastFiveStr = randStr.slice(from: randStr.length - 5, upTo: randStr.length)
+            return UFix64.fromString("0.".concat(lastFiveStr))!
         }
 
         access(self)

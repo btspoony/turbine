@@ -128,7 +128,7 @@ pub contract EntityQuery {
                 }
                 // fast continue if allMatch is false
                 if allMatch == false {
-                    log(entityLogStr.concat("Checking All - Failure"))
+                    // log(entityLogStr.concat("Checking All - Failure"))
                     continue
                 }
 
@@ -145,7 +145,7 @@ pub contract EntityQuery {
                 }
                 // fast continue if presentMatch is false
                 if presentMatch == false {
-                    log(entityLogStr.concat("Checking Present - Failure"))
+                    // log(entityLogStr.concat("Checking Present - Failure"))
                     continue
                 }
 
@@ -165,7 +165,7 @@ pub contract EntityQuery {
                 }
                 // fast continue if anyMatch is false
                 if anyMatch == false {
-                    log(entityLogStr.concat("Checking Any - Failure"))
+                    // log(entityLogStr.concat("Checking Any - Failure"))
                     continue
                 }
 
@@ -178,7 +178,7 @@ pub contract EntityQuery {
                 }
                 // fast continue if noneMatch is false
                 if noneMatch == false {
-                    log(entityLogStr.concat("Checking None - Failure"))
+                    // log(entityLogStr.concat("Checking None - Failure"))
                     continue
                 }
 
@@ -191,7 +191,7 @@ pub contract EntityQuery {
                 }
                 // fast continue if disabledMatch is false
                 if disabledMatch == false {
-                    log(entityLogStr.concat("Checking Disabled - Failure"))
+                    // log(entityLogStr.concat("Checking Disabled - Failure"))
                     continue
                 }
 
@@ -204,7 +204,7 @@ pub contract EntityQuery {
                 }
                 // fast continue if absentMatch is false
                 if absentMatch == false {
-                    log(entityLogStr.concat("Checking Absent - Failure"))
+                    // log(entityLogStr.concat("Checking Absent - Failure"))
                     continue
                 }
 

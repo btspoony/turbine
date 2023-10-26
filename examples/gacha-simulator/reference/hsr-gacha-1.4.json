@@ -14,7 +14,7 @@
     }
   ],
   "counterThreshold": 73,
-  "counterProbabilityModifier": "0.006",
+  "counterProbabilityModifier": "0.06",
   "boostingProbabilityRatio": "0.5",
   "boostingProbabilityItems": [
     "Char_JingLiu",

@@ -15,3 +15,9 @@ Setup Gacha Pool referred from "Honkai Starrail 1.4 version"
 ```bash
 node bin/setup-gacha-dev.mjs
 ```
+
+> Pull Items from Gacha pool (for Dev)
+
+```bash
+node bin/pull-gacha-dev.mjs
+```
