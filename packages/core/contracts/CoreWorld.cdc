@@ -174,9 +174,9 @@ pub contract CoreWorld: IWorld {
         access(all)
         fun borrowSystem(_ type: Type): auth &ISystem.System {
             pre {
-                self.systems[type] != nil: "System not found"
+                self.systems[type] != nil: "Not Found - System: ".concat(type.identifier)
             }
-            return self.systems[type]!.borrow() ?? panic("System not found")
+            return self.systems[type]!.borrow() ?? panic("Not Found - System: ".concat(type.identifier))
         }
 
         /// Adds a system to the context provider.

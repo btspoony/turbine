@@ -104,6 +104,38 @@ pub contract InventorySystem: ISystem {
             emit NonFungibleItemRemovedFromInventory(playerId, info.itemEntityID, ownedItemId)
         }
 
+        // --- Utility Methods ---
+
+        /// Borrow the Inventory component from the player
+        ///
+        access(all)
+        fun borrowInventory(_ playerId: UInt64): &InventoryComponent.Component {
+            let playerEntity = self.borrowEntity(playerId)
+            let comp = playerEntity.borrowComponent(Type<@InventoryComponent.Component>())
+                ?? panic("Player does not have an inventory")
+            return comp as! &InventoryComponent.Component
+        }
+
+        /// Borrow the item component from the item entity
+        ///
+        access(all)
+        fun borrowItem(_ itemId: UInt64): &ItemComponent.Component {
+            let itemEntity = self.borrowEntity(itemId)
+            let comp = itemEntity.borrowComponent(Type<@ItemComponent.Component>())
+                ?? panic("Item does not exist")
+            return comp as! &ItemComponent.Component
+        }
+
+        /// Borrow the owned item component from the owned item entity
+        ///
+        access(all)
+        fun borrowOwnedItem(_ itemId: UInt64): &OwnedItemComponent.Component {
+            let itemEntity = self.borrowEntity(itemId)
+            let comp = itemEntity.borrowComponent(Type<@OwnedItemComponent.Component>())
+                ?? panic("Item does not exist")
+            return comp as! &OwnedItemComponent.Component
+        }
+
         // --- ISystem.CoreLifecycle ---
 
         /// System event callback to add the work that your system must perform every frame.
@@ -135,36 +167,6 @@ pub contract InventorySystem: ISystem {
                 withData: { "itemEntityID": itemEntityId }
             )
             return owned.getId()
-        }
-
-        /// Borrow the Inventory component from the player
-        ///
-        access(self)
-        fun borrowInventory(_ playerId: UInt64): &InventoryComponent.Component {
-            let playerEntity = self.borrowEntity(playerId)
-            let comp = playerEntity.borrowComponent(Type<@InventoryComponent.Component>())
-                ?? panic("Player does not have an inventory")
-            return comp as! &InventoryComponent.Component
-        }
-
-        /// Borrow the item component from the item entity
-        ///
-        access(self)
-        fun borrowItem(_ itemId: UInt64): &ItemComponent.Component {
-            let itemEntity = self.borrowEntity(itemId)
-            let comp = itemEntity.borrowComponent(Type<@ItemComponent.Component>())
-                ?? panic("Item does not exist")
-            return comp as! &ItemComponent.Component
-        }
-
-        /// Borrow the owned item component from the owned item entity
-        ///
-        access(self)
-        fun borrowOwnedItem(_ itemId: UInt64): &OwnedItemComponent.Component {
-            let itemEntity = self.borrowEntity(itemId)
-            let comp = itemEntity.borrowComponent(Type<@OwnedItemComponent.Component>())
-                ?? panic("Item does not exist")
-            return comp as! &OwnedItemComponent.Component
         }
     }
 

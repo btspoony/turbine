@@ -156,6 +156,13 @@ pub contract GachaPlatform {
             ?? panic("Could not borrow GachaPlatform from storage")
     }
 
+    /// Get the contract address
+    ///
+    access(all)
+    fun getContractAddress(): Address {
+        return self.account.address
+    }
+
     /// Create a new game world
     access(all)
     fun createGachaWorld(

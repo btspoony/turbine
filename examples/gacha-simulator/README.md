@@ -21,3 +21,9 @@ node bin/setup-gacha-dev.mjs
 ```bash
 node bin/pull-gacha-dev.mjs
 ```
+
+> Query Inventory
+
+```bash
+flow scripts execute ./scripts/platform/query-user-inventory.cdc sample bt.wood
+```

@@ -51,10 +51,10 @@ pub contract OwnedItemComponent: IComponent {
             self.enabled = true
             self.kv = {}
 
-            self.kv["itemEntityID"] = 0
-            self.kv["exp"] = 0
-            self.kv["level"] = 1
-            self.kv["quality"] = 0
+            self.kv["itemEntityID"] = 0 as UInt64
+            self.kv["exp"] = 0 as UInt64
+            self.kv["level"] = 1 as UInt64
+            self.kv["quality"] = 0 as UInt64
             self.kv["quantity"] = 1.0
         }
 
@@ -105,10 +105,10 @@ pub contract OwnedItemComponent: IComponent {
         fun toStruct(): OwnedItemInfo {
             return OwnedItemInfo(
                 self.getKeyValue("itemEntityID") as! UInt64? ?? panic("itemEntityID"),
-                self.getKeyValue("exp") as! UInt64? ?? panic("exp"),
-                self.getKeyValue("level") as! UInt64? ?? panic("level"),
-                self.getKeyValue("quality") as! UInt64? ?? panic("quality"),
-                self.getKeyValue("quantity") as! UFix64? ?? panic("quantity")
+                self.getKeyValue("exp") as? UInt64 ?? 0,
+                self.getKeyValue("level") as? UInt64 ?? 1,
+                self.getKeyValue("quality") as? UInt64 ?? 0,
+                self.getKeyValue("quantity") as! UFix64? ?? 1.0
             )
         }
     }

@@ -31,8 +31,8 @@ pub contract PlayerComponent: IComponent {
             self.gachaPoolLastPulledRare = {}
 
             self.kv = {}
-            self.kv["exp"] = 0
-            self.kv["level"] = 1
+            self.kv["exp"] = 0 as UInt64
+            self.kv["level"] = 1 as UInt64
         }
 
         /// --- General Interface methods ---
