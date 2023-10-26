@@ -315,7 +315,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Perfect Timing"
+        "identity": "LC_Perfect_Timing"
       },
       "display": {
         "name": "Perfect Timing",
@@ -327,7 +327,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Shared Feeling"
+        "identity": "LC_Shared_Feeling"
       },
       "display": {
         "name": "Shared Feeling",
@@ -339,7 +339,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Post-Op Conversation"
+        "identity": "LC_Post-Op_Conversation"
       },
       "display": {
         "name": "Post-Op Conversation",
@@ -351,7 +351,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Planetary Rendezvous"
+        "identity": "LC_Planetary_Rendezvous"
       },
       "display": {
         "name": "Planetary Rendezvous",
@@ -363,7 +363,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Memories of the Past"
+        "identity": "LC_Memories_of_thePast"
       },
       "display": {
         "name": "Memories of the Past",
@@ -375,7 +375,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Dance! Dance! Dance!"
+        "identity": "LC_Dance!_Dance!_Dance!"
       },
       "display": {
         "name": "Dance! Dance! Dance!",
@@ -387,7 +387,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Day One of My New Life"
+        "identity": "LC_DayOne_of_My_New_Life"
       },
       "display": {
         "name": "Day One of My New Life",
@@ -399,7 +399,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Trend of the Universal Market"
+        "identity": "LC_Trend_of_the_Universal_Market"
       },
       "display": {
         "name": "Trend of the Universal Market",
@@ -411,11 +411,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Landau's Choice"
+        "identity": "LC_Landau_s_Choice"
       },
       "display": {
-        "name": "Landau's Choice",
-        "description": "Light Cone - Landau's Choice",
+        "name": "Landau’s Choice",
+        "description": "Light Cone - Landau’s Choice",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/9/95/nssngfddhxojwuwzr4ui75viowtcyhs.png/150px-%E6%9C%97%E9%81%93%E7%9A%84%E9%80%89%E6%8B%A9.png"
       }
     },
@@ -435,7 +435,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Only Silence Remains"
+        "identity": "LC_Only_Silence_Remains"
       },
       "display": {
         "name": "Only Silence Remains",
@@ -447,7 +447,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Subscribe for More!"
+        "identity": "LC_Subscribe_for_More!"
       },
       "display": {
         "name": "Subscribe for More!",
@@ -459,11 +459,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Geniuses' Repose"
+        "identity": "LC_Geniuses_Repose"
       },
       "display": {
-        "name": "Geniuses' Repose",
-        "description": "Light Cone - Geniuses' Repose",
+        "name": "Geniuses’ Repose",
+        "description": "Light Cone - Geniuses’ Repose",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/f/fc/4glh3rvpc0lgsuzmsm9jkuhh1zhjskq.png/150px-%E5%A4%A9%E6%89%8D%E4%BB%AC%E7%9A%84%E4%BC%91%E6%86%A9.png"
       }
     },
@@ -471,7 +471,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_The Birth of the Self"
+        "identity": "LC_The_Birth_of_the_Self"
       },
       "display": {
         "name": "The Birth of the Self",
@@ -483,7 +483,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Make the World Clamor"
+        "identity": "LC_Make_the_World_Clamor"
       },
       "display": {
         "name": "Make the World Clamor",
@@ -495,7 +495,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Under the Blue Sky"
+        "identity": "LC_Under_the_Blue_Sky"
       },
       "display": {
         "name": "Under the Blue Sky",
@@ -507,7 +507,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_The Moles Welcome You"
+        "identity": "LC_The_Moles_Welcome_You"
       },
       "display": {
         "name": "The Moles Welcome You",
@@ -519,7 +519,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_A Secret Vow"
+        "identity": "LC_A_Secret_Vow"
       },
       "display": {
         "name": "A Secret Vow",
@@ -531,7 +531,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Resolution Shines As Pearls of Sweat"
+        "identity": "LC_Resolution_Shines_As_Pearls_of_Sweat"
       },
       "display": {
         "name": "Resolution Shines As Pearls of Sweat",
@@ -543,7 +543,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Eyes of the Prey"
+        "identity": "LC_Eyes_of_the_Prey"
       },
       "display": {
         "name": "Eyes of the Prey",
@@ -555,7 +555,7 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_Good Night and Sleep Well"
+        "identity": "LC_Good_Night_and_Sleep_Well"
       },
       "display": {
         "name": "Good Night and Sleep Well",
