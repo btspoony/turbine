@@ -6,6 +6,8 @@ import "ItemSystem"
 import "GachaPoolSystem"
 import "GachaPoolComponent"
 
+/// Setup the gacha pool by Platform Account
+/// This is called by the platform owner
 transaction(
     name: String,
     rarityProbabilityPool: {UInt8: UFix64},

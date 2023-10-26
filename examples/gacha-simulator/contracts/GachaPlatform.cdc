@@ -132,8 +132,17 @@ pub contract GachaPlatform {
         ///
         access(all)
         fun borrowWorld(_ host: Address, _ name: String): &CoreWorld.World {
-            let worldMgr = self.borrowWorldManager(host) ?? panic("WorldManager not found")
+            let worldMgr = self.borrowWorldManager(host) ?? panic("Not found: WorldManager - ".concat(host.toString()))
             return worldMgr.borrowWorld(name) ?? panic("World not found")
+        }
+
+        access(all)
+        fun updateAll(_ now: UFix64) {
+            for host in self.delegatedManagers.keys {
+                let cap = self.delegatedManagers[host]!
+                let worldMgr = cap.borrow() ?? panic("Not found: WorldManager - ".concat(host.toString()))
+                worldMgr.updateAllWorlds(now: now)
+            }
         }
     }
 

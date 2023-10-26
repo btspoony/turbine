@@ -5,6 +5,10 @@ import "FlowToken"
 
 import "GachaPlatform"
 
+/// Create a new gacha world by any user:
+/// Create a new account to hold the world and fund the new account with the specified
+/// amount of $FLOW, then delegate the account to the platform.
+///
 transaction(
     name: String,
     pubKey: String,
