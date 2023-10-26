@@ -8,6 +8,16 @@ import "EntityQuery"
 pub contract interface IWorld {
 
     pub resource interface WorldState {
+        /// The name of the wrold.
+        ///
+        access(all)
+        fun getName(): String
+
+        /// The address of the wrold.
+        ///
+        access(all)
+        fun getAddress(): Address
+
         // --- Module Methods ---
 
         /// Fetch the installed modules' names.
@@ -15,12 +25,34 @@ pub contract interface IWorld {
         access(all)
         fun getInstalledModules(): [String]
 
+        // --- System Methods ---
+
+        /// The list of system types that the context provider supports.
+        ///
+        access(all)
+        fun getSystemTypes(): [Type]
+
+        /// Fetches the system capability for the given type.
+        ///
+        access(all)
+        fun getSystemCapability(type: Type): Capability<&AnyResource{Context.Consumer}>
+
         // --- Entity Manager Methods ---
 
         /// Fetch the entity manager
         ///
         access(all)
         fun borrowEntityManager(): &EntityManager.Manager
+
+        /// Create a new entity resource with the given UUID.
+        ///
+        access(all)
+        fun createEntity(_ uid: UInt64?): &IEntity.Entity
+
+        /// Destroy the entity resource for the given UUID.
+        ///
+        access(all)
+        fun destroyEntity(uid: UInt64): Void
 
         /// Returns all available components.
         ///

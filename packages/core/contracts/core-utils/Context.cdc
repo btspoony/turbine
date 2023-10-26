@@ -5,36 +5,6 @@ import "IEntity"
 pub contract Context {
 
     pub resource interface Provider {
-        /// The name of the wrold.
-        ///
-        access(all)
-        fun getName(): String
-
-        /// The address of the wrold.
-        ///
-        access(all)
-        fun getAddress(): Address
-
-        /// The list of consumer types that the context provider supports.
-        ///
-        access(all)
-        fun getSystemTypes(): [Type]
-
-        /// Fetches the consumer capability for the given type.
-        ///
-        access(all)
-        fun getSystemCapability(type: Type): Capability<&AnyResource{Consumer}>
-
-        /// Create a new entity resource with the given UUID.
-        ///
-        access(all)
-        fun createEntity(_ uid: UInt64?): &IEntity.Entity
-
-        /// Destroy the entity resource for the given UUID.
-        ///
-        access(all)
-        fun destroyEntity(uid: UInt64): Void
-
         /// Check if the given entity resource exists.
         ///
         access(all)
