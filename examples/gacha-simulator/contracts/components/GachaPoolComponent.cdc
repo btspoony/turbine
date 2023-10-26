@@ -66,7 +66,7 @@ pub contract GachaPoolComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct}): Void {
             if kv["baseProbabilityPool"] != nil {
                 self.baseProbabilityPool = kv["baseProbabilityPool"] as! {UInt64: UFix64}? ?? panic("Invalid baseProbabilityPool")
             }

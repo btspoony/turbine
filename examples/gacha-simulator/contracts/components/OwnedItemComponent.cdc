@@ -30,7 +30,7 @@ pub contract OwnedItemComponent: IComponent {
             self.quantity = quantity
         }
 
-        pub fun toDictionary(): {String: AnyStruct?} {
+        pub fun toDictionary(): {String: AnyStruct} {
             return {
                 "itemEntityID": self.itemEntityID,
                 "exp": self.exp,
@@ -74,7 +74,7 @@ pub contract OwnedItemComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct}): Void {
             if kv["itemEntityID"] != nil {
                 self.kv["itemEntityID"] = kv["itemEntityID"] as! UInt64? ?? panic("Invalid type for itemEntityID")
             }

@@ -169,6 +169,16 @@ pub contract CoreWorld: IWorld {
             return self.systems[type] ?? panic("System not found")
         }
 
+        /// Fetch the address of the world
+        ///
+        access(all)
+        fun borrowSystem(_ type: Type): auth &ISystem.System {
+            pre {
+                self.systems[type] != nil: "System not found"
+            }
+            return self.systems[type]!.borrow() ?? panic("System not found")
+        }
+
         /// Adds a system to the context provider.
         ///
         access(all)
@@ -277,16 +287,6 @@ pub contract CoreWorld: IWorld {
         access(contract)
         fun onModuleInstalled(_ name: String) {
             self.installedModules.append(name)
-        }
-
-        /// Fetch the address of the world
-        ///
-        access(self)
-        fun borrowSystem(_ type: Type): auth &ISystem.System {
-            pre {
-                self.systems[type] != nil: "System not found"
-            }
-            return self.systems[type]!.borrow() ?? panic("System not found")
         }
     }
 

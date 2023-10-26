@@ -24,7 +24,7 @@ transaction(
 
         let listed = platform.getListedWorld(name) ?? panic("Cannot find listed world")
         self.worldMgr = platform.borrowWorldManager(listed.address) ?? panic("Cannot borrow world manager")
-        self.world = platform.borrowWorld(listed.address, name)
+        self.world = self.worldMgr.borrowWorld(name) ?? panic("Cannot borrow world")
     }
 
     execute {
@@ -35,8 +35,21 @@ transaction(
         let addedItemIds: [UInt64] = []
         let boostingItemIds: [UInt64] = []
         for data in items {
+            log("Item: name="
+                .concat(data["name"] as! String? ?? "no name")
+                .concat(", description=")
+                .concat(data["description"] as! String? ?? "no description")
+                .concat(", thumbnail=")
+                .concat(data["thumbnail"] as! String? ?? "no thumbnail")
+                .concat(", rarity=")
+                .concat((data["rarity"] as! UInt8? ?? 0).toString())
+                .concat(", category=")
+                .concat((data["category"] as! UInt8? ?? 0).toString())
+                .concat(", identity=")
+                .concat(data["identity"] as! String? ?? "no identity")
+            )
             assert(
-                data.containsKey("name") && data.containsKey("discription") && data.containsKey("thumbnail") &&
+                data.containsKey("name") && data.containsKey("description") && data.containsKey("thumbnail") &&
                 data.containsKey("rarity") && data.containsKey("category") && data.containsKey("identity"),
                 message: "Item's data must contain name, discription, thumbnail, rarity, category, identity"
             )

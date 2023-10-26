@@ -29,7 +29,7 @@ pub contract interface IComponent {
 
     pub resource interface DataSetter {
         /// Sets the value of the key
-        access(all) fun setData(_ kv: {String: AnyStruct?}): Void
+        access(all) fun setData(_ kv: {String: AnyStruct}): Void
     }
 
     /* --- Interfaces & Resources --- */
@@ -68,7 +68,7 @@ pub contract interface IComponent {
 
         /// Sets the value of the key
         ///
-        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct}): Void {
             panic("You need to implement setData method in your component")
         }
     }

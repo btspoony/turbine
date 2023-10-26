@@ -40,7 +40,7 @@ pub contract ItemComponent: IComponent {
             self.traits = traits
         }
 
-        pub fun toDictionary(): {String: AnyStruct?} {
+        pub fun toDictionary(): {String: AnyStruct} {
             return {
                 "category": self.category,
                 "fungible": self.fungible,
@@ -85,7 +85,7 @@ pub contract ItemComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct}): Void {
             if kv["category"] != nil {
                 self.kv["category"] = kv["category"] as! ItemCategory? ?? panic("Invalid type for category")
             }

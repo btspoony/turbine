@@ -11,7 +11,7 @@ function generateSetupTransactionParams() {
   // name: String,
   params.push({
     type: "String",
-    value: "HSR_GACHA",
+    value: "sample",
   });
 
   // rarityProbabilityPool: {UInt8: UFix64},
@@ -89,6 +89,7 @@ function generateSetupTransactionParams() {
 
 const paramsJsonStr = JSON.stringify(generateSetupTransactionParams());
 
-cp.execSync(
+const out = cp.execSync(
   `flow transactions send ./transactions/platform/setup-gacha-pool.cdc --args-json='${paramsJsonStr}' --signer=default`
 );
+console.log("Result: ", out.toString());

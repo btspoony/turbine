@@ -34,7 +34,7 @@ pub contract IdentityComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct}): Void {
             if kv["username"] != nil {
                 self.setUsername(kv["username"] as! String? ?? panic("Invalid username"))
             }

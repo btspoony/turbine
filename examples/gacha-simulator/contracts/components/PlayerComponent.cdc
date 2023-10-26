@@ -65,7 +65,7 @@ pub contract PlayerComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct}): Void {
             if kv["gachaPoolCounter"] != nil {
                 self.gachaPoolCounter = kv["gachaPoolCounter"] as! {UInt64: UInt64}? ?? panic("Invalid gachaPoolCounter")
             }

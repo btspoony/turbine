@@ -30,7 +30,7 @@ pub contract CapabilityComponent: IComponent {
 
         /// Sets the value of the key
         ///
-        access(all) fun setData(_ kv: {String: AnyStruct?}): Void {
+        access(all) fun setData(_ kv: {String: AnyStruct}): Void {
             for k in kv.keys {
                 switch k {
                 case "address":
