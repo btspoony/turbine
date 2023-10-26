@@ -314,24 +314,12 @@
     {
       "data": {
         "category": 1,
-        "rarity": 3,
-        "identity": ""
-      },
-      "display": {
-        "name": "",
-        "description": "Light Cone - ",
-        "thumbnail": ""
-      }
-    },
-    {
-      "data": {
-        "category": 1,
         "rarity": 4,
-        "identity": "LC_此时恰好"
+        "identity": "LC_Perfect Timing"
       },
       "display": {
-        "name": "此时恰好",
-        "description": "Light Cone - 此时恰好",
+        "name": "Perfect Timing",
+        "description": "Light Cone - Perfect Timing",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/6/61/iv495j58c8fdet5i8sko1ba81f48u70.png/150px-%E6%AD%A4%E6%97%B6%E6%81%B0%E5%A5%BD.png"
       }
     },
@@ -339,11 +327,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_同一种心情"
+        "identity": "LC_Shared Feeling"
       },
       "display": {
-        "name": "同一种心情",
-        "description": "Light Cone - 同一种心情",
+        "name": "Shared Feeling",
+        "description": "Light Cone - Shared Feeling",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/7/71/ciwxhdtx0b0jzbmvdv0qrvp3o0s8shk.png/150px-%E5%90%8C%E4%B8%80%E7%A7%8D%E5%BF%83%E6%83%85.png"
       }
     },
@@ -351,11 +339,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_一场术后对话"
+        "identity": "LC_Post-Op Conversation"
       },
       "display": {
-        "name": "一场术后对话",
-        "description": "Light Cone - 一场术后对话",
+        "name": "Post-Op Conversation",
+        "description": "Light Cone - Post-Op Conversation",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/2/2e/qephd8t9uw308te2h7puiwzi55itzy1.png/150px-%E4%B8%80%E5%9C%BA%E6%9C%AF%E5%90%8E%E5%AF%B9%E8%AF%9D.png"
       }
     },
@@ -363,11 +351,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_与行星相会"
+        "identity": "LC_Planetary Rendezvous"
       },
       "display": {
-        "name": "与行星相会",
-        "description": "Light Cone - 与行星相会",
+        "name": "Planetary Rendezvous",
+        "description": "Light Cone - Planetary Rendezvous",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/0/00/5cl56v29ww6lrnpn1p1len41glannhq.png/150px-%E4%B8%8E%E8%A1%8C%E6%98%9F%E7%9B%B8%E4%BC%9A.png"
       }
     },
@@ -375,11 +363,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_记忆中的模样"
+        "identity": "LC_Memories of the Past"
       },
       "display": {
-        "name": "记忆中的模样",
-        "description": "Light Cone - 记忆中的模样",
+        "name": "Memories of the Past",
+        "description": "Light Cone - Memories of the Past",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/2/22/b5x3n7cae4ub17lfct2kw9qzyn1eag6.png/150px-%E8%AE%B0%E5%BF%86%E4%B8%AD%E7%9A%84%E6%A8%A1%E6%A0%B7.png"
       }
     },
@@ -387,11 +375,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_舞！舞！舞！"
+        "identity": "LC_Dance! Dance! Dance!"
       },
       "display": {
-        "name": "舞！舞！舞！",
-        "description": "Light Cone - 舞！舞！舞！",
+        "name": "Dance! Dance! Dance!",
+        "description": "Light Cone - Dance! Dance! Dance!",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/2/20/h6m4pvmqh0hq7i88zz00rwyr3hqdbul.png/150px-%E8%88%9E%EF%BC%81%E8%88%9E%EF%BC%81%E8%88%9E%EF%BC%81.png"
       }
     },
@@ -399,11 +387,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_余生的第一天"
+        "identity": "LC_Day One of My New Life"
       },
       "display": {
-        "name": "余生的第一天",
-        "description": "Light Cone - 余生的第一天",
+        "name": "Day One of My New Life",
+        "description": "Light Cone - Day One of My New Life",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/8/8c/d4ee8tjaikyg1oshu6annvxdhnpigst.png/150px-%E4%BD%99%E7%94%9F%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A4%A9.png"
       }
     },
@@ -411,11 +399,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_宇宙市场趋势"
+        "identity": "LC_Trend of the Universal Market"
       },
       "display": {
-        "name": "宇宙市场趋势",
-        "description": "Light Cone - 宇宙市场趋势",
+        "name": "Trend of the Universal Market",
+        "description": "Light Cone - Trend of the Universal Market",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/e/e9/8uibukvsf9g7yafatcr6z3ih71tugwy.png/150px-%E5%AE%87%E5%AE%99%E5%B8%82%E5%9C%BA%E8%B6%8B%E5%8A%BF.png"
       }
     },
@@ -423,11 +411,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_朗道的选择"
+        "identity": "LC_Landau's Choice"
       },
       "display": {
-        "name": "朗道的选择",
-        "description": "Light Cone - 朗道的选择",
+        "name": "Landau's Choice",
+        "description": "Light Cone - Landau's Choice",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/9/95/nssngfddhxojwuwzr4ui75viowtcyhs.png/150px-%E6%9C%97%E9%81%93%E7%9A%84%E9%80%89%E6%8B%A9.png"
       }
     },
@@ -435,11 +423,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_论剑"
+        "identity": "LC_Swordplay"
       },
       "display": {
-        "name": "论剑",
-        "description": "Light Cone - 论剑",
+        "name": "Swordplay",
+        "description": "Light Cone - Swordplay",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/0/01/1i790vp2z853u4u7eiwd8pzby26lk3p.png/150px-%E8%AE%BA%E5%89%91.png"
       }
     },
@@ -447,11 +435,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_唯有沉默"
+        "identity": "LC_Only Silence Remains"
       },
       "display": {
-        "name": "唯有沉默",
-        "description": "Light Cone - 唯有沉默",
+        "name": "Only Silence Remains",
+        "description": "Light Cone - Only Silence Remains",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/7/79/o72e536subttx210ahh1pxhgg00oajk.png/150px-%E5%94%AF%E6%9C%89%E6%B2%89%E9%BB%98.png"
       }
     },
@@ -459,11 +447,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_点个关注吧！"
+        "identity": "LC_Subscribe for More!"
       },
       "display": {
-        "name": "点个关注吧！",
-        "description": "Light Cone - 点个关注吧！",
+        "name": "Subscribe for More!",
+        "description": "Light Cone - Subscribe for More!",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/f/fd/skncz1rl4k44r6i8h7gbhgb62yx9mzf.png/150px-%E7%82%B9%E4%B8%AA%E5%85%B3%E6%B3%A8%E5%90%A7%EF%BC%81.png"
       }
     },
@@ -471,11 +459,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_天才们的休憩"
+        "identity": "LC_Geniuses' Repose"
       },
       "display": {
-        "name": "天才们的休憩",
-        "description": "Light Cone - 天才们的休憩",
+        "name": "Geniuses' Repose",
+        "description": "Light Cone - Geniuses' Repose",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/f/fc/4glh3rvpc0lgsuzmsm9jkuhh1zhjskq.png/150px-%E5%A4%A9%E6%89%8D%E4%BB%AC%E7%9A%84%E4%BC%91%E6%86%A9.png"
       }
     },
@@ -483,11 +471,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_「我」的诞生"
+        "identity": "LC_The Birth of the Self"
       },
       "display": {
-        "name": "「我」的诞生",
-        "description": "Light Cone - 「我」的诞生",
+        "name": "The Birth of the Self",
+        "description": "Light Cone - The Birth of the Self",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/3/3d/e936oqxwgkkjry0hnxrxwa0mvpblp8n.png/150px-%E3%80%8C%E6%88%91%E3%80%8D%E7%9A%84%E8%AF%9E%E7%94%9F.png"
       }
     },
@@ -495,11 +483,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_别让世界静下来"
+        "identity": "LC_Make the World Clamor"
       },
       "display": {
-        "name": "别让世界静下来",
-        "description": "Light Cone - 别让世界静下来",
+        "name": "Make the World Clamor",
+        "description": "Light Cone - Make the World Clamor",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/7/77/elt9omhqfwefide3yhb9e3a7d3c84b6.png/150px-%E5%88%AB%E8%AE%A9%E4%B8%96%E7%95%8C%E9%9D%99%E4%B8%8B%E6%9D%A5.png"
       }
     },
@@ -507,11 +495,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_在蓝天下"
+        "identity": "LC_Under the Blue Sky"
       },
       "display": {
-        "name": "在蓝天下",
-        "description": "Light Cone - 在蓝天下",
+        "name": "Under the Blue Sky",
+        "description": "Light Cone - Under the Blue Sky",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/c/ce/pbsxitugh0f2bw59ad7xn71qdy0t82h.png/150px-%E5%9C%A8%E8%93%9D%E5%A4%A9%E4%B8%8B.png"
       }
     },
@@ -519,11 +507,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_鼹鼠党欢迎你"
+        "identity": "LC_The Moles Welcome You"
       },
       "display": {
-        "name": "鼹鼠党欢迎你",
-        "description": "Light Cone - 鼹鼠党欢迎你",
+        "name": "The Moles Welcome You",
+        "description": "Light Cone - The Moles Welcome You",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/4/4d/p3qhuopa71dtvj82jvvr7t51ml1onji.png/150px-%E9%BC%B9%E9%BC%A0%E5%85%9A%E6%AC%A2%E8%BF%8E%E4%BD%A0.png"
       }
     },
@@ -531,11 +519,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_秘密誓心"
+        "identity": "LC_A Secret Vow"
       },
       "display": {
-        "name": "秘密誓心",
-        "description": "Light Cone - 秘密誓心",
+        "name": "A Secret Vow",
+        "description": "Light Cone - A Secret Vow",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/b/b8/0ivpjfh5uml71p8z3ejcntnbcsvtcdr.png/150px-%E7%A7%98%E5%AF%86%E8%AA%93%E5%BF%83.png"
       }
     },
@@ -543,11 +531,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_决心如汗珠般闪耀"
+        "identity": "LC_Resolution Shines As Pearls of Sweat"
       },
       "display": {
-        "name": "决心如汗珠般闪耀",
-        "description": "Light Cone - 决心如汗珠般闪耀",
+        "name": "Resolution Shines As Pearls of Sweat",
+        "description": "Light Cone - Resolution Shines As Pearls of Sweat",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/e/ee/lxf9170hekk45caz9lutfh10ln4a7o1.png/150px-%E5%86%B3%E5%BF%83%E5%A6%82%E6%B1%97%E7%8F%A0%E8%88%AC%E9%97%AA%E8%80%80.png"
       }
     },
@@ -555,11 +543,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_猎物的视线"
+        "identity": "LC_Eyes of the Prey"
       },
       "display": {
-        "name": "猎物的视线",
-        "description": "Light Cone - 猎物的视线",
+        "name": "Eyes of the Prey",
+        "description": "Light Cone - Eyes of the Prey",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/1/14/hb5cqdyuvmy265318ak4t99s6p9hcaj.png/150px-%E7%8C%8E%E7%89%A9%E7%9A%84%E8%A7%86%E7%BA%BF.png"
       }
     },
@@ -567,11 +555,11 @@
       "data": {
         "category": 1,
         "rarity": 4,
-        "identity": "LC_晚安与睡颜"
+        "identity": "LC_Good Night and Sleep Well"
       },
       "display": {
-        "name": "晚安与睡颜",
-        "description": "Light Cone - 晚安与睡颜",
+        "name": "Good Night and Sleep Well",
+        "description": "Light Cone - Good Night and Sleep Well",
         "thumbnail": "https://patchwiki.biligame.com/images/sr/thumb/2/2e/m4x2ul3sipzx9dsgys8g9c6r575birq.png/150px-%E6%99%9A%E5%AE%89%E4%B8%8E%E7%9D%A1%E9%A2%9C.png"
       }
     },
