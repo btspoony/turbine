@@ -29,14 +29,20 @@ node bin/setup-gacha-dev.mjs
 node bin/pull-gacha-dev.mjs
 ```
 
-> Query Inventory
-
-```bash
-flow scripts execute ./scripts/platform/query-user-inventory.cdc sample bt.wood
-```
-
 > Query List of Gacha Pools
 
 ```bash
 flow scripts execute ./scripts/platform/list-pools.cdc
+```
+
+> Fetch Pool Details
+
+```bash
+flow scripts execute ./scripts/platform/fetch-pool-detail.cdc sample {poolID}
+```
+
+> Query Inventory
+
+```bash
+flow scripts execute ./scripts/platform/query-user-inventory.cdc sample bt.wood
 ```

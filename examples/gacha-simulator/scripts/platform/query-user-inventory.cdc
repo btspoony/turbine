@@ -8,7 +8,7 @@ import "InventorySystem"
 pub fun main(
     worldName: String,
     username: String
-): [ItemData] {
+): [OwnedItemData] {
     let addr = GachaPlatform.getContractAddress()
     let acct = getAuthAccount(addr)
     let platform = acct.borrow<&GachaPlatform.Platform>(from: GachaPlatform.GachaPlatformStoragePath)
@@ -30,7 +30,7 @@ pub fun main(
     let counterDic: {String: UInt64} = {}
     let logStrDic: {String: String} = {}
 
-    let ret: [ItemData] = []
+    let ret: [OwnedItemData] = []
     // get owned items
     let ownedItems = inventory.getOwnedItemIds()
     // get owned item component
@@ -40,7 +40,7 @@ pub fun main(
         let item = inventorySystem.borrowItem(ownedInfo.itemEntityID)
         let itemInfo = item.toStruct()
 
-        ret.append(ItemData(owned: ownedInfo, item: itemInfo))
+        ret.append(OwnedItemData(owned: ownedInfo, item: itemInfo))
 
         counterDic[itemInfo.identity] = (counterDic[itemInfo.identity] ?? 0) + 1
         if logStrDic[itemInfo.identity] == nil {
@@ -56,7 +56,7 @@ pub fun main(
     return ret
 }
 
-pub struct ItemData {
+pub struct OwnedItemData {
     pub let owned: OwnedItemComponent.OwnedItemInfo
     pub let item: ItemComponent.ItemInfo
     init (owned: OwnedItemComponent.OwnedItemInfo, item: ItemComponent.ItemInfo) {
