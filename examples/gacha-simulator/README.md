@@ -34,3 +34,9 @@ node bin/pull-gacha-dev.mjs
 ```bash
 flow scripts execute ./scripts/platform/query-user-inventory.cdc sample bt.wood
 ```
+
+> Query List of Gacha Pools
+
+```bash
+flow scripts execute ./scripts/platform/list-pools.cdc
+```

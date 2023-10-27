@@ -192,7 +192,7 @@ pub contract GachaGameSystem: ISystem {
                 newOwnedItemIds.append(ownedId)
 
                 log(counterStr.concat("Picked Item: ").concat(pickedItemInfo.identity)
-                    .concat("Created Owned Item: ").concat(ownedId.toString()))
+                    .concat(", Created Owned Item: ").concat(ownedId.toString()))
 
                 // add counter to PlayerComponent
                 playerComp.incrementGachaPoolCounter(poolEntityId, amount: 1)

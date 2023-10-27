@@ -17,7 +17,7 @@ function generateSetupTransactionParams() {
   // poolName: String,
   params.push({
     type: "String",
-    value: "HSR_Gacha_1.4_Charactor_A",
+    value: json.name,
   });
 
   // rarityProbabilityPool: {UInt8: UFix64},

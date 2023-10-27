@@ -1,11 +1,12 @@
 import cp from "node:child_process";
 
+import json from "../reference/hsr-gacha-1.4.json" assert { type: "json" };
+
 const userName = "bt.wood";
 const worldName = "sample";
-const poolName = "HSR_Gacha_1.4_Charactor_A";
 const times = 10;
 
 const out = cp.execSync(
-  `flow transactions send ./transactions/platform/pull.cdc ${userName} ${worldName} ${poolName} ${times} --signer=default --gas-limit 9999`
+  `flow transactions send ./transactions/platform/pull.cdc ${userName} ${worldName} ${json.name} ${times} --signer=default --gas-limit 9999`
 );
 console.log("Result: ", out.toString());
