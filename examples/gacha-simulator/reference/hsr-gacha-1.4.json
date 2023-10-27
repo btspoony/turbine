@@ -17,12 +17,36 @@
   "counterProbabilityModifier": "0.06",
   "boostingProbabilityRatio": "0.5",
   "boostingProbabilityItems": [
-    "Char_JingLiu",
-    "Char_TingYun",
-    "Char_QingQue",
-    "Char_Sampo"
+    "Char_TopazAndNumby",
+    "Char_Guinaifen",
+    "Char_Luka",
+    "Char_SuShang"
   ],
   "items": [
+    {
+      "data": {
+        "category": 0,
+        "rarity": 5,
+        "identity": "Char_TopazAndNumby"
+      },
+      "display": {
+        "name": "Topaz and Numby",
+        "description": "Charactor Topaz and Numby",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/4/44/gro6khvj906r2f4bd5yr5dzllpr889r.png"
+      }
+    },
+    {
+      "data": {
+        "category": 0,
+        "rarity": 4,
+        "identity": "Char_Guinaifen"
+      },
+      "display": {
+        "name": "Guinaifen",
+        "description": "Charactor Guinaifen",
+        "thumbnail": "https://patchwiki.biligame.com/images/sr/a/a2/msof31qixcvqal0meau64wn8i78pk6c.png"
+      }
+    },
     {
       "data": {
         "category": 0,

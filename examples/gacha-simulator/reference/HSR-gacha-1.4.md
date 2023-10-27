@@ -12,6 +12,22 @@ Basics:
 
 ## Charactor
 
+角色一览-托帕&账账 Topaz and Numby
+
+- Key: Char_TopazAndNumby
+- UpOnly: true
+- Rarity: 5
+
+![角色一览-托帕&账账](https://patchwiki.biligame.com/images/sr/4/44/gro6khvj906r2f4bd5yr5dzllpr889r.png)
+
+角色一览-桂乃芬 Guinaifen
+
+- Key: Char_Guinaifen
+- UpOnly: true
+- Rarity: 5
+
+![角色一览-桂乃芬](https://patchwiki.biligame.com/images/sr/a/a2/msof31qixcvqal0meau64wn8i78pk6c.png)
+
 角色一览-镜流 JingLiu
 
 - Key: Char_JingLiu
