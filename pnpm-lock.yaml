@@ -24,6 +24,7 @@ importers:
       '@astrojs/vercel': ^5.1.0
       '@astrojs/vue': ^3.0.2
       '@babel/core': ^7.0.0-0
+      '@vercel/edge': ^1.1.0
       astro: ^3.4.0
       typescript: ^5.2.2
       vite: ^4.0.0
@@ -32,6 +33,7 @@ importers:
       '@astrojs/check': registry.npmmirror.com/@astrojs/check/0.2.1_typescript@5.2.2
       '@astrojs/vercel': registry.npmmirror.com/@astrojs/vercel/5.1.0_astro@3.4.0
       '@astrojs/vue': registry.npmmirror.com/@astrojs/vue/3.0.2_dl7vrnfxyqpnjp2g6ftwbnwl64
+      '@vercel/edge': registry.npmmirror.com/@vercel/edge/1.1.0
       astro: registry.npmmirror.com/astro/3.4.0_typescript@5.2.2
       typescript: registry.npmmirror.com/typescript/5.2.2
       vite: registry.npmmirror.com/vite/4.5.0
@@ -1562,6 +1564,12 @@ packages:
     version: 1.1.1
     dependencies:
       server-only: registry.npmmirror.com/server-only/0.0.1
+    dev: false
+
+  registry.npmmirror.com/@vercel/edge/1.1.0:
+    resolution: {integrity: sha512-84H2EavY5Kul9Ef1DnTH0XEG5vChqcXjyqoRLVPjjZjLWw47sMapzXXQH09pybcshR+8AKqULGvFqPTWuRh3Rw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vercel/edge/-/edge-1.1.0.tgz}
+    name: '@vercel/edge'
+    version: 1.1.0
     dev: false
 
   registry.npmmirror.com/@vercel/nft/0.23.1:
