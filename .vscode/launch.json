@@ -1,0 +1,11 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Gacha Simulator Development server",
+      "command": "./examples/gacha-simulator-frontend/node_modules/.bin/astro dev",
+      "request": "launch",
+      "type": "node-terminal"
+    }
+  ]
+}
