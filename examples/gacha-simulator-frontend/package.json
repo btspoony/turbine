@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@astrojs/vue": "^3.0.2",
+    "@onflow/fcl": "^1.6.0",
     "@turbine/examples-gacha": "workspace:^",
     "@vercel/edge": "^1.1.0",
     "@vueuse/core": "^10.5.0",
@@ -32,9 +33,10 @@
     "@astrojs/check": "^0.3.0",
     "@astrojs/vercel": "^5.1.0",
     "@babel/core": "^7.0.0-0",
+    "@onflow/typedefs": "^1.1.1",
     "@unocss/reset": "^0.57.1",
-    "unocss": "^0.57.1",
     "typescript": "^5.2.2",
+    "unocss": "^0.57.1",
     "vite": "^4.0.0"
   }
 }
