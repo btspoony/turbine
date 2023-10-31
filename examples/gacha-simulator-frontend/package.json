@@ -21,20 +21,20 @@
   "author": "Bohao Tang<tech@btang.cn>",
   "license": "MIT",
   "dependencies": {
-    "@astrojs/check": "^0.2.1",
-    "@astrojs/vercel": "^5.1.0",
     "@astrojs/vue": "^3.0.2",
     "@turbine/examples-gacha": "workspace:^",
     "@vercel/edge": "^1.1.0",
     "@vueuse/core": "^10.5.0",
     "astro": "^3.4.0",
-    "typescript": "^5.2.2",
-    "vite": "^4.0.0",
     "vue": "^3.2.30"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.3.0",
+    "@astrojs/vercel": "^5.1.0",
     "@babel/core": "^7.0.0-0",
     "@unocss/reset": "^0.57.1",
-    "unocss": "^0.57.1"
+    "unocss": "^0.57.1",
+    "typescript": "^5.2.2",
+    "vite": "^4.0.0"
   }
 }
