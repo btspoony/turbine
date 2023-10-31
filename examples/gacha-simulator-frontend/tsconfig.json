@@ -4,7 +4,8 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@api/*": ["src/pages/api/*"]
     }
   },
   "exclude": ["node_modules", "dist", "build", "public"]

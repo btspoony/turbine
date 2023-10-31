@@ -1,6 +1,5 @@
 import { resolve } from "node:path";
 import { readFile } from "node:fs/promises";
-import * as fcl from "@onflow/fcl";
 
 import { FlowContext } from "./shared/context.js";
 import flowJSON from "@turbine/examples-gacha/flow.json" assert { type: "json" };
