@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from 'astro:transitions'
+
 interface Props {
 	title: string;
   description?: string;
@@ -15,6 +17,7 @@ const url = import.meta.env.SITE ?? "http://localhost:4321"
 	<head>
     <meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
+		<title>{title}</title>
     <meta name="title" content={title} />
 		<meta name="description" content={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -29,7 +32,7 @@ const url = import.meta.env.SITE ?? "http://localhost:4321"
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content=`${url}/social-image.png`` />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+    <ViewTransitions />
 	</head>
 	<body>
 		<slot />
