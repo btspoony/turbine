@@ -132,3 +132,47 @@ export async function getGachaPoolItems(
     throw new Error(`Not Found: ${world}/${poolId}`);
   }
 }
+
+export interface PlayerInventoryItem extends GachaPoolItem {
+  // owned info
+  itemEntityID: string;
+  exp: number;
+  level: number;
+  quality: number;
+  quantity: number;
+}
+
+function parsePlayerInventoryItem(one: any): PlayerInventoryItem {
+  const item = parseGachaItem(one);
+  return {
+    ...item,
+    itemEntityID: one.itemEntityID,
+    exp: parseInt(one.exp ?? "0"),
+    level: parseInt(one.level ?? "0"),
+    quality: parseInt(one.quality ?? "0"),
+    quantity: parseInt(one.quantity ?? "0"),
+  };
+}
+
+export async function getPlayerInventoryItems(
+  world: string,
+  username: string
+): Promise<PlayerInventoryItem[]> {
+  const ctx = await buildFlowContext();
+  const code = await loadCode("scripts", "platform/query-user-inventory");
+  let response: any;
+  try {
+    const list = await ctx.service.executeScript(
+      code,
+      (arg, t) => [arg(world, t.String), arg(username, t.String)],
+      undefined
+    );
+    if (Array.isArray(list) && list.length > 0) {
+      response = list.map((one) => parsePlayerInventoryItem(one));
+    }
+  } catch (e) {}
+  if (!response) {
+    throw new Error(`Inventory Not Found: ${world}/${username}`);
+  }
+  return response;
+}

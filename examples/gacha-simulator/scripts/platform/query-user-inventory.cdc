@@ -1,5 +1,7 @@
+import "MetadataViews"
 import "CoreWorld"
 import "GachaPlatform"
+import "DisplayComponent"
 import "ItemComponent"
 import "OwnedItemComponent"
 import "PlayerRegSystem"
@@ -35,13 +37,29 @@ pub fun main(
     let ownedItems = inventory.getOwnedItemIds()
     // get owned item component
     for id in ownedItems {
+        // owned item info
         let ownedItem = inventorySystem.borrowOwnedItem(id)
         let ownedInfo = ownedItem.toStruct()
-        let item = inventorySystem.borrowItem(ownedInfo.itemEntityID)
+
+        // fetch item entity
+        let itemEntity = world.borrowEntity(uid: ownedInfo.itemEntityID) ?? panic("Cannot find item entity")
+        // get item component
+        var comp = itemEntity.borrowComponent(Type<@ItemComponent.Component>())
+            ?? panic("Failed to borrow item component")
+        let item = comp as! &ItemComponent.Component
         let itemInfo = item.toStruct()
+        // get display component
+        comp = itemEntity.borrowComponent(Type<@DisplayComponent.Component>())
+            ?? panic("Failed to borrow display component")
+        let itemDisplay = comp as! &DisplayComponent.Component
 
-        ret.append(OwnedItemData(owned: ownedInfo, item: itemInfo))
-
+        // append to result
+        ret.append(OwnedItemData(
+            owned: ownedItem.toStruct(),
+            item: itemInfo,
+            display: itemDisplay.resolveView(Type<MetadataViews.Display>()) as! MetadataViews.Display? ?? panic("Cannot resolve display")
+        ))
+        // logger for emulator
         counterDic[itemInfo.identity] = (counterDic[itemInfo.identity] ?? 0) + 1
         if logStrDic[itemInfo.identity] == nil {
             logStrDic[itemInfo.identity] = "Item: ".concat(itemInfo.identity)
@@ -59,8 +77,11 @@ pub fun main(
 pub struct OwnedItemData {
     pub let owned: OwnedItemComponent.OwnedItemInfo
     pub let item: ItemComponent.ItemInfo
-    init (owned: OwnedItemComponent.OwnedItemInfo, item: ItemComponent.ItemInfo) {
+    pub let display: MetadataViews.Display
+
+    init (owned: OwnedItemComponent.OwnedItemInfo, item: ItemComponent.ItemInfo, display: MetadataViews.Display) {
         self.owned = owned
         self.item = item
+        self.display = display
     }
 }
