@@ -176,3 +176,10 @@ export async function getPlayerInventoryItems(
   }
   return response;
 }
+
+export async function fetchLatestTransactions(
+  limit?: number
+): Promise<string[]> {
+  const ctx = await buildFlowContext();
+  return await ctx.redisHelper.fetchLatestKeysFromRedis("Transactions", limit);
+}

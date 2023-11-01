@@ -41,6 +41,7 @@ export class FlowSigner {
     const txid = await this.flowService.sendTransaction(code, args, authzFn);
 
     await this.redisHelper.releaseKeyIndex(address, keyIndex);
+    await this.redisHelper.pushKeyToRedis("Transactions", txid);
 
     return txid;
   }

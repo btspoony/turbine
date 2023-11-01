@@ -1,5 +1,8 @@
 import type { APIRoute } from "astro";
 
-export const GET: APIRoute = ({ request, locals, params }) => {
-  return new Response(JSON.stringify({}));
+import { fetchLatestTransactions } from "@flow/actions";
+
+export const GET: APIRoute = async (_ctx) => {
+  const list = await fetchLatestTransactions(20);
+  return new Response(JSON.stringify({ list }));
 };

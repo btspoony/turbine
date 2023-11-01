@@ -55,6 +55,37 @@ export class RedisHelperService {
   }
 
   /**
+   * Push a key to redis pool
+   * @param key
+   * @param value
+   * @param limit
+   */
+  async pushKeyToRedis(key: string, value: string) {
+    const redisKeyPool = `${this.prefix}:SERVICE_POOL:${this.network}:DATA:${key}:SORTED_SET`;
+
+    const now = Date.now();
+    // set a timeout for key
+    await this.redis.zadd(redisKeyPool, now, value);
+  }
+
+  /**
+   * Fetch latest keys from redis pool
+   * @param key
+   * @param limit
+   */
+  async fetchLatestKeysFromRedis(
+    key: string,
+    limit?: number
+  ): Promise<string[]> {
+    if (!this.redis) {
+      return [];
+    }
+    const redisKeyPool = `${this.prefix}:SERVICE_POOL:${this.network}:DATA:${key}:SORTED_SET`;
+    // query last {limit} added values from redis
+    return await this.redis.zrevrange(redisKeyPool, 0, limit ?? 20);
+  }
+
+  /**
    * Acquire a key index from redis pool
    */
   async acquireKeyIndex(
