@@ -1,0 +1,77 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+/* Global focus outline reset */
+*:focus:not(:focus-visible) {
+	outline: none;
+}
+
+/* Firefox */
+* {
+	scrollbar-color: var(--theme-dim-light) transparent;
+}
+
+/* Webkit */
+/* Make scrollbars transparent except for main page scrollbar. */
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+body::-webkit-scrollbar,
+body::-webkit-scrollbar-track {
+	background: var(--theme-bg-gradient);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--theme-dim-light);
+	border: 4px solid transparent;
+	background-clip: content-box;
+	border-radius: 10px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	:root {
+		scroll-behavior: smooth;
+	}
+}
+
+/*
+	Ensure that the auto-hiding/showing address bar on iOS Safari
+	always has a background color matching our theme.
+*/
+html {
+	background: var(--theme-bg-gradient-bottom);
+}
+
+/*
+	Use a pseudo-element to add a gradient background that covers the entire viewport.
+	Using a regular fixed background does not work properly on mobile browsers like iOS Safari.
+*/
+body::before {
+	content: '';
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -999;
+	background: var(--theme-bg-gradient);
+}
+
+body {
+	color: var(--theme-text);
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	font-family: var(--font-body);
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+nav ul {
+	list-style: none;
+	padding: 0;
+}

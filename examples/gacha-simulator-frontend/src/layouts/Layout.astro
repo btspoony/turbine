@@ -1,11 +1,15 @@
 ---
+import '../styles/index.css'
+import '../styles/theme.css'
+
 import { ViewTransitions } from 'astro:transitions'
 
 interface Props {
-	title: string;
+  title: string;
   description?: string;
 }
 
+const isDark = true
 const titlebase = "Gacha Simulator For Honkai StarRail v1.4"
 const title = `${Astro.props.title} - ${titlebase}`
 const description = Astro.props.description ?? "This is a gacha simulator for Honkai StarRail. You can use this to simulate gacha pulls and see how lucky you are."
@@ -13,14 +17,14 @@ const url = import.meta.env.SITE ?? "http://localhost:4321"
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
+<html lang="en" class:list={[isDark ? 'theme-dark' : '']}>
+  <head>
     <meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>{title}</title>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
     <meta name="title" content={title} />
-		<meta name="description" content={description} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={url} />
     <meta property="og:title" content={title} />
@@ -30,41 +34,12 @@ const url = import.meta.env.SITE ?? "http://localhost:4321"
     <meta property="twitter:url" content={url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content=`${url}/social-image.png`` />
-		<meta name="generator" content={Astro.generator} />
+    <meta property="twitter:image" content=`${url}/social-image.png` />
+    <meta name="generator" content={Astro.generator} />
     <ViewTransitions />
-	</head>
-	<body>
-		<slot />
-	</body>
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>
