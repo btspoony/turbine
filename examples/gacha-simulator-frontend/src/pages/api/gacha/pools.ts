@@ -1,5 +1,8 @@
 import type { APIRoute } from "astro";
 
-export const GET: APIRoute = ({ request, locals, params }) => {
-  return new Response(JSON.stringify({}));
+import { getGachaPools } from "@flow/actions.js";
+
+export const GET: APIRoute = async (_ctx) => {
+  let list = await getGachaPools();
+  return new Response(JSON.stringify({ list }));
 };

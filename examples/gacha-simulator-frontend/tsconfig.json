@@ -4,6 +4,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
+      "@flow/*": ["src/flow/*"],
       "@components/*": ["src/components/*"],
       "@api/*": ["src/pages/api/*"]
     }

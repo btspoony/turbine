@@ -2,7 +2,7 @@ import type { MiddlewareResponseHandler } from "astro";
 import { sequence } from "astro:middleware";
 
 const ensureAPIRequest: MiddlewareResponseHandler = async (
-  { request, url },
+  { request, url, cookies, locals },
   next
 ) => {
   if (url.pathname.startsWith("/api")) {
@@ -19,17 +19,38 @@ const ensureAPIRequest: MiddlewareResponseHandler = async (
       }
     );
     const contentType = request.headers.get("content-type");
-    if (!contentType || !contentType.includes("application/json")) {
+    if (
+      request.method !== "GET" &&
+      (!contentType || !contentType.includes("application/json"))
+    ) {
       return errorRes;
     }
+
+    // setup locals
+    locals.username =
+      request.headers.get("x-app-username") ??
+      cookies.get("x-app-username")?.value ??
+      "";
+
     // Go to the next middleware
-    const response = await next();
+    let response: Response;
+    let error: Error;
+    try {
+      response = await next();
+    } catch (err: any) {
+      error = err;
+    }
     // Format the response
-    if (response.status >= 400) {
+    if (error || response.status >= 400) {
       return new Response(
-        JSON.stringify({ ok: false, error: await response.text() }),
+        JSON.stringify({
+          ok: false,
+          error: response
+            ? await response.text()
+            : error?.message ?? "Unknown error",
+        }),
         {
-          status: response.status,
+          status: response?.status ?? 400,
           headers: {
             "content-type": "application/json",
           },

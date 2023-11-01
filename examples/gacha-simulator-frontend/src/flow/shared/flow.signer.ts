@@ -36,8 +36,13 @@ export class FlowSigner {
   async sendTransactionWithKeyPool(code: string, args: fcl.ArgsFn) {
     const address = await this.getAddress();
     const keyIndex = await this.redisHelper.acquireKeyIndex(address);
+
     const authzFn = await this.buildAuthorization(keyIndex);
-    return this.flowService.sendTransaction(code, args, authzFn);
+    const txid = await this.flowService.sendTransaction(code, args, authzFn);
+
+    await this.redisHelper.releaseKeyIndex(address, keyIndex);
+
+    return txid;
   }
 
   /**

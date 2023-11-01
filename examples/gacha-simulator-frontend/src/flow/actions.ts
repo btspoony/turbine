@@ -32,3 +32,103 @@ export async function buildFlowContext(): Promise<FlowContext> {
 }
 
 /// ------------------------------ Transactions ------------------------------
+
+export interface GeneralTransaction {
+  txid: string;
+}
+
+export async function gachaPull(
+  username: string,
+  world: string,
+  poolId: string,
+  times: number
+) {
+  const ctx = await buildFlowContext();
+  const code = await loadCode("transactions", "platform/pull");
+
+  const signer = ctx.createNewSigner();
+  signer.setLabel("default");
+  const txid = await signer.sendTransactionWithKeyPool(code, (arg, t) => [
+    arg(username, t.String),
+    arg(world, t.String),
+    arg(poolId, t.UInt64),
+    arg(String(Math.min(1, Math.max(10, times))), t.UInt64),
+  ]);
+  return { txid };
+}
+
+/// ------------------------------ Query Scripts ------------------------------
+
+export interface GachaPool {
+  host: string;
+  world: string;
+  poolId: string;
+  poolName: string;
+}
+
+export async function getGachaPools(): Promise<GachaPool[]> {
+  const ctx = await buildFlowContext();
+  const code = await loadCode("scripts", "platform/list-pools");
+  const response = await ctx.service.executeScript(
+    code,
+    (args, t) => [],
+    undefined
+  );
+  // TODO: parse response
+  return response as GachaPool[];
+}
+
+export enum ItemCatagory {
+  Character = 0,
+  Weapon,
+  Consumable,
+  QuestItem,
+}
+
+export interface GachaPoolItem {
+  // display
+  name: string;
+  description: string;
+  thumbnail?: string;
+  // info
+  category: ItemCatagory;
+  fungible: boolean;
+  identity: string;
+  rarity: number;
+  traits: Record<string, number>;
+}
+
+function parseGachaItem(one: any): GachaPoolItem {
+  return {
+    name: one.display?.name,
+    description: one.display?.description,
+    thumbnail: one.display?.thumbnail?.url ?? undefined,
+    category: parseInt(one.item?.category?.rawValue ?? "0") as ItemCatagory,
+    fungible: one.item?.fungible,
+    identity: one.item?.identity,
+    rarity: parseInt(one.item?.rarity ?? "0"),
+    traits: one.item?.traits ?? {},
+  };
+}
+
+export async function getGachaPoolItems(
+  world: string,
+  poolId: string
+): Promise<GachaPoolItem[]> {
+  const ctx = await buildFlowContext();
+  const code = await loadCode("scripts", "platform/fetch-pool-detail");
+  try {
+    const list = await ctx.service.executeScript(
+      code,
+      (arg, t) => [arg(world, t.String), arg(poolId, t.UInt64)],
+      undefined
+    );
+    if (Array.isArray(list) && list.length > 0) {
+      return list.map((one) => parseGachaItem(one));
+    } else {
+      return [];
+    }
+  } catch (e) {
+    throw new Error(`Not Found: ${world}/${poolId}`);
+  }
+}

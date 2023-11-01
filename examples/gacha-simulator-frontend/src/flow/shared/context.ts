@@ -37,6 +37,27 @@ export class FlowContext {
   }
 
   /**
+   * Get the flow service
+   */
+  get service(): FlowService {
+    return this.flowService;
+  }
+
+  /**
+   * Get the key manager service
+   */
+  get kms(): KeyManagerService {
+    return this.keyManagerService;
+  }
+
+  /**
+   * Get the redis helper service
+   */
+  get redisHelper(): RedisHelperService {
+    return this.redisHelperService;
+  }
+
+  /**
    * Create a new flow signer
    */
   createNewSigner(): FlowSigner {
