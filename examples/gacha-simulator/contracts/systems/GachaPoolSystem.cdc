@@ -169,7 +169,7 @@ pub contract GachaPoolSystem: ISystem {
 
         /// Borrow the gacha pool component
         ///
-        access(self)
+        access(all)
         fun borrowGachaPool(_ poolEntityId: UInt64): &GachaPoolComponent.Component {
             let poolEntity = self.borrowEntity(poolEntityId)
             let comp = poolEntity.borrowComponent(Type<@GachaPoolComponent.Component>())

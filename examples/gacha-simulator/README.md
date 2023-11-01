@@ -26,7 +26,7 @@ node bin/setup-gacha-dev.mjs
 > Pull Items from Gacha pool (for Dev, user: bt.wood, times: 10)
 
 ```bash
-node bin/pull-gacha-dev.mjs
+node bin/pull-gacha-dev.mjs {poolId}
 ```
 
 > Query List of Gacha Pools

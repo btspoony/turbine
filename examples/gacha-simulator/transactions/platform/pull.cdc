@@ -8,7 +8,7 @@ import "GachaGameSystem"
 transaction(
     userName: String,
     worldName: String,
-    poolName: String,
+    poolId: UInt64,
     times: UInt64
 ) {
     let worldMgr: &CoreWorld.WorldManager
@@ -30,11 +30,11 @@ transaction(
     execute {
         let gachaPoolSystem = self.world.borrowSystem(Type<@GachaPoolSystem.System>()) as! &GachaPoolSystem.System
         let gachaGameSystem = self.world.borrowSystem(Type<@GachaGameSystem.System>()) as! &GachaGameSystem.System
-
-        let pool = gachaPoolSystem.findGachaPoolEntity(name: poolName) ?? panic("Cannot find gacha pool: ".concat(poolName))
+        // ensure pool exists
+        let pool = gachaPoolSystem.borrowGachaPool(poolId)
         /// Pull items from the pool
-        gachaGameSystem.pullFromCachaPool(userName, pool.getId(), times)
+        gachaGameSystem.pullFromCachaPool(userName, poolId, times)
 
-        log("Pulled items from pool[".concat(poolName).concat("] for user.").concat(userName))
+        log("Pulled items from pool[".concat(pool.getName()).concat("] for user.").concat(userName))
     }
 }
