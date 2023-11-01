@@ -52,7 +52,7 @@ export async function gachaPull(
     arg(username, t.String),
     arg(world, t.String),
     arg(poolId, t.UInt64),
-    arg(String(Math.min(1, Math.max(10, times))), t.UInt64),
+    arg(String(Math.min(10, Math.max(1, times))), t.UInt64),
   ]);
   return { txid };
 }
