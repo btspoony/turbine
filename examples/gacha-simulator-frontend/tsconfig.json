@@ -6,6 +6,7 @@
     "paths": {
       "@flow/*": ["src/flow/*"],
       "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
       "@api/*": ["src/pages/api/*"]
     }
   },

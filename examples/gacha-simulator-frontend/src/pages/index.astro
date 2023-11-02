@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '@layouts/Layout.astro';
 import Header from '@components/partials/Header.astro';
 import Footer from '@components/partials/Footer.astro';
 import MainSection from '@components/gacha/MainSection.vue';
@@ -9,8 +9,6 @@ const title = "Index"
 
 <Layout title={title}>
   <Header />
-  <main class="container m-a">
-    <MainSection />
-  </main>
+  <MainSection />
   <Footer />
 </Layout>

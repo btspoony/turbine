@@ -4,7 +4,9 @@ import { ref, computed } from 'vue'
 </script>
 
 <template>
-<div class="flex items-center justify-center">
-  TODO
-</div>
+<main class="container m-a">
+  <div class="flex items-center justify-center">
+    TODO
+  </div>
+</main>
 </template>
