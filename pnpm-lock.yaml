@@ -65,6 +65,12 @@ importers:
       '@babel/core':
         specifier: ^7.0.0-0
         version: registry.npmmirror.com/@babel/core@7.23.2
+      '@iconify-json/carbon':
+        specifier: ^1.1.21
+        version: registry.npmmirror.com/@iconify-json/carbon@1.1.21
+      '@iconify-json/logos':
+        specifier: ^1.1.37
+        version: registry.npmmirror.com/@iconify-json/logos@1.1.37
       '@onflow/typedefs':
         specifier: ^1.1.1
         version: registry.npmmirror.com/@onflow/typedefs@1.1.1
@@ -1417,6 +1423,22 @@ packages:
     name: '@humanwhocodes/object-schema'
     version: 2.0.1
     dev: false
+
+  registry.npmmirror.com/@iconify-json/carbon@1.1.21:
+    resolution: {integrity: sha512-bK2cMVM4noBU+FGlay433flpXLRzQu0ED095iAnoO6ka3yb4uz0lvb8acpN5gthyGLJ89C4HpfIbQZLQnMKQww==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@iconify-json/carbon/-/carbon-1.1.21.tgz}
+    name: '@iconify-json/carbon'
+    version: 1.1.21
+    dependencies:
+      '@iconify/types': registry.npmmirror.com/@iconify/types@2.0.0
+    dev: true
+
+  registry.npmmirror.com/@iconify-json/logos@1.1.37:
+    resolution: {integrity: sha512-H2S8frTEznk6paX2kMzeUGn4KSiykghvO0b8UvEDd1fFFzt0WxCXpP1tBv67XaWK99e6JgA34hhv4lRGAm1hJg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@iconify-json/logos/-/logos-1.1.37.tgz}
+    name: '@iconify-json/logos'
+    version: 1.1.37
+    dependencies:
+      '@iconify/types': registry.npmmirror.com/@iconify/types@2.0.0
+    dev: true
 
   registry.npmmirror.com/@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@iconify/types/-/types-2.0.0.tgz}

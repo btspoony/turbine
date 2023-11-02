@@ -75,3 +75,15 @@ nav ul {
 	list-style: none;
 	padding: 0;
 }
+
+a {
+  color: var(--theme-accent-secondary);
+  text-underline-offset: 0.08em;
+  text-decoration-color: var(--theme-accent-secondary);
+  align-items: center;
+}
+
+header {
+  background: var(--theme-navbar-bg);
+  padding: 1rem 0;
+}
