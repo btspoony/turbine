@@ -3,10 +3,13 @@ import NamePanel from '@components/player/NamePanel.vue'
 ---
 
 <header class="container mx-a max-h-20 max-w-[calc(100%-3rem)]">
-  <div class="h-20 flex items-center justify-between">
-    <h2 class="mb-0">
-      Turbine Example: Gacha Simulator
-    </h2>
+  <div class="h-20 flex items-center justify-between gap-4">
+    <img src="/apple-touch-icon.png" alt="Turbine Logo" class="w-10 h-10" />
+    <div class="lg:flex-1">
+      <h3 class="my-0">
+        Turbine Example: <strong>Gacha Simulator</strong>
+      </h3>
+    </div>
     <NamePanel client:only="vue"/>
   </div>
 </header>
