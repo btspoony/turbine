@@ -46,6 +46,9 @@ importers:
       ioredis:
         specifier: ^5.3.2
         version: registry.npmmirror.com/ioredis@5.3.2
+      js-md5:
+        specifier: ^0.8.3
+        version: registry.npmmirror.com/js-md5@0.8.3
       pino:
         specifier: ^8.16.1
         version: registry.npmmirror.com/pino@8.16.1
@@ -4802,6 +4805,12 @@ packages:
     version: 1.21.0
     hasBin: true
     dev: true
+
+  registry.npmmirror.com/js-md5@0.8.3:
+    resolution: {integrity: sha512-qR0HB5uP6wCuRMrWPTrkMaev7MJZwJuuw4fnwAzRgP4J4/F8RwtodOKpGp4XpqsLBFzzgqIO42efFAyz2Et6KQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/js-md5/-/js-md5-0.8.3.tgz}
+    name: js-md5
+    version: 0.8.3
+    dev: false
 
   registry.npmmirror.com/js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/js-tokens/-/js-tokens-4.0.0.tgz}

@@ -1,9 +1,12 @@
 ---
-// TODO
+import NamePanel from '@components/player/NamePanel.vue'
 ---
 
-<header class="container mx-a h-16 max-w-[calc(100%-3rem)]">
-  <div class="flex items-center justify-between">
-    <h2> Turbine Example: Gacha Simulator </h2>
+<header class="container mx-a max-h-20 max-w-[calc(100%-3rem)]">
+  <div class="h-20 flex items-center justify-between">
+    <h2 class="mb-0">
+      Turbine Example: Gacha Simulator
+    </h2>
+    <NamePanel client:load/>
   </div>
 </header>
