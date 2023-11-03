@@ -46,3 +46,9 @@ const url = import.meta.env.SITE ?? "http://localhost:4321"
   </body>
 </html>
 
+<script>
+  // naive-ui style injection
+  const meta = document.createElement('meta')
+  meta.name = 'naive-ui-style'
+  document.head.appendChild(meta)
+</script>

@@ -1,8 +1,14 @@
 import { resolve } from "node:path";
 import { readFile } from "node:fs/promises";
 
-import { FlowContext } from "./shared/context.js";
 import flowJSON from "@turbine/examples-gacha/flow.json" assert { type: "json" };
+import { FlowContext } from "./shared/context.js";
+import type {
+  GachaPool,
+  GachaPoolItem,
+  ItemCatagory,
+  PlayerInventoryItem,
+} from "./types.js";
 
 const APP_PREFIX = "GACHA_SIMULATOR_FLOW";
 
@@ -33,10 +39,6 @@ export async function buildFlowContext(): Promise<FlowContext> {
 
 /// ------------------------------ Transactions ------------------------------
 
-export interface GeneralTransaction {
-  txid: string;
-}
-
 export async function gachaPull(
   username: string,
   world: string,
@@ -59,13 +61,6 @@ export async function gachaPull(
 
 /// ------------------------------ Query Scripts ------------------------------
 
-export interface GachaPool {
-  host: string;
-  world: string;
-  poolId: string;
-  poolName: string;
-}
-
 export async function getGachaPools(): Promise<GachaPool[]> {
   const ctx = await buildFlowContext();
   const code = await loadCode("scripts", "platform/list-pools");
@@ -76,26 +71,6 @@ export async function getGachaPools(): Promise<GachaPool[]> {
   );
   // TODO: parse response
   return response as GachaPool[];
-}
-
-export enum ItemCatagory {
-  Character = 0,
-  Weapon,
-  Consumable,
-  QuestItem,
-}
-
-export interface GachaPoolItem {
-  // display
-  name: string;
-  description: string;
-  thumbnail?: string;
-  // info
-  category: ItemCatagory;
-  fungible: boolean;
-  identity: string;
-  rarity: number;
-  traits: Record<string, number>;
 }
 
 function parseGachaItem(one: any): GachaPoolItem {
@@ -131,15 +106,6 @@ export async function getGachaPoolItems(
   } catch (e) {
     throw new Error(`Not Found: World[${world}] GachaPool[${poolId}]`);
   }
-}
-
-export interface PlayerInventoryItem extends GachaPoolItem {
-  // owned info
-  itemEntityID: string;
-  exp: number;
-  level: number;
-  quality: number;
-  quantity: number;
 }
 
 function parsePlayerInventoryItem(one: any): PlayerInventoryItem {
