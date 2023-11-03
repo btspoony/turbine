@@ -3,14 +3,17 @@ import { ref, computed } from 'vue'
 import { useFetch, useStorage } from '@vueuse/core'
 import { darkTheme, NConfigProvider, NButton } from 'naive-ui'
 import type { GachaPool, PlayerInventoryItem } from '@flow/types.js'
+import { revealTxids } from '@components/utils/api.js'
 import ProgressBar from '@components/widgets/ProgressBar.vue'
 import InventoryItem from './InventoryItem.vue'
+import TransactionHistorySection from './TransactionHistorySection.vue'
 
 const userName = useStorage('x-app-username', '')
 
 const { data: listedPools, isFetching } = await useFetch('/api/gacha/pools').get().json<{ list: GachaPool[] }>()
 const currentPool = computed<GachaPool>(() => listedPools.value?.list?.[0])
 
+const history = ref<InstanceType<typeof TransactionHistorySection> | null>(null)
 const responseTxid = ref<string>(null);
 const isLoading = ref(false)
 const isActionAvailable = computed(() => !isLoading.value && !!currentPool.value && !!userName.value)
@@ -53,24 +56,14 @@ async function tryRevealTx() {
     return
   }
 
-  const url = `/api/gacha/reveal`
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-app-username': userName.value,
-    },
-    body: JSON.stringify({
-      txids: [responseTxid.value],
-    })
-  }).then(res => res.json())
-
+  const response = await revealTxids([responseTxid.value])
   if (response?.ok) {
-    console.log(`Called ${url} - Response: `, response)
     if (response.batch?.[responseTxid.value] && Array.isArray(response.batch?.[responseTxid.value]?.items)) {
       isLoading.value = false
       pulledInventoryItems.value = response.batch?.[responseTxid.value]?.items
         ?.filter((one: PlayerInventoryItem) => typeof one.thumbnail === 'string')
+      // refresh history
+      history.value?.refresh()
       return
     }
   }
@@ -116,9 +109,7 @@ async function tryRevealTx() {
         </div>
       </div>
     </section>
-    <section class="mx-a mt-4 max-w-4xl flex flex-col items-center gap-2">
-      <h3 class="mb-4">Transaction History</h3>
-    </section>
+    <TransactionHistorySection ref="history" />
   </main>
 </NConfigProvider>
 </template>

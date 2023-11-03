@@ -6,6 +6,7 @@ import { FlowContext } from "./shared/context.js";
 import type {
   GachaPool,
   GachaPoolItem,
+  GachaResult,
   ItemCatagory,
   PlayerInventoryItem,
 } from "./types.js";
@@ -198,7 +199,7 @@ export async function revealGachaPullResults(txids: string[]) {
 
   const ownedItemIdsMapping: Record<
     string,
-    { world: string; poolId: string; username: string; items: string[] }
+    Omit<GachaResult, "items"> & { items: string[] }
   > = {};
 
   // parse events
@@ -234,15 +235,7 @@ export async function revealGachaPullResults(txids: string[]) {
   }
 
   // query items
-  const results: Record<
-    string,
-    {
-      world: string;
-      poolId: string;
-      username: string;
-      items: PlayerInventoryItem[];
-    }
-  > = {};
+  const results: Record<string, GachaResult> = {};
   for (const txid in ownedItemIdsMapping) {
     const record = ownedItemIdsMapping[txid];
 

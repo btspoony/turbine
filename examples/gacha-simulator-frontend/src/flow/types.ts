@@ -38,3 +38,10 @@ export interface GachaPool {
 export interface GeneralTransaction {
   txid: string;
 }
+
+export interface GachaResult {
+  world: string;
+  poolId: string;
+  username: string;
+  items: PlayerInventoryItem[];
+}
