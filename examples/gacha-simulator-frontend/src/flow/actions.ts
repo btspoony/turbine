@@ -197,7 +197,7 @@ export async function revealGachaPullResults(txids: string[]) {
 
   const ownedItemIdsMapping: Record<
     string,
-    { world: string; items: string[] }
+    { world: string; poolId: string; username: string; items: string[] }
   > = {};
 
   // parse events
@@ -210,7 +210,15 @@ export async function revealGachaPullResults(txids: string[]) {
     const world = worldEvt.data["name"] as string;
     if (!world) continue;
 
-    const txRecord = { world, items: [] };
+    const userPullEvt = one.events.find((one) =>
+      one.type.endsWith("GachaGameSystem.PlayerPulled")
+    );
+    if (!userPullEvt) continue;
+    const username = userPullEvt.data["username"] as string;
+    const poolId = userPullEvt.data["poolEntityId"] as string;
+    if (!username || !poolId) continue;
+
+    const txRecord = { world, username, poolId, items: [] };
 
     const owndItemEvts = one.events.filter((one) =>
       one.type.endsWith("InventoryComponent.OwnedItemAdded")
@@ -226,15 +234,25 @@ export async function revealGachaPullResults(txids: string[]) {
   }
 
   // query items
-  const results: Record<string, PlayerInventoryItem[]> = {};
+  const results: Record<
+    string,
+    {
+      world: string;
+      poolId: string;
+      username: string;
+      items: PlayerInventoryItem[];
+    }
+  > = {};
   for (const txid in ownedItemIdsMapping) {
     const record = ownedItemIdsMapping[txid];
 
-    results[txid] = await getPlayerInventoryItemsByIds(
-      record.world,
-      record.items,
-      ctx
-    );
+    results[txid] = Object.assign({}, record, {
+      items: await getPlayerInventoryItemsByIds(
+        record.world,
+        record.items,
+        ctx
+      ),
+    });
   }
   return results;
 }
