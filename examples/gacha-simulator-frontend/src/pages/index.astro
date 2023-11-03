@@ -2,13 +2,13 @@
 import Layout from '@layouts/Layout.astro';
 import Header from '@components/partials/Header.astro';
 import Footer from '@components/partials/Footer.astro';
-import MainSection from '@components/gacha/MainSection.vue';
+import Main from '@components/partials/Main.vue';
 
 const title = "Index"
 ---
 
 <Layout title={title}>
   <Header />
-  <MainSection client:load/>
+  <Main client:load/>
   <Footer />
 </Layout>

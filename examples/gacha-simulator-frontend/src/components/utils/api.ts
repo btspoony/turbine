@@ -1,3 +1,6 @@
+/**
+ * Reveals the gacha result
+ */
 export async function revealTxids(txids: string[]) {
   const url = `/api/gacha/reveal`;
   return await fetch(url, {
@@ -8,5 +11,17 @@ export async function revealTxids(txids: string[]) {
     body: JSON.stringify({
       txids: txids,
     }),
+  }).then((res) => res.json());
+}
+
+/**
+ * Load player inventory
+ */
+export async function getInventroy(world: string, username: string) {
+  const url = `/api/player/${world}/inventory`;
+  return await fetch(url, {
+    headers: {
+      "x-app-username": username,
+    },
   }).then((res) => res.json());
 }

@@ -6,8 +6,8 @@ import type { GachaPool, PlayerInventoryItem } from '@flow/types.js'
 import { revealTxids } from '@components/utils/api.js'
 import { useGlobalUsername } from '@components/utils/shared.js'
 import ProgressBar from '@components/widgets/ProgressBar.vue'
-import InventoryItem from './InventoryItem.vue'
-import TransactionHistorySection from './TransactionHistorySection.vue'
+import InventoryItem from '@components/gacha/InventoryItem.vue'
+import TransactionHistorySection from '@components/gacha/TransactionHistorySection.vue'
 
 const userName = useGlobalUsername()
 
@@ -76,22 +76,21 @@ async function tryRevealTx() {
 <template>
 <NConfigProvider :theme="darkTheme">
   <main class="container m-a">
-    <section
-      v-if="!isFetching"
-      class="p-4 flex flex-col items-center gap-4"
-    >
+    <section v-if="!isFetching" class="p-4 flex flex-col items-center gap-4">
       <h2 class="mb-0">Gacha Simulator For {{ currentPool?.poolName }}</h2>
       <div class="relative object-cover h-80">
         <img src="/social-image.png" alt="Hero Image">
         <div class="absolute bottom-0 h-16 w-full" v-if="currentPool">
           <div class="h-full flex items-center justify-around gap-4">
-            <NButton round type="primary" strong size="large" :disabled="!isActionAvailable" :loading="isLoading" @click="pull(1)">
+            <NButton round type="primary" strong size="large" :disabled="!isActionAvailable" :loading="isLoading"
+              @click="pull(1)">
               <template #icon>
                 <div class="i-carbon:ticket w-5 h-5"></div>
               </template>
               Pull &nbsp;<span class="font-bold">x 1</span>
             </NButton>
-            <NButton round type="primary" strong size="large" :disabled="!isActionAvailable" :loading="isLoading" @click="pull(10)">
+            <NButton round type="primary" strong size="large" :disabled="!isActionAvailable" :loading="isLoading"
+              @click="pull(10)">
               <template #icon>
                 <div class="i-carbon:ticket w-5 h-5"></div>
               </template>
