@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useFetch, useStorage } from '@vueuse/core'
+import { useFetch } from '@vueuse/core'
 import { darkTheme, NConfigProvider, NButton } from 'naive-ui'
 import type { GachaPool, PlayerInventoryItem } from '@flow/types.js'
 import { revealTxids } from '@components/utils/api.js'
+import { useGlobalUsername } from '@components/utils/shared.js'
 import ProgressBar from '@components/widgets/ProgressBar.vue'
 import InventoryItem from './InventoryItem.vue'
 import TransactionHistorySection from './TransactionHistorySection.vue'
 
-const userName = useStorage('x-app-username', '')
+const userName = useGlobalUsername()
 
 const { data: listedPools, isFetching } = await useFetch('/api/gacha/pools').get().json<{ list: GachaPool[] }>()
 const currentPool = computed<GachaPool>(() => listedPools.value?.list?.[0])

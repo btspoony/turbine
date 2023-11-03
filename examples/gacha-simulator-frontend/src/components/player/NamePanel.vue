@@ -1,10 +1,10 @@
 <script setup>
+import md5 from 'js-md5'
 import { ref, computed } from 'vue'
 import { darkTheme, NConfigProvider, NAvatar, NInput, NButton, NDropdown } from 'naive-ui'
-import { useStorage } from '@vueuse/core'
-import md5 from 'js-md5'
+import { useGlobalUsername } from '@components/utils/shared'
 
-const userName = useStorage('x-app-username', '')
+const userName = useGlobalUsername()
 const editModeName = ref('')
 
 const gravatarUrl = computed(() => {
