@@ -10,6 +10,17 @@ import "PlayerRegSystem"
 
 pub contract GachaGameSystem: ISystem {
 
+    // --- Events ---
+
+    pub event PlayerPulled(
+        _ username: String,
+        _ poolEntityId: UInt64,
+        _ times: UInt64,
+        _ ownedItemIds: [UInt64],
+    )
+
+    // --- System ---
+
     pub resource System: ISystem.CoreLifecycle, Context.Consumer {
         access(contract)
         let worldCap: Capability<&AnyResource{Context.Provider, IWorld.WorldState}>
@@ -204,6 +215,8 @@ pub contract GachaGameSystem: ISystem {
                 // increment pull counter
                 pullCnt = pullCnt.saturatingAdd(1)
             }
+
+            emit PlayerPulled(username, poolEntityId, times, newOwnedItemIds)
 
             return newOwnedItemIds
         }
