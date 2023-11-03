@@ -75,6 +75,7 @@ export async function getGachaPools(): Promise<GachaPool[]> {
 
 function parseGachaItem(one: any): GachaPoolItem {
   return {
+    id: one.id,
     name: one.display?.name,
     description: one.display?.description,
     thumbnail: one.display?.thumbnail?.url ?? undefined,
@@ -224,7 +225,6 @@ export async function revealGachaPullResults(txids: string[]) {
       one.type.endsWith("InventoryComponent.OwnedItemAdded")
     );
     for (const evt of owndItemEvts) {
-      console.log(evt);
       if (typeof evt.data["itemID"] !== "string") continue;
       txRecord.items.push(evt.data["itemID"]);
     }

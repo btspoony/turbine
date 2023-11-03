@@ -55,6 +55,7 @@ pub fun main(
 
         // append to result
         ret.append(OwnedItemData(
+            id: id,
             owned: ownedItem.toStruct(),
             item: itemInfo,
             display: itemDisplay.resolveView(Type<MetadataViews.Display>()) as! MetadataViews.Display? ?? panic("Cannot resolve display")
@@ -75,11 +76,18 @@ pub fun main(
 }
 
 pub struct OwnedItemData {
+    pub let id: UInt64
     pub let owned: OwnedItemComponent.OwnedItemInfo
     pub let item: ItemComponent.ItemInfo
     pub let display: MetadataViews.Display
 
-    init (owned: OwnedItemComponent.OwnedItemInfo, item: ItemComponent.ItemInfo, display: MetadataViews.Display) {
+    init (
+        id: UInt64,
+        owned: OwnedItemComponent.OwnedItemInfo,
+        item: ItemComponent.ItemInfo,
+        display: MetadataViews.Display
+    ) {
+        self.id = id
         self.owned = owned
         self.item = item
         self.display = display

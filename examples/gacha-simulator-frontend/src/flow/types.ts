@@ -6,6 +6,7 @@ export enum ItemCatagory {
 }
 
 export interface GachaPoolItem {
+  id: string;
   // display
   name: string;
   description: string;

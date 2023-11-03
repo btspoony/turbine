@@ -29,6 +29,7 @@ pub fun main(
             let itemDisplay = itemEntity.borrowComponent(Type<@DisplayComponent.Component>()) as! &DisplayComponent.Component?
                 ?? panic("Cannot borrow display component")
             ret.append(ItemData(
+                itemId,
                 item.toStruct(),
                 itemDisplay.resolveView(Type<MetadataViews.Display>()) as! MetadataViews.Display? ?? panic("Cannot resolve display")
             ))
@@ -38,9 +39,15 @@ pub fun main(
 }
 
 pub struct ItemData {
+    pub let id: UInt64
     pub let item: ItemComponent.ItemInfo
     pub let display: MetadataViews.Display
-    init(_ item: ItemComponent.ItemInfo, _ display: MetadataViews.Display) {
+    init(
+        _ id: UInt64,
+        _ item: ItemComponent.ItemInfo,
+        _ display: MetadataViews.Display
+    ) {
+        self.id = id
         self.item = item
         self.display = display
     }

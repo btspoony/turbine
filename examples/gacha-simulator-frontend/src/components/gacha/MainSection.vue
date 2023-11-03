@@ -2,8 +2,9 @@
 import { ref, computed } from 'vue'
 import { useFetch, useStorage } from '@vueuse/core'
 import { NButton } from 'naive-ui'
-
-import type { GachaPool } from '@flow/types.js'
+import type { GachaPool, PlayerInventoryItem } from '@flow/types.js'
+import ProgressBar from '@components/widgets/ProgressBar.vue'
+import InventoryItem from './InventoryItem.vue'
 
 const userName = useStorage('x-app-username', '')
 
@@ -13,6 +14,7 @@ const currentPool = computed<GachaPool>(() => listedPools.value?.list?.[0])
 const responseTxid = ref<string>(null);
 const isLoading = ref(false)
 const isActionAvailable = computed(() => !isLoading.value && !!currentPool.value)
+const pulledInventoryItems = ref<PlayerInventoryItem[]>([])
 
 async function pull(times: number) {
   if (isActionAvailable.value === false) {
@@ -22,7 +24,10 @@ async function pull(times: number) {
     alert('Please set your username first!')
     return
   }
+
   isLoading.value = true
+  pulledInventoryItems.value = []
+
   const url = `/api/gacha/${currentPool.value.world}/${currentPool.value.poolId}`
   const response = await fetch(url, {
     method: 'POST',
@@ -34,10 +39,12 @@ async function pull(times: number) {
       times,
     })
   }).then(res => res.json())
+
   if (response?.ok && typeof response?.txid === 'string') {
     responseTxid.value = response.txid
   }
   console.log(`Called ${url} - Response: `, response)
+  await tryRevealTx()
 }
 
 async function tryRevealTx() {
@@ -56,9 +63,18 @@ async function tryRevealTx() {
       txids: [responseTxid.value],
     })
   }).then(res => res.json())
+
   if (response?.ok) {
     console.log(`Called ${url} - Response: `, response)
+    if (response.batch?.[responseTxid.value] && Array.isArray(response.batch?.[responseTxid.value]?.items)) {
+      isLoading.value = false
+      pulledInventoryItems.value = response.batch?.[responseTxid.value]?.items
+        ?.filter((one: PlayerInventoryItem) => typeof one.thumbnail === 'string')
+      return
+    }
   }
+  // try again
+  setTimeout(tryRevealTx, 500)
 }
 </script>
 
@@ -88,9 +104,18 @@ async function tryRevealTx() {
         </div>
       </div>
     </div>
+    <div v-if="responseTxid" class="relative w-3xl">
+      <div v-if="isLoading" class="flex flex-col items-center">
+        <h5>Response Txid: {{ responseTxid }}</h5>
+        <ProgressBar />
+      </div>
+      <div v-else class="flex items-center justify-start gap-4">
+        <InventoryItem v-for="item in pulledInventoryItems" :key="item.id" :item="item" />
+      </div>
+    </div>
   </section>
-  <section>
-    Second
+  <section class="mx-a mt-4 max-w-4xl flex flex-col items-center gap-2">
+    <h3 class="mb-4">Transaction History</h3>
   </section>
 </main>
 </template>
