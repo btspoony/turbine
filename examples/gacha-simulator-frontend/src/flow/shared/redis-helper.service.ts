@@ -12,10 +12,12 @@ export class RedisHelperService {
 
   constructor(opt: RedisHelperServiceOption) {
     this.network = (import.meta.env.FLOW_NETWORK as NetworkType) ?? "emulator";
-    this.redis = new Redis({
-      host: import.meta.env.REDIS_HOST ?? "localhost",
-      port: parseInt(import.meta.env.REDIS_PORT ?? "6379"),
-    });
+    this.redis = new Redis(
+      import.meta.env.REDIS_URL ?? {
+        host: import.meta.env.REDIS_HOST ?? "localhost",
+        port: parseInt(import.meta.env.REDIS_PORT ?? "6379"),
+      }
+    );
     this.prefix = opt.prefix ?? "FLOW";
   }
 
