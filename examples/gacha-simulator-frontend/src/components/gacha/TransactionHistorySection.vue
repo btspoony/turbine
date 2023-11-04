@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { defineExpose, reactive } from 'vue';
+import { defineExpose, onMounted, reactive } from 'vue';
 import { useFetch } from '@vueuse/core';
 import type { GachaResult } from '@flow/types';
 import { revealTxids } from '@components/utils/api.js'
 import TransactionItem from './TransactionItem.vue';
+
+defineExpose({
+  refresh: async () => {
+    await revealHistory()
+  },
+})
 
 const { data, execute } = useFetch('/api/history/transactions', { immediate: false }).get().json<{ list: string[] }>()
 
@@ -20,13 +26,11 @@ async function revealHistory() {
     }
   }
 }
-await revealHistory()
 
-defineExpose({
-  refresh: async () => {
-    await revealHistory()
-  },
+onMounted(async () => {
+  await revealHistory()
 })
+
 </script>
 
 <template>

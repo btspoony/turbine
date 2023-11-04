@@ -32,9 +32,9 @@ const rarityCounts = computed<Record<string, number>>(() => {
 <template>
 <div class="w-full flex items-center justify-between p-2 rounded border border-[var(--theme-bg-hover)]">
   <div class="text-sm">
-    {{ simpleTxid }} -
+    <a :href="`https://testnet.flowdiver.io/tx/${txid}`" target="_blank">{{ simpleTxid }}</a>
     <template v-if="result">
-      {{ result?.username }}
+      - {{ result?.username }}
       <NTag round size="small" :type="result?.items.length === 1 ? 'warning' : 'success'" :bordered="false">
         x{{ result?.items.length }}
       </NTag>
