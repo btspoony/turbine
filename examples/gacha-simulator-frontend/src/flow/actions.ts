@@ -1,7 +1,7 @@
 import { resolve } from "node:path";
 import { readFile } from "node:fs/promises";
 
-import flowJSON from "@turbine/examples-gacha/flow.json" assert { type: "json" };
+import flowJSON from "@turbine-cdc/examples-gacha/flow.json" assert { type: "json" };
 import { FlowContext } from "./shared/context.js";
 import type {
   GachaPool,
@@ -22,7 +22,7 @@ export async function loadCode(type: "transactions" | "scripts", path: string) {
   const pathName = path.endsWith(".cdc") ? path : `${path}.cdc`;
   const filePath = resolve(
     process.cwd(),
-    `node_modules/@turbine/examples-gacha/${type}/${pathName}`
+    `node_modules/@turbine-cdc/examples-gacha/${type}/${pathName}`
   );
   return await readFile(filePath, "utf-8");
 }

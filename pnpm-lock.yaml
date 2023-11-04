@@ -16,7 +16,7 @@ importers:
 
   examples/gacha-simulator:
     dependencies:
-      '@turbine/core':
+      '@turbine-cdc/core':
         specifier: workspace:^
         version: link:../../packages/core
 
@@ -28,7 +28,7 @@ importers:
       '@onflow/fcl':
         specifier: ^1.6.0
         version: registry.npmmirror.com/@onflow/fcl@1.6.0
-      '@turbine/examples-gacha':
+      '@turbine-cdc/examples-gacha':
         specifier: workspace:^
         version: link:../gacha-simulator
       '@vercel/edge':

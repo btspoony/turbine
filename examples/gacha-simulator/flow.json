@@ -9,49 +9,49 @@
       }
     },
     "CapabilityComponent": {
-      "source": "./node_modules/@turbine/core/contracts/components/CapabilityComponent.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/components/CapabilityComponent.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
       }
     },
     "Context": {
-      "source": "./node_modules/@turbine/core/contracts/core-utils/Context.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/core-utils/Context.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
       }
     },
     "CoreEntity": {
-      "source": "./node_modules/@turbine/core/contracts/CoreEntity.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/CoreEntity.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
       }
     },
     "CoreWorld": {
-      "source": "./node_modules/@turbine/core/contracts/CoreWorld.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/CoreWorld.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
       }
     },
     "DisplayComponent": {
-      "source": "./node_modules/@turbine/core/contracts/components/DisplayComponent.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/components/DisplayComponent.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
       }
     },
     "EntityManager": {
-      "source": "./node_modules/@turbine/core/contracts/core-utils/EntityManager.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/core-utils/EntityManager.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
       }
     },
     "EntityQuery": {
-      "source": "./node_modules/@turbine/core/contracts/core-utils/EntityQuery.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/core-utils/EntityQuery.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
@@ -117,35 +117,35 @@
       }
     },
     "IComponent": {
-      "source": "./node_modules/@turbine/core/contracts/interfaces/IComponent.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/interfaces/IComponent.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
       }
     },
     "IEntity": {
-      "source": "./node_modules/@turbine/core/contracts/interfaces/IEntity.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/interfaces/IEntity.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
       }
     },
     "IModule": {
-      "source": "./node_modules/@turbine/core/contracts/interfaces/IModule.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/interfaces/IModule.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
       }
     },
     "ISystem": {
-      "source": "./node_modules/@turbine/core/contracts/interfaces/ISystem.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/interfaces/ISystem.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
       }
     },
     "IWorld": {
-      "source": "./node_modules/@turbine/core/contracts/interfaces/IWorld.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/interfaces/IWorld.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
@@ -224,7 +224,7 @@
       }
     },
     "PropertyComponent": {
-      "source": "./node_modules/@turbine/core/contracts/components/PropertyComponent.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/components/PropertyComponent.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"
@@ -247,7 +247,7 @@
       }
     },
     "WorldUtils": {
-      "source": "./node_modules/@turbine/core/contracts/core-utils/WorldUtils.cdc",
+      "source": "./node_modules/@turbine-cdc/core/contracts/core-utils/WorldUtils.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
         "testnet": "3102c5131b585d67"

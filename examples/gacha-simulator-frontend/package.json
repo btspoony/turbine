@@ -1,5 +1,5 @@
 {
-  "name": "@turbine/gacha-simulator-frontend",
+  "name": "@turbine-cdc/gacha-simulator-frontend",
   "private": true,
   "type": "module",
   "version": "0.1.0",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@astrojs/vue": "^3.0.2",
     "@onflow/fcl": "^1.6.0",
-    "@turbine/examples-gacha": "workspace:^",
+    "@turbine-cdc/examples-gacha": "workspace:^",
     "@vercel/edge": "^1.1.0",
     "@vueuse/core": "^10.5.0",
     "astro": "^3.4.0",

@@ -1,5 +1,5 @@
 {
-  "name": "@turbine/core",
+  "name": "@turbine-cdc/core",
   "version": "0.1.0",
   "exports": {
     "./contracts/**/*": "./contracts/**/*",

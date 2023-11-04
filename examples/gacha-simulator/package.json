@@ -1,5 +1,5 @@
 {
-  "name": "@turbine/examples-gacha",
+  "name": "@turbine-cdc/examples-gacha",
   "version": "0.1.0",
   "exports": {
     "./contracts/**/*": "./contracts/**/*",
@@ -11,10 +11,10 @@
     "deploy:emulator": "flow project deploy --update",
     "deploy:testnet": "flow project deploy --update --network testnet",
     "deploy:mainnet": "flow project deploy --update --network mainnet",
-    "fund:emulator": "flow transactions send ./node_modules/@turbine/core/transactions/for-dev/transfer-token.cdc 0x01cf0e2f2f715450 1000.0 --signer=emulator-account",
+    "fund:emulator": "flow transactions send ./node_modules/@turbine-cdc/core/transactions/for-dev/transfer-token.cdc 0x01cf0e2f2f715450 1000.0 --signer=emulator-account",
     "dev": "pnpm fund:emulator && pnpm deploy:emulator"
   },
   "dependencies": {
-    "@turbine/core": "workspace:^"
+    "@turbine-cdc/core": "workspace:^"
   }
 }
