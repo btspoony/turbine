@@ -1,2 +1,5 @@
 *.key
+*.pkey
 !emulator.key
+
+turbine-testnet-admin.pkey

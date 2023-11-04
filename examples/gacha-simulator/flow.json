@@ -8,28 +8,61 @@
         "testnet": "31ad40c07a2a9788"
       }
     },
-    "StringUtils": {
-      "source": "./deps/StringUtils.cdc",
+    "CapabilityComponent": {
+      "source": "./node_modules/@turbine/core/contracts/components/CapabilityComponent.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
-        "mainnet": "a340dc0a4ec828ab",
-        "testnet": "31ad40c07a2a9788"
+        "testnet": "3102c5131b585d67"
       }
     },
-    "NonFungibleToken": {
-      "source": "./deps/NonFungibleToken.cdc",
+    "Context": {
+      "source": "./node_modules/@turbine/core/contracts/core-utils/Context.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
-        "mainnet": "1d7e57aa55817448",
-        "testnet": "631e88ae7f1d7c20"
+        "testnet": "3102c5131b585d67"
       }
     },
-    "MetadataViews": {
-      "source": "./deps/MetadataViews.cdc",
+    "CoreEntity": {
+      "source": "./node_modules/@turbine/core/contracts/CoreEntity.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7",
-        "mainnet": "1d7e57aa55817448",
-        "testnet": "631e88ae7f1d7c20"
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "CoreWorld": {
+      "source": "./node_modules/@turbine/core/contracts/CoreWorld.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "DisplayComponent": {
+      "source": "./node_modules/@turbine/core/contracts/components/DisplayComponent.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "EntityManager": {
+      "source": "./node_modules/@turbine/core/contracts/core-utils/EntityManager.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "EntityQuery": {
+      "source": "./node_modules/@turbine/core/contracts/core-utils/EntityQuery.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "FlowToken": {
+      "source": "./deps/FlowToken.cdc",
+      "aliases": {
+        "emulator": "0ae53cb6e3f42a79",
+        "mainnet": "1654653399040a61",
+        "testnet": "7e60df042a9c0868"
       }
     },
     "FungibleToken": {
@@ -48,6 +81,163 @@
         "testnet": "9a0766d93b6608b7"
       }
     },
+    "GachaGameSystem": {
+      "source": "./contracts/systems/GachaGameSystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "GachaModule": {
+      "source": "./contracts/GachaModule.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "GachaPlatform": {
+      "source": "./contracts/GachaPlatform.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "GachaPoolComponent": {
+      "source": "./contracts/components/GachaPoolComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "GachaPoolSystem": {
+      "source": "./contracts/systems/GachaPoolSystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "IComponent": {
+      "source": "./node_modules/@turbine/core/contracts/interfaces/IComponent.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "IEntity": {
+      "source": "./node_modules/@turbine/core/contracts/interfaces/IEntity.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "IModule": {
+      "source": "./node_modules/@turbine/core/contracts/interfaces/IModule.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "ISystem": {
+      "source": "./node_modules/@turbine/core/contracts/interfaces/ISystem.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "IWorld": {
+      "source": "./node_modules/@turbine/core/contracts/interfaces/IWorld.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "IdentityComponent": {
+      "source": "./contracts/components/IdentityComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "InventoryComponent": {
+      "source": "./contracts/components/InventoryComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "InventorySystem": {
+      "source": "./contracts/systems/InventorySystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "ItemComponent": {
+      "source": "./contracts/components/ItemComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "ItemSystem": {
+      "source": "./contracts/systems/ItemSystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "MetadataViews": {
+      "source": "./deps/MetadataViews.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "mainnet": "1d7e57aa55817448",
+        "testnet": "631e88ae7f1d7c20"
+      }
+    },
+    "NonFungibleToken": {
+      "source": "./deps/NonFungibleToken.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "mainnet": "1d7e57aa55817448",
+        "testnet": "631e88ae7f1d7c20"
+      }
+    },
+    "OwnedItemComponent": {
+      "source": "./contracts/components/OwnedItemComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "PlayerComponent": {
+      "source": "./contracts/components/PlayerComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "PlayerRegSystem": {
+      "source": "./contracts/systems/PlayerRegSystem.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450",
+        "testnet": "c33119fd93a657d9"
+      }
+    },
+    "PropertyComponent": {
+      "source": "./node_modules/@turbine/core/contracts/components/PropertyComponent.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
+      }
+    },
+    "StringUtils": {
+      "source": "./deps/StringUtils.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7",
+        "mainnet": "a340dc0a4ec828ab",
+        "testnet": "31ad40c07a2a9788"
+      }
+    },
     "ViewResolver": {
       "source": "./deps/ViewResolver.cdc",
       "aliases": {
@@ -56,174 +246,11 @@
         "testnet": "631e88ae7f1d7c20"
       }
     },
-    "FlowToken": {
-      "source": "./deps/FlowToken.cdc",
-      "aliases": {
-        "emulator": "0ae53cb6e3f42a79",
-        "mainnet": "1654653399040a61",
-        "testnet": "7e60df042a9c0868"
-      }
-    },
-    "CoreEntity": {
-      "source": "./node_modules/@turbine/core/contracts/CoreEntity.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "CoreWorld": {
-      "source": "./node_modules/@turbine/core/contracts/CoreWorld.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "DisplayComponent": {
-      "source": "./node_modules/@turbine/core/contracts/components/DisplayComponent.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "PropertyComponent": {
-      "source": "./node_modules/@turbine/core/contracts/components/PropertyComponent.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "CapabilityComponent": {
-      "source": "./node_modules/@turbine/core/contracts/components/CapabilityComponent.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "IComponent": {
-      "source": "./node_modules/@turbine/core/contracts/interfaces/IComponent.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "IEntity": {
-      "source": "./node_modules/@turbine/core/contracts/interfaces/IEntity.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "IModule": {
-      "source": "./node_modules/@turbine/core/contracts/interfaces/IModule.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "ISystem": {
-      "source": "./node_modules/@turbine/core/contracts/interfaces/ISystem.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "IWorld": {
-      "source": "./node_modules/@turbine/core/contracts/interfaces/IWorld.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "Context": {
-      "source": "./node_modules/@turbine/core/contracts/core-utils/Context.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "EntityQuery": {
-      "source": "./node_modules/@turbine/core/contracts/core-utils/EntityQuery.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "EntityManager": {
-      "source": "./node_modules/@turbine/core/contracts/core-utils/EntityManager.cdc",
-      "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
     "WorldUtils": {
       "source": "./node_modules/@turbine/core/contracts/core-utils/WorldUtils.cdc",
       "aliases": {
-        "emulator": "f8d6e0586b0a20c7"
-      }
-    },
-    "GachaPlatform": {
-      "source": "./contracts/GachaPlatform.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "GachaModule": {
-      "source": "./contracts/GachaModule.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "GachaPoolComponent": {
-      "source": "./contracts/components/GachaPoolComponent.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "InventoryComponent": {
-      "source": "./contracts/components/InventoryComponent.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "ItemComponent": {
-      "source": "./contracts/components/ItemComponent.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "OwnedItemComponent": {
-      "source": "./contracts/components/OwnedItemComponent.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "PlayerComponent": {
-      "source": "./contracts/components/PlayerComponent.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "IdentityComponent": {
-      "source": "./contracts/components/IdentityComponent.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "GachaPoolSystem": {
-      "source": "./contracts/systems/GachaPoolSystem.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "InventorySystem": {
-      "source": "./contracts/systems/InventorySystem.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "ItemSystem": {
-      "source": "./contracts/systems/ItemSystem.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "PlayerRegSystem": {
-      "source": "./contracts/systems/PlayerRegSystem.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "GachaGameSystem": {
-      "source": "./contracts/systems/GachaGameSystem.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
+        "emulator": "f8d6e0586b0a20c7",
+        "testnet": "3102c5131b585d67"
       }
     }
   },
@@ -253,6 +280,13 @@
       "key": {
         "type": "file",
         "location": "./emulator.key"
+      }
+    },
+    "testnet-admin": {
+      "address": "c33119fd93a657d9",
+      "key": {
+        "type": "file",
+        "location": "testnet-admin.pkey"
       }
     }
   },
@@ -300,6 +334,22 @@
         "FlowToken"
       ]
     },
-    "testnet": {}
+    "testnet": {
+      "testnet-admin": [
+        "GachaPoolComponent",
+        "GachaPoolSystem",
+        "InventoryComponent",
+        "InventorySystem",
+        "ItemComponent",
+        "ItemSystem",
+        "OwnedItemComponent",
+        "PlayerComponent",
+        "IdentityComponent",
+        "PlayerRegSystem",
+        "GachaGameSystem",
+        "GachaModule",
+        "GachaPlatform"
+      ]
+    }
   }
 }

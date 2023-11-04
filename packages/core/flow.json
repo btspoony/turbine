@@ -16,6 +16,18 @@
         "testnet": "31ad40c07a2a9788"
       }
     },
+    "CapabilityComponent": {
+      "source": "contracts/components/CapabilityComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
+    "Context": {
+      "source": "contracts/core-utils/Context.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
     "CoreEntity": {
       "source": "contracts/CoreEntity.cdc",
       "aliases": {
@@ -34,14 +46,14 @@
         "emulator": "01cf0e2f2f715450"
       }
     },
-    "PropertyComponent": {
-      "source": "contracts/components/PropertyComponent.cdc",
+    "EntityManager": {
+      "source": "contracts/core-utils/EntityManager.cdc",
       "aliases": {
         "emulator": "01cf0e2f2f715450"
       }
     },
-    "CapabilityComponent": {
-      "source": "contracts/components/CapabilityComponent.cdc",
+    "EntityQuery": {
+      "source": "contracts/core-utils/EntityQuery.cdc",
       "aliases": {
         "emulator": "01cf0e2f2f715450"
       }
@@ -106,30 +118,6 @@
         "emulator": "01cf0e2f2f715450"
       }
     },
-    "Context": {
-      "source": "contracts/core-utils/Context.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "EntityQuery": {
-      "source": "contracts/core-utils/EntityQuery.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "EntityManager": {
-      "source": "contracts/core-utils/EntityManager.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
-    "WorldUtils": {
-      "source": "contracts/core-utils/WorldUtils.cdc",
-      "aliases": {
-        "emulator": "01cf0e2f2f715450"
-      }
-    },
     "MetadataViews": {
       "source": "./deps/flow-nft/contracts/MetadataViews.cdc",
       "aliases": {
@@ -146,6 +134,12 @@
         "testnet": "631e88ae7f1d7c20"
       }
     },
+    "PropertyComponent": {
+      "source": "contracts/components/PropertyComponent.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
+      }
+    },
     "StringUtils": {
       "source": "./deps/flow-utils/cadence/contracts/StringUtils.cdc",
       "aliases": {
@@ -160,6 +154,12 @@
         "emulator": "f8d6e0586b0a20c7",
         "mainnet": "1d7e57aa55817448",
         "testnet": "631e88ae7f1d7c20"
+      }
+    },
+    "WorldUtils": {
+      "source": "contracts/core-utils/WorldUtils.cdc",
+      "aliases": {
+        "emulator": "01cf0e2f2f715450"
       }
     }
   },
@@ -189,6 +189,13 @@
       "key": {
         "type": "file",
         "location": "./emulator.key"
+      }
+    },
+    "turbine-testnet-admin": {
+      "address": "3102c5131b585d67",
+      "key": {
+        "type": "file",
+        "location": "turbine-testnet-admin.pkey"
       }
     }
   },
@@ -225,6 +232,23 @@
         "FlowToken"
       ]
     },
-    "testnet": {}
+    "testnet": {
+      "turbine-testnet-admin": [
+        "Context",
+        "IComponent",
+        "IEntity",
+        "ISystem",
+        "IModule",
+        "IWorld",
+        "EntityQuery",
+        "EntityManager",
+        "DisplayComponent",
+        "PropertyComponent",
+        "CapabilityComponent",
+        "CoreEntity",
+        "CoreWorld",
+        "WorldUtils"
+      ]
+    }
   }
 }
