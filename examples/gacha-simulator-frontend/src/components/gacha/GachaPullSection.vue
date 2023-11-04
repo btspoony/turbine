@@ -74,7 +74,7 @@ async function tryRevealTx() {
     }
   }
   // try again
-  setTimeout(tryRevealTx, 500)
+  setTimeout(tryRevealTx, 1000)
 }
 </script>
 
