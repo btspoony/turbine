@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useFetch } from '@vueuse/core'
+import { ref, computed, type PropType } from 'vue'
 import { NButton } from 'naive-ui'
 import type { GachaPool, PlayerInventoryItem } from '@flow/types.js'
 import { revealTxids } from '@components/utils/api.js'
@@ -12,14 +11,18 @@ const emit = defineEmits<{
   (e: 'update:history'): void
 }>()
 
-const userName = useGlobalUsername()
+const props = defineProps({
+  currentPool: {
+    type: Object as PropType<GachaPool>,
+    required: false,
+  },
+})
 
-const { data: listedPools, isFetching } = useFetch('/api/gacha/pools').get().json<{ list: GachaPool[] }>()
-const currentPool = computed<GachaPool>(() => listedPools.value?.list?.[0])
+const userName = useGlobalUsername()
 
 const responseTxid = ref<string>(null);
 const isLoading = ref(false)
-const isActionAvailable = computed(() => !isLoading.value && !!currentPool.value && !!userName.value)
+const isActionAvailable = computed(() => !!props.currentPool && !isLoading.value && !!userName.value)
 const pulledInventoryItems = ref<PlayerInventoryItem[]>([])
 
 async function pull(times: number) {
@@ -35,7 +38,7 @@ async function pull(times: number) {
   isLoading.value = true
   pulledInventoryItems.value = []
 
-  const url = `/api/gacha/${currentPool.value.world}/${currentPool.value.poolId}`
+  const url = `/api/gacha/${props.currentPool.world}/${props.currentPool.poolId}`
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -76,7 +79,7 @@ async function tryRevealTx() {
 </script>
 
 <template>
-<section v-if="!isFetching && currentPool" class="p-4 flex flex-col items-center gap-4">
+<section v-if="currentPool" class="p-4 flex flex-col items-center gap-4">
   <h2 class="mb-0">Gacha Simulator For {{ currentPool?.poolName }}</h2>
   <div class="relative object-cover h-80">
     <img src="/social-image.png" alt="Hero Image">

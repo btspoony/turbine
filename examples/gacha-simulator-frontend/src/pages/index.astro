@@ -9,6 +9,8 @@ const title = "Index"
 
 <Layout title={title}>
   <Header />
-  <Main client:load/>
+  <main class="container mx-a min-h-[calc(100vh-9rem)]">
+    <Main client:only="vue"/>
+  </main>
   <Footer />
 </Layout>

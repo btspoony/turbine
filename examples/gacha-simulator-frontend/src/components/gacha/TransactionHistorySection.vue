@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineExpose, onMounted, reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useFetch } from '@vueuse/core';
 import type { GachaResult } from '@flow/types';
 import { revealTxids } from '@components/utils/api.js'
