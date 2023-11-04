@@ -104,7 +104,7 @@ async function tryRevealTx() {
   </div>
   <div v-if="responseTxid" class="relative w-3xl">
     <div v-if="isLoading" class="flex flex-col items-center">
-      <h5>Response Txid: {{ responseTxid }}</h5>
+      <h5>Response Txid: <a :href="`https://testnet.flowdiver.io/tx/${responseTxid}`" target="_blank">{{ responseTxid }}</a></h5>
       <ProgressBar />
     </div>
     <div v-else class="flex flex-wrap items-center justify-start gap-4">
