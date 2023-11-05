@@ -17,4 +17,9 @@ export default defineConfig({
   adapter: vercel({
     functionPerRoute: false,
   }),
+  vite: {
+    ssr: {
+      external: ["@onflow/fcl", "@turbine-cdc/examples-gacha"],
+    },
+  },
 });
