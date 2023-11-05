@@ -37,7 +37,9 @@ const activeKey = ref<'gacha' | 'inventory'>('gacha')
 </script>
 
 <template>
-<NConfigProvider :theme="darkTheme">
+<NConfigProvider :theme="darkTheme" :theme-overrides="{
+  common: { primaryColor: '#ff7e33' }
+}">
   <NMenu v-model:value="activeKey" mode="horizontal" :options="menus" />
   <template v-if="activeKey === 'gacha'">
     <GachaPullSection :current-pool="currentPool" @update:history="onHistoryUpdate" />

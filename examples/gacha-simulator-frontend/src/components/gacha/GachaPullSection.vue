@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, type PropType } from 'vue'
-import { NButton } from 'naive-ui'
+import { NButton, NSwitch } from 'naive-ui'
 import type { GachaPool, PlayerInventoryItem } from '@flow/types.js'
 import { revealTxids } from '@components/utils/api.js'
 import { useGlobalUsername } from '@components/utils/shared.js'
@@ -20,6 +20,7 @@ const props = defineProps({
 
 const userName = useGlobalUsername()
 
+const isComputeOnly = ref(true)
 const responseTxid = ref<string>(null);
 const isLoading = ref(false)
 const isActionAvailable = computed(() => !!props.currentPool && !isLoading.value && !!userName.value)
@@ -39,21 +40,25 @@ async function pull(times: number) {
   pulledInventoryItems.value = []
 
   const url = `/api/gacha/${props.currentPool.world}/${props.currentPool.poolId}`
+  const mode = isComputeOnly.value ? 'computeOnly' : 'transaction'
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'x-app-username': userName.value,
     },
-    body: JSON.stringify({
-      times,
-    })
+    body: JSON.stringify({ times, mode })
   }).then(res => res.json())
 
-  if (response?.ok && typeof response?.txid === 'string') {
-    responseTxid.value = response.txid
+  if (response?.ok) {
+    if (typeof response?.txid === 'string') {
+      responseTxid.value = response.txid
+    } else if (Array.isArray(response?.list)) {
+      isLoading.value = false
+      pulledInventoryItems.value = response.list
+    }
   }
-  console.log(`Called ${url} - Response: `, response)
+  console.log(`Called ${url} in Mode[${mode}] - Response: `, response)
   await tryRevealTx()
 }
 
@@ -80,8 +85,16 @@ async function tryRevealTx() {
 
 <template>
 <section v-if="currentPool" class="p-4 flex flex-col items-center gap-4">
-  <h2 class="mb-0">Gacha Simulator For {{ currentPool?.poolName }}</h2>
-  <div class="relative object-cover h-80">
+  <h2 class="mb-0 text-center">Gacha Simulator For {{ currentPool?.poolName }}</h2>
+  <div class="max-w-3xl w-full">
+    <div class="flex items-center justify-start gap-2">
+      <span :class="['mr-2', { 'text-[var(--theme-accent)]': isComputeOnly }]">
+        Computing Only (No Transaction)
+      </span>
+      <NSwitch v-model:value="isComputeOnly" />
+    </div>
+  </div>
+  <div class="max-w-3xl w-full h-80 relative object-cover">
     <img src="/social-image.png" alt="Hero Image">
     <div class="absolute bottom-0 h-16 w-full" v-if="currentPool">
       <div class="h-full flex items-center justify-around gap-4">
@@ -102,12 +115,12 @@ async function tryRevealTx() {
       </div>
     </div>
   </div>
-  <div v-if="responseTxid" class="relative w-3xl">
-    <div v-if="isLoading" class="flex flex-col items-center">
+  <div class="relative w-3xl">
+    <div v-if="responseTxid && isLoading" class="flex flex-col items-center">
       <h5>Response Txid: <a :href="`https://testnet.flowdiver.io/tx/${responseTxid}`" target="_blank">{{ responseTxid }}</a></h5>
       <ProgressBar />
     </div>
-    <div v-else class="flex flex-wrap items-center justify-start gap-4">
+    <div v-if="!isLoading && pulledInventoryItems.length >= 0" class="flex flex-wrap items-center justify-start gap-4">
       <InventoryItem v-for="item in pulledInventoryItems" :key="item.id" :item="item" />
     </div>
   </div>

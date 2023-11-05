@@ -21,7 +21,7 @@ export async function buildFlowContext(): Promise<FlowContext> {
   return ctx;
 }
 
-/// ------------------------------ Transactions ------------------------------
+/// ------------------------------ Gacha Action ------------------------------
 
 export async function gachaPull(
   username: string,
@@ -49,7 +49,37 @@ export async function gachaPull(
   return { txid };
 }
 
-/// ------------------------------ Query Scripts ------------------------------
+export async function gachaPullComputeOnly(
+  username: string,
+  world: string,
+  poolId: string,
+  times: number
+) {
+  const ctx = await buildFlowContext();
+  const code = await loadCode("scripts", "platform/pull-compute-only");
+  try {
+    const list = await ctx.service.executeScript(
+      code,
+      (arg, t) => [
+        arg(username, t.String),
+        arg(world, t.String),
+        arg(poolId, t.UInt64),
+        arg(String(Math.min(10, Math.max(1, times))), t.UInt64),
+      ],
+      undefined
+    );
+    console.log(list);
+    if (Array.isArray(list) && list.length > 0) {
+      return list.map((one) => parsePlayerInventoryItem(one));
+    } else {
+      return [];
+    }
+  } catch (e) {
+    throw new Error(`Not Found: World[${world}] GachaPool[${poolId}]`);
+  }
+}
+
+/// ------------------------------ Pool Action ------------------------------
 
 export async function getGachaPools(): Promise<GachaPool[]> {
   const ctx = await buildFlowContext();
@@ -59,7 +89,6 @@ export async function getGachaPools(): Promise<GachaPool[]> {
     (args, t) => [],
     undefined
   );
-  // TODO: parse response
   return response as GachaPool[];
 }
 
@@ -98,6 +127,8 @@ export async function getGachaPoolItems(
     throw new Error(`Not Found: World[${world}] GachaPool[${poolId}]`);
   }
 }
+
+// ------------------------------ Inventory Action ------------------------------
 
 function parsePlayerInventoryItem(one: any): PlayerInventoryItem {
   const item = parseGachaItem(one);

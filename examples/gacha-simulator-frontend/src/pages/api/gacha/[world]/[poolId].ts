@@ -1,6 +1,9 @@
 import type { APIRoute } from "astro";
-
-import { gachaPull, getGachaPoolItems } from "@flow/actions.js";
+import {
+  gachaPull,
+  gachaPullComputeOnly,
+  getGachaPoolItems,
+} from "@flow/actions.js";
 
 /**
  * Pull from a gacha pool
@@ -17,12 +20,25 @@ export const POST: APIRoute = async (ctx) => {
     throw new Error("Invalid body: times is required");
   }
 
-  const response = await gachaPull(
-    ctx.locals.username,
-    ctx.params.world,
-    ctx.params.poolId,
-    body.times
-  );
+  const isComputeOnly = body.mode === "computeOnly";
+  let response: any;
+
+  if (isComputeOnly) {
+    const list = await gachaPullComputeOnly(
+      ctx.locals.username,
+      ctx.params.world,
+      ctx.params.poolId,
+      body.times
+    );
+    response = { list };
+  } else {
+    response = await gachaPull(
+      ctx.locals.username,
+      ctx.params.world,
+      ctx.params.poolId,
+      body.times
+    );
+  }
   return new Response(JSON.stringify(response));
 };
 
