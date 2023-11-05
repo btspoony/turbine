@@ -62,16 +62,14 @@ const ensureAPIRequest: MiddlewareResponseHandler = async (
         }
       );
     } else {
-      return new Response(
-        JSON.stringify({ ok: true, ...(await response.json()) }),
-        {
-          status: response.status,
-          headers: {
-            ...response.headers,
-            "content-type": "application/json",
-          },
-        }
-      );
+      const finalData = await response.json();
+      return new Response(JSON.stringify({ ok: true, ...finalData }), {
+        status: response.status,
+        headers: {
+          ...response.headers,
+          "content-type": "application/json",
+        },
+      });
     }
   } else {
     return next();
