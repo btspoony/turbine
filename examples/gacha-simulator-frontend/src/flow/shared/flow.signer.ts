@@ -6,8 +6,8 @@ import type { Account, CompositeSignature } from "@onflow/typedefs";
 
 import type { AuthZ, AuthzFn } from "./fcl.types.js";
 import { FlowService } from "./flow.service.js";
-import { RedisHelperService } from "./redis-helper.service.js";
 import { KeyManagerService } from "./key-manager.service.js";
+import type { RedisHelperService } from "./redis-helper.service.js";
 
 export class FlowSigner {
   private readonly logger = pino({ name: "FlowSigner" });
@@ -15,7 +15,6 @@ export class FlowSigner {
 
   constructor(
     private flowService: FlowService,
-    private redisHelper: RedisHelperService,
     private kmService: KeyManagerService
   ) {}
 
@@ -33,15 +32,23 @@ export class FlowSigner {
   /**
    * Send a transaction with the given code and arguments
    */
-  async sendTransactionWithKeyPool(code: string, args: fcl.ArgsFn) {
+  async sendTransactionWithKeyPool(
+    code: string,
+    args: fcl.ArgsFn,
+    redisHelper?: RedisHelperService
+  ) {
     const address = await this.getAddress();
-    const keyIndex = await this.redisHelper.acquireKeyIndex(address);
+    const keyIndex = !redisHelper
+      ? 0
+      : await redisHelper.acquireKeyIndex(address);
 
     const authzFn = await this.buildAuthorization(keyIndex);
     const txid = await this.flowService.sendTransaction(code, args, authzFn);
 
-    await this.redisHelper.releaseKeyIndex(address, keyIndex);
-    await this.redisHelper.pushKeyToRedis("Transactions", txid);
+    if (redisHelper) {
+      await redisHelper.releaseKeyIndex(address, keyIndex);
+      await redisHelper.pushKeyToRedis("Transactions", txid);
+    }
 
     return txid;
   }

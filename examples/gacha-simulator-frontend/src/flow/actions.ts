@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 
 import flowJSON from "@turbine-cdc/examples-gacha/flow.json" assert { type: "json" };
 import { FlowContext } from "./shared/context.js";
+import { RedisHelperService } from "./shared/redis-helper.service.js";
 import type {
   GachaPool,
   GachaPoolItem,
@@ -31,10 +32,7 @@ export async function loadCode(type: "transactions" | "scripts", path: string) {
  * Build flow context
  */
 export async function buildFlowContext(): Promise<FlowContext> {
-  const ctx = await FlowContext.create({
-    flowJSON,
-    redisPrefix: APP_PREFIX,
-  });
+  const ctx = await FlowContext.create({ flowJSON });
   return ctx;
 }
 
@@ -51,12 +49,18 @@ export async function gachaPull(
 
   const signer = ctx.createNewSigner();
   signer.setLabel("default");
-  const txid = await signer.sendTransactionWithKeyPool(code, (arg, t) => [
-    arg(username, t.String),
-    arg(world, t.String),
-    arg(poolId, t.UInt64),
-    arg(String(Math.min(10, Math.max(1, times))), t.UInt64),
-  ]);
+
+  const redisHelper = new RedisHelperService({ prefix: APP_PREFIX });
+  const txid = await signer.sendTransactionWithKeyPool(
+    code,
+    (arg, t) => [
+      arg(username, t.String),
+      arg(world, t.String),
+      arg(poolId, t.UInt64),
+      arg(String(Math.min(10, Math.max(1, times))), t.UInt64),
+    ],
+    redisHelper
+  );
   return { txid };
 }
 
@@ -182,8 +186,8 @@ export async function getPlayerInventoryItemsByIds(
 export async function fetchLatestTransactions(
   limit?: number
 ): Promise<string[]> {
-  const ctx = await buildFlowContext();
-  return await ctx.redisHelper.fetchLatestKeysFromRedis("Transactions", limit);
+  const redisHelper = new RedisHelperService({ prefix: APP_PREFIX });
+  return await redisHelper.fetchLatestKeysFromRedis("Transactions", limit);
 }
 
 export async function revealGachaPullResults(txids: string[]) {
