@@ -1,7 +1,6 @@
-import { resolve } from "node:path";
-import { readFile } from "node:fs/promises";
-
+import { loadCode } from "@turbine-cdc/examples-gacha";
 import flowJSON from "@turbine-cdc/examples-gacha/flow.json" assert { type: "json" };
+
 import { FlowContext } from "./shared/context.js";
 import { RedisHelperService } from "./shared/redis-helper.service.js";
 import type {
@@ -13,20 +12,6 @@ import type {
 } from "./types.js";
 
 const APP_PREFIX = "GACHA_SIMULATOR_FLOW";
-
-/**
- * Load standard code from flow-core-contracts
- * @param type
- * @param path
- */
-export async function loadCode(type: "transactions" | "scripts", path: string) {
-  const pathName = path.endsWith(".cdc") ? path : `${path}.cdc`;
-  const filePath = resolve(
-    process.cwd(),
-    `node_modules/@turbine-cdc/examples-gacha/${type}/${pathName}`
-  );
-  return await readFile(filePath, "utf-8");
-}
 
 /**
  * Build flow context

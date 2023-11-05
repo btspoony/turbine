@@ -1,11 +1,13 @@
 {
   "name": "@turbine-cdc/examples-gacha",
   "version": "0.1.0",
+  "main": "index.mjs",
   "exports": {
     "./contracts/**/*": "./contracts/**/*",
     "./transactions/**/*": "./transactions/**/*",
     "./scripts/**/*": "./scripts/**/*",
-    "./flow.json": "./flow.json"
+    "./flow.json": "./flow.json",
+    ".": "./index.mjs"
   },
   "scripts": {
     "deploy:emulator": "flow project deploy --update",
