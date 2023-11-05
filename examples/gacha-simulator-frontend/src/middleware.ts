@@ -1,5 +1,8 @@
 import type { MiddlewareResponseHandler } from "astro";
 import { sequence } from "astro:middleware";
+import pino from "pino";
+
+const logger = pino({ name: "FlowContext" });
 
 const ensureAPIRequest: MiddlewareResponseHandler = async (
   { request, url, cookies, locals },
@@ -42,12 +45,14 @@ const ensureAPIRequest: MiddlewareResponseHandler = async (
     }
     // Format the response
     if (error || response.status >= 400) {
+      const errorMsg = response
+        ? await response.text()
+        : error?.message ?? "Unknown error";
+      logger.error(errorMsg);
       return new Response(
         JSON.stringify({
           ok: false,
-          error: response
-            ? await response.text()
-            : error?.message ?? "Unknown error",
+          error: errorMsg,
         }),
         {
           status: response?.status ?? 400,

@@ -68,7 +68,6 @@ export async function gachaPullComputeOnly(
       ],
       undefined
     );
-    console.log(list);
     if (Array.isArray(list) && list.length > 0) {
       return list.map((one) => parsePlayerInventoryItem(one));
     } else {

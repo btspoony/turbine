@@ -17,14 +17,12 @@ export class FlowContext {
   }
 
   // Instance methods
-  private readonly logger = pino({ name: "FlowContext" });
   private readonly flowService: FlowService;
   private readonly keyManagerService: KeyManagerService;
 
   private constructor(opt: FlowContextOption) {
     this.flowService = new FlowService(opt.flowJSON);
     this.keyManagerService = new KeyManagerService();
-    this.logger.info("FlowContext created");
   }
 
   private async init() {
