@@ -13,7 +13,7 @@ const isDark = true
 const titlebase = "Gacha Simulator For Honkai StarRail v1.4"
 const title = `${Astro.props.title} - ${titlebase}`
 const description = Astro.props.description ?? "This is a gacha simulator for Honkai StarRail. You can use this to simulate gacha pulls and see how lucky you are."
-const url = import.meta.env.SITE ?? "http://localhost:4321"
+const url = import.meta.env.BASE_URL ?? "http://localhost:4321"
 ---
 
 <!doctype html>
