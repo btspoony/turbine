@@ -1,0 +1,34 @@
+{
+  "name": "@turbine-cdc/webiste",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "The website project of Turbine Engine",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "keywords": [
+    "Astro",
+    "Fully on-chain"
+  ],
+  "author": "Bohao Tang<tech@btang.cn>",
+  "license": "MIT",
+  "dependencies": {
+    "astro": "^3.4.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.3.0",
+    "@astrojs/vercel": "^5.1.0",
+    "@babel/core": "^7.0.0-0",
+    "@iconify-json/carbon": "^1.1.21",
+    "@iconify-json/logos": "^1.1.37",
+    "@unocss/reset": "^0.57.1",
+    "typescript": "^5.2.2",
+    "unocss": "^0.57.1",
+    "vite": "^4.0.0"
+  }
+}

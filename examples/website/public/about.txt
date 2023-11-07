@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Licorice
+- Font Author: Copyright 2004 The Licorice Project Authors (https://github.com/googlefonts/licorice)
+- Font Source: http://fonts.gstatic.com/s/licorice/v6/t5tjIR8TMomTCAyjNk23hqLgzCHu.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))

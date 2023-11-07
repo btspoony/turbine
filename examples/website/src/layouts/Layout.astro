@@ -1,0 +1,49 @@
+---
+import "../styles/index.css";
+import "../styles/theme.css";
+
+import { ViewTransitions } from "astro:transitions";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const isDark = true;
+const titlebase = "Turbine Engine";
+const title = `${Astro.props.title} - ${titlebase}`;
+const description =
+  Astro.props.description ??
+  "Turbine is a fully on-chain game engine for the Cadence programming language on Flow blockchain. It utilizes the Entity Component System (ECS) architecture, providing a flexible and powerful framework for developing a wide range of games.";
+const url = import.meta.env.SITE ?? "http://turbine.run";
+---
+
+<!doctype html>
+<html lang="en" class:list={[isDark ? "theme-dark" : ""]}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content=`${url}/social-image.png` />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content=`${url}/social-image.png` />
+    <meta name="generator" content={Astro.generator} />
+    <ViewTransitions />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

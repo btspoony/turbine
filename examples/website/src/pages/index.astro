@@ -1,0 +1,14 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Footer from "@components/partials/Footer.astro";
+import MainSection from "@components/landing/MainSection.astro";
+
+const title = "Index";
+---
+
+<Layout title={title}>
+  <main class="container mx-a min-h-[calc(100vh-8rem)]">
+    <MainSection />
+  </main>
+  <Footer />
+</Layout>
