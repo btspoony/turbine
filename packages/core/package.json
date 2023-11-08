@@ -1,10 +1,10 @@
 {
   "name": "@turbine-cdc/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "exports": {
-    "./contracts/**/*": "./contracts/**/*",
-    "./transactions/**/*": "./transactions/**/*",
-    "./scripts/**/*": "./scripts/**/*",
+    "./contracts/*": "./contracts/*.cdc",
+    "./transactions/*": "./transactions/*.cdc",
+    "./scripts/*": "./scripts/*.cdc",
     "./flow.json": "./flow.json"
   },
   "scripts": {
