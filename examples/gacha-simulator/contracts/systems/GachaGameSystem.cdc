@@ -244,7 +244,7 @@ pub contract GachaGameSystem: ISystem {
 
         access(self)
         fun geneRandomInRange(_ max: UInt64): UInt64 {
-            let rand = unsafeRandom()
+            let rand = revertibleRandom()
             return rand % max
         }
 
