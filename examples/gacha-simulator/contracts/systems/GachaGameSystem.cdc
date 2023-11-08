@@ -234,7 +234,7 @@ pub contract GachaGameSystem: ISystem {
 
         access(self)
         fun geneRandomPercentage(): UFix64 {
-            var randStr = unsafeRandom().toString()
+            var randStr = revertibleRandom().toString()
             if randStr.length < 5 {
                 randStr = "00000".concat(randStr)
             }
