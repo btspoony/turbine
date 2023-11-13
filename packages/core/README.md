@@ -1,4 +1,4 @@
-# Core contracts library of Turbine Engine
+# Core contracts library of Turbine Framework
 
 Contracts are deployed here:
 

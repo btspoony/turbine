@@ -203,7 +203,7 @@ Update your `flow.json` file to add the following data to the proper fields:
 ```
 {% endcode %}
 
-Now you have completed the installation of the Turbine Engine core library.&#x20;
+Now you have completed the installation of the Turbine Framework core library.&#x20;
 
 Let's start building an FOC game!
 
@@ -555,9 +555,9 @@ fun createWorld(
 
 ## FAQ
 
-#### Why should I use the Turbine Engine to build a game?
+#### Why should I use the Turbine to build a game?
 
-First of all, Turbine is a fully on-chain game engine designed based on the ECS concept([Learn more](../#what-is-ecs-architecture)). This means that it always adheres to the core development concept of separating data from logic. It can provide you with good maintainability and scalability when building games, and a good engineering-oriented, easy-to-collaborate development experience.&#x20;
+First of all, Turbine is a fully on-chain game framework designed based on the ECS concept([Learn more](../#what-is-ecs-architecture)). This means that it always adheres to the core development concept of separating data from logic. It can provide you with good maintainability and scalability when building games, and a good engineering-oriented, easy-to-collaborate development experience.&#x20;
 
 When you are developing a game, you just need to think step by step:
 

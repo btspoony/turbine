@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "version": "0.1.0",
-  "description": "The website project of Turbine Engine",
+  "description": "The website project of Turbine Framework",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

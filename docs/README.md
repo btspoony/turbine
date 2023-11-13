@@ -1,6 +1,6 @@
 # What is Turbine?
 
-[Turbine](https://turbine.run) is an ECS-based fully on-chain game engine for **Cadence** smart contract language on the Flow blockchain. It utilizes the **Entity Component System** (ECS) architecture, providing a flexible and powerful on-chain game logic development framework for various games.
+[Turbine](https://turbine.run) is an ECS-based fully on-chain game framework for **Cadence** smart contract language on the Flow blockchain. It utilizes the **Entity Component System** (ECS) architecture, providing a flexible and powerful on-chain game logic development framework for various games.
 
 ### Why Flow and Cadence?
 
