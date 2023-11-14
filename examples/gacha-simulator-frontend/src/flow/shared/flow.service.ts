@@ -115,7 +115,14 @@ export class FlowService {
   async getTransactionStatus(
     transactionId: string
   ): Promise<TransactionStatus> {
-    return fcl.tx(transactionId).snapshot();
+    return await fcl.tx(transactionId).onceExecuted();
+  }
+
+  /**
+   * Get chain id
+   */
+  async getChainId() {
+    return await fcl.getChainId();
   }
 
   /**

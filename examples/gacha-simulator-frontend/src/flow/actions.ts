@@ -211,6 +211,7 @@ export async function revealGachaPullResults(txids: string[]) {
   const txResults = await Promise.all(
     txids.map(async (txid) => await ctx.service.getTransactionStatus(txid))
   );
+  console.log("Querying txids: ", txids.join(", "));
   // filter valid txs
   const txResultsWithEvents = txResults.filter(
     (one) => one.status >= 3 && one.events.length > 0
@@ -238,7 +239,6 @@ export async function revealGachaPullResults(txids: string[]) {
     if (!userPullEvt) continue;
     const username = userPullEvt.data["username"] as string;
     const poolId = userPullEvt.data["poolEntityId"] as string;
-    console.log("Found User pulled: ", username, poolId, world);
     if (!username || !poolId) continue;
 
     const txRecord = { world, username, poolId, items: [] };
@@ -250,7 +250,11 @@ export async function revealGachaPullResults(txids: string[]) {
       if (typeof evt.data["itemID"] !== "string") continue;
       txRecord.items.push(evt.data["itemID"]);
     }
-    console.log("Found OwnedItemAdded: ", txRecord.items.join(","));
+
+    console.log(
+      `Found User pulled: [${username}@${world}#${poolId}] Items: `,
+      txRecord.items.join(",")
+    );
 
     // save tx record
     ownedItemIdsMapping[txid] = txRecord;
